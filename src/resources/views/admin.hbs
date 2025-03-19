@@ -1,0 +1,1348 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+<style>
+    :root {
+        --primary-color: #8B4513;
+        --secondary-color: #A0522D;
+        --accent-color: #CD853F;
+        --success-color: #228B22;
+        --warning-color: #DAA520;
+        --danger-color: #B22222;
+        --light-color: #F5F5DC;
+        --text-color: #4A4A4A;
+        --border-color: #DEB887;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-color);
+        color: var(--text-color);
+    }
+
+    .sidebar {
+        min-height: 100vh;
+        background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link {
+        color: #fff;
+        padding: 12px 20px;
+        margin: 4px 0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateX(5px);
+    }
+
+    .nav-link.active {
+        background-color: var(--accent-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-link i {
+        margin-right: 10px;
+        font-size: 1.2em;
+    }
+
+    .content {
+        padding: 30px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        margin-bottom: 25px;
+        background-color: #fff;
+        border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .table {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+    }
+
+    .table thead th {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 15px;
+    }
+
+    .table tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        border-color: var(--border-color);
+    }
+
+    .table img {
+        max-width: 60px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+    }
+
+    .badge {
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .btn {
+        border-radius: 8px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+    .btn-warning {
+        background-color: var(--warning-color);
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: var(--danger-color);
+        border: none;
+    }
+
+    .btn-info {
+        background-color: var(--accent-color);
+        border: none;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        padding: 10px 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(205, 133, 63, 0.25);
+    }
+
+    .modal-content {
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 15px 15px 0 0;
+        padding: 20px;
+    }
+
+    .modal-body {
+        padding: 25px;
+    }
+
+    .modal-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .stats-card {
+        background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        color: white;
+    }
+
+    .stats-card .card-title {
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+
+    .stats-card .card-text {
+        font-size: 2em;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .section-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(205, 133, 63, 0.05);
+    }
+
+    .action-buttons .btn {
+        margin: 0 3px;
+    }
+
+    .status-badge {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .status-badge.pending {
+        background-color: var(--warning-color);
+        color: white;
+    }
+
+    .status-badge.processing {
+        background-color: var(--accent-color);
+        color: white;
+    }
+
+    .status-badge.completed {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .status-badge.cancelled {
+        background-color: var(--danger-color);
+        color: white;
+    }
+
+    .badge.bg-success {
+        background-color: var(--success-color) !important;
+    }
+
+    .badge.bg-danger {
+        background-color: var(--danger-color) !important;
+    }
+
+    .badge.bg-warning {
+        background-color: var(--warning-color) !important;
+    }
+
+    .badge.bg-info {
+        background-color: var(--accent-color) !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 px-0 sidebar">
+            <div class="d-flex flex-column">
+                <div class="p-4 text-white">
+                    <h4 class="mb-0">Quản trị website</h4>
+                    <small class="text-muted">Nội thất Phú Quý</small>
+                </div>
+                <ul class="nav flex-column px-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-section="dashboard">
+                            <i class="bi bi-speedometer2"></i> Tổng quan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="products">
+                            <i class="bi bi-box"></i> Sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="categories">
+                            <i class="bi bi-grid"></i> Danh mục
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="orders">
+                            <i class="bi bi-cart"></i> Đơn hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="users">
+                            <i class="bi bi-people"></i> Người dùng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="settings">
+                            <i class="bi bi-gear"></i> Cài đặt
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section">
+                <h2 class="section-title">Tổng quan</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng đơn hàng</h5>
+                                <h2 class="card-text">150</h2>
+                                <small class="text-white-50">+12% so với tháng trước</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng sản phẩm</h5>
+                                <h2 class="card-text">45</h2>
+                                <small class="text-white-50">+5 sản phẩm mới</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng người dùng</h5>
+                                <h2 class="card-text">1,250</h2>
+                                <small class="text-white-50">+8% so với tháng trước</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Doanh thu</h5>
+                                <h2 class="card-text">250.000.000đ</h2>
+                                <small class="text-white-50">+15% so với tháng trước</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products" class="section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="section-title">Quản lý sản phẩm</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        <i class="bi bi-plus-lg"></i> Thêm sản phẩm
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Danh mục</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><img src="https://via.placeholder.com/60" alt="Sản phẩm"></td>
+                                <td>Bàn ăn gỗ</td>
+                                <td>2.500.000đ</td>
+                                <td>Bàn ăn</td>
+                                <td><span class="badge bg-success">Còn hàng</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm btn-warning edit-product" data-id="1">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-product" data-id="1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div id="categories" class="section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="section-title">Quản lý danh mục</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                        <i class="bi bi-plus-lg"></i> Thêm danh mục
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên danh mục</th>
+                                <th>Mô tả</th>
+                                <th>Số sản phẩm</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Bàn ăn</td>
+                                <td>Các loại bàn ăn gia đình</td>
+                                <td>15</td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm btn-warning edit-category" data-id="1">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-category" data-id="1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders" class="section d-none">
+                <h2 class="section-title">Quản lý đơn hàng</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Khách hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày đặt</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DH001</td>
+                                <td>Nguyễn Văn A</td>
+                                <td>5.000.000đ</td>
+                                <td>
+                                    <select class="form-select form-select-sm order-status" data-id="DH001">
+                                        <option value="pending" class="status-badge pending">Chờ xử lý</option>
+                                        <option value="processing" class="status-badge processing">Đang xử lý</option>
+                                        <option value="completed" class="status-badge completed">Hoàn thành</option>
+                                        <option value="cancelled" class="status-badge cancelled">Đã hủy</option>
+                                    </select>
+                                </td>
+                                <td>01/01/2024</td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm btn-info view-order" data-id="DH001">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="section d-none">
+                <h2 class="section-title">Quản lý người dùng</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên người dùng</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>admin@example.com</td>
+                                <td>Quản trị viên</td>
+                                <td><span class="badge bg-success">Hoạt động</span></td>
+                                <td class="action-buttons">
+                                    <button class="btn btn-sm btn-warning edit-user" data-id="1">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-user" data-id="1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="section d-none">
+                <h2 class="section-title">Cài đặt website</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form id="settingsForm">
+                            <div class="mb-3">
+                                <label class="form-label">Tên website</label>
+                                <input type="text" class="form-control" name="siteName" value="Nội thất Phú Quý">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email liên hệ</label>
+                                <input type="email" class="form-control" name="contactEmail" value="contact@phuquy.com">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" name="contactPhone" value="0123456789">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Địa chỉ</label>
+                                <textarea class="form-control" name="address">123 Đường ABC, Quận 1, TP.HCM</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Lưu cài đặt
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm sản phẩm mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giá</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục</label>
+                        <select class="form-select" name="category" required>
+                            <option value="" disabled selected>Chọn danh mục sản phẩm</option>
+                            <optgroup label="Nội Thất Phòng Khách">
+                                <option value="sofa-vang">Sofa văng</option>
+                                <option value="sofa-goc">Sofa góc</option>
+                                <option value="sofa-doi">Sofa đôi</option>
+                                <option value="ghe-don">Ghế đơn</option>
+                                <option value="ban-tra">Bàn trà</option>
+                                <option value="ke-tivi">Kệ tivi</option>
+                                <option value="tu-trang-tri">Tủ trang trí</option>
+                                <option value="den-trang-tri">Đèn trang trí</option>
+                                <option value="ban-console">Bàn console</option>
+                                <option value="guong-phong-khach">Gương phòng khách</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Bếp">
+                                <option value="ban-an-4-cho">Bàn ăn 4 chỗ</option>
+                                <option value="ban-an-6-cho">Bàn ăn 6 chỗ</option>
+                                <option value="ban-an-8-cho">Bàn ăn 8 chỗ</option>
+                                <option value="ghe-an-go">Ghế ăn gỗ</option>
+                                <option value="ghe-an-dem">Ghế ăn đệm</option>
+                                <option value="tu-bep-tren">Tủ bếp trên</option>
+                                <option value="tu-bep-duoi">Tủ bếp dưới</option>
+                                <option value="tu-bep-cao">Tủ bếp cao</option>
+                                <option value="tu-ruou">Tủ rượu</option>
+                                <option value="ban-bar">Bàn bar</option>
+                                <option value="ghe-bar">Ghế bar</option>
+                                <option value="dao-bep">Đảo bếp</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Ngủ">
+                                <option value="giuong-don">Giường đơn</option>
+                                <option value="giuong-doi">Giường đôi</option>
+                                <option value="giuong-tang">Giường tầng</option>
+                                <option value="tu-quan-ao-2-canh">Tủ quần áo 2 cánh</option>
+                                <option value="tu-quan-ao-3-canh">Tủ quần áo 3 cánh</option>
+                                <option value="tu-quan-ao-4-canh">Tủ quần áo 4 cánh</option>
+                                <option value="tu-dau-giuong">Tủ đầu giường</option>
+                                <option value="ban-trang-diem">Bàn trang điểm</option>
+                                <option value="ghe-phong-ngu">Ghế phòng ngủ</option>
+                                <option value="guong-phong-ngu">Gương phòng ngủ</option>
+                                <option value="dem">Đệm</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Văn Phòng">
+                                <option value="ban-lam-viec-don">Bàn làm việc đơn</option>
+                                <option value="ban-lam-viec-doi">Bàn làm việc đôi</option>
+                                <option value="ban-lam-viec-goc">Bàn làm việc góc</option>
+                                <option value="ban-hop">Bàn họp</option>
+                                <option value="ghe-van-phong-co-dinh">Ghế văn phòng cố định</option>
+                                <option value="ghe-van-phong-xoay">Ghế văn phòng xoay</option>
+                                <option value="ghe-giam-doc">Ghế giám đốc</option>
+                                <option value="tu-tai-lieu-thap">Tủ tài liệu thấp</option>
+                                <option value="tu-tai-lieu-cao">Tủ tài liệu cao</option>
+                                <option value="ke-sach">Kệ sách</option>
+                                <option value="vach-ngan">Vách ngăn</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Trẻ Em">
+                                <option value="ban-hoc">Bàn học</option>
+                                <option value="ghe-hoc">Ghế học</option>
+                                <option value="giuong-tre-em">Giường trẻ em</option>
+                                <option value="tu-quan-ao-tre-em">Tủ quần áo trẻ em</option>
+                                <option value="tu-do-choi">Tủ đồ chơi</option>
+                                <option value="ke-sach-tre-em">Kệ sách trẻ em</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Tiện Ích">
+                                <option value="tu-giay">Tủ giày</option>
+                                <option value="ke-trang-tri">Kệ trang trí</option>
+                                <option value="binh-phong">Bình phong</option>
+                                <option value="banner-treo-tuong">Banner treo tường</option>
+                                <option value="rem-cua">Rèm cửa</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                                <option value="goi-tua">Gối tựa</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveProduct">
+                    <i class="bi bi-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm danh mục mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description" placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveCategory">
+                    <i class="bi bi-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa thông tin người dùng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên người dùng</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Vai trò</label>
+                        <select class="form-select" name="role" required>
+                            <option value="admin">Quản trị viên</option>
+                            <option value="staff">Nhân viên</option>
+                            <option value="user">Người dùng</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="status" required>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Khóa</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" name="password" placeholder="Để trống nếu không muốn thay đổi">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveUser">
+                    <i class="bi bi-save"></i> Lưu thay đổi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Thông tin đơn hàng</h6>
+                        <p><strong>Mã đơn hàng:</strong> <span id="orderId"></span></p>
+                        <p><strong>Ngày đặt:</strong> <span id="orderDate"></span></p>
+                        <p><strong>Trạng thái:</strong> <span id="orderStatus"></span></p>
+                        <p><strong>Phương thức thanh toán:</strong> <span id="paymentMethod"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Thông tin khách hàng</h6>
+                        <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
+                        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+                        <p><strong>Số điện thoại:</strong> <span id="customerPhone"></span></p>
+                        <p><strong>Địa chỉ:</strong> <span id="customerAddress"></span></p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItems">
+                            <!-- Sản phẩm sẽ được thêm vào đây -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tạm tính:</strong></td>
+                                <td><span id="subtotal"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Phí vận chuyển:</strong></td>
+                                <td><span id="shipping"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                                <td><strong><span id="total"></span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="printOrder">
+                    <i class="bi bi-printer"></i> In đơn hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="notificationIcon" class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                </div>
+                <p id="notificationMessage" class="mb-0"></p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa sản phẩm</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giá</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục</label>
+                        <select class="form-select" name="category" required>
+                            <option value="" disabled selected>Chọn danh mục sản phẩm</option>
+                            <optgroup label="Nội Thất Phòng Khách">
+                                <option value="sofa-vang">Sofa văng</option>
+                                <option value="sofa-goc">Sofa góc</option>
+                                <option value="sofa-doi">Sofa đôi</option>
+                                <option value="ghe-don">Ghế đơn</option>
+                                <option value="ban-tra">Bàn trà</option>
+                                <option value="ke-tivi">Kệ tivi</option>
+                                <option value="tu-trang-tri">Tủ trang trí</option>
+                                <option value="den-trang-tri">Đèn trang trí</option>
+                                <option value="ban-console">Bàn console</option>
+                                <option value="guong-phong-khach">Gương phòng khách</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Bếp">
+                                <option value="ban-an-4-cho">Bàn ăn 4 chỗ</option>
+                                <option value="ban-an-6-cho">Bàn ăn 6 chỗ</option>
+                                <option value="ban-an-8-cho">Bàn ăn 8 chỗ</option>
+                                <option value="ghe-an-go">Ghế ăn gỗ</option>
+                                <option value="ghe-an-dem">Ghế ăn đệm</option>
+                                <option value="tu-bep-tren">Tủ bếp trên</option>
+                                <option value="tu-bep-duoi">Tủ bếp dưới</option>
+                                <option value="tu-bep-cao">Tủ bếp cao</option>
+                                <option value="tu-ruou">Tủ rượu</option>
+                                <option value="ban-bar">Bàn bar</option>
+                                <option value="ghe-bar">Ghế bar</option>
+                                <option value="dao-bep">Đảo bếp</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Ngủ">
+                                <option value="giuong-don">Giường đơn</option>
+                                <option value="giuong-doi">Giường đôi</option>
+                                <option value="giuong-tang">Giường tầng</option>
+                                <option value="tu-quan-ao-2-canh">Tủ quần áo 2 cánh</option>
+                                <option value="tu-quan-ao-3-canh">Tủ quần áo 3 cánh</option>
+                                <option value="tu-quan-ao-4-canh">Tủ quần áo 4 cánh</option>
+                                <option value="tu-dau-giuong">Tủ đầu giường</option>
+                                <option value="ban-trang-diem">Bàn trang điểm</option>
+                                <option value="ghe-phong-ngu">Ghế phòng ngủ</option>
+                                <option value="guong-phong-ngu">Gương phòng ngủ</option>
+                                <option value="dem">Đệm</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Văn Phòng">
+                                <option value="ban-lam-viec-don">Bàn làm việc đơn</option>
+                                <option value="ban-lam-viec-doi">Bàn làm việc đôi</option>
+                                <option value="ban-lam-viec-goc">Bàn làm việc góc</option>
+                                <option value="ban-hop">Bàn họp</option>
+                                <option value="ghe-van-phong-co-dinh">Ghế văn phòng cố định</option>
+                                <option value="ghe-van-phong-xoay">Ghế văn phòng xoay</option>
+                                <option value="ghe-giam-doc">Ghế giám đốc</option>
+                                <option value="tu-tai-lieu-thap">Tủ tài liệu thấp</option>
+                                <option value="tu-tai-lieu-cao">Tủ tài liệu cao</option>
+                                <option value="ke-sach">Kệ sách</option>
+                                <option value="vach-ngan">Vách ngăn</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Trẻ Em">
+                                <option value="ban-hoc">Bàn học</option>
+                                <option value="ghe-hoc">Ghế học</option>
+                                <option value="giuong-tre-em">Giường trẻ em</option>
+                                <option value="tu-quan-ao-tre-em">Tủ quần áo trẻ em</option>
+                                <option value="tu-do-choi">Tủ đồ chơi</option>
+                                <option value="ke-sach-tre-em">Kệ sách trẻ em</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Tiện Ích">
+                                <option value="tu-giay">Tủ giày</option>
+                                <option value="ke-trang-tri">Kệ trang trí</option>
+                                <option value="binh-phong">Bình phong</option>
+                                <option value="banner-treo-tuong">Banner treo tường</option>
+                                <option value="rem-cua">Rèm cửa</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                                <option value="goi-tua">Gối tựa</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="status" required>
+                            <option value="in_stock">Còn hàng</option>
+                            <option value="out_of_stock">Hết hàng</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveEditProduct">
+                    <i class="bi bi-save"></i> Lưu thay đổi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa danh mục</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description" rows="3" placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Vị trí hiển thị</label>
+                        <select class="form-select" name="position" required>
+                            <option value="" disabled selected>Chọn vị trí hiển thị</option>
+                            <option value="1">Đầu tiên</option>
+                            <option value="2">Thứ hai</option>
+                            <option value="3">Thứ ba</option>
+                            <option value="4">Thứ tư</option>
+                            <option value="5">Cuối cùng</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hiển thị</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="isActive" id="activeYes" value="true" checked>
+                            <label class="form-check-label" for="activeYes">
+                                Có
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="isActive" id="activeNo" value="false">
+                            <label class="form-check-label" for="activeNo">
+                                Không
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveEditCategory">
+                    <i class="bi bi-save"></i> Lưu thay đổi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+<script>
+    // Hàm hiển thị thông báo
+    function showNotification(title, message, type = 'success') {
+        const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+        const notificationIcon = document.getElementById('notificationIcon');
+        
+        // Cập nhật tiêu đề và nội dung
+        document.getElementById('notificationTitle').textContent = title;
+        document.getElementById('notificationMessage').textContent = message;
+        
+        // Cập nhật icon và màu sắc theo loại thông báo
+        let iconClass, iconColor;
+        switch(type) {
+            case 'success':
+                iconClass = 'bi-check-circle-fill';
+                iconColor = 'var(--success-color)';
+                break;
+            case 'error':
+                iconClass = 'bi-x-circle-fill';
+                iconColor = 'var(--danger-color)';
+                break;
+            case 'warning':
+                iconClass = 'bi-exclamation-circle-fill';
+                iconColor = 'var(--warning-color)';
+                break;
+            case 'info':
+                iconClass = 'bi-info-circle-fill';
+                iconColor = 'var(--accent-color)';
+                break;
+        }
+        
+        notificationIcon.innerHTML = `<i class="bi ${iconClass}" style="font-size: 3rem; color: ${iconColor}"></i>`;
+        
+        // Hiển thị modal
+        modal.show();
+        
+        // Tự động đóng sau 3 giây
+        setTimeout(() => {
+            modal.hide();
+        }, 3000);
+    }
+
+    // Hàm xác nhận
+    function showConfirm(title, message) {
+        return new Promise((resolve) => {
+            const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+            const modalContent = document.getElementById('notificationModal').querySelector('.modal-content');
+            
+            // Cập nhật nội dung modal
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            document.getElementById('notificationIcon').innerHTML = `
+                <i class="bi bi-exclamation-triangle-fill" style="font-size: 3rem; color: var(--warning-color)"></i>
+            `;
+            
+            // Thêm nút xác nhận và hủy
+            const footer = document.getElementById('notificationModal').querySelector('.modal-footer');
+            footer.innerHTML = `
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="confirmButton">Đồng ý</button>
+            `;
+            
+            // Xử lý sự kiện click
+            document.getElementById('confirmButton').addEventListener('click', () => {
+                modal.hide();
+                resolve(true);
+            });
+            
+            // Xử lý khi modal đóng
+            document.getElementById('notificationModal').addEventListener('hidden.bs.modal', () => {
+                resolve(false);
+            }, { once: true });
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    }
+
+    // Hàm xử lý chuyển đổi tab
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = e.target.dataset.section;
+
+            // Cập nhật active state
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // Hiển thị section tương ứng
+            document.querySelectorAll('.section').forEach(s => s.classList.add('d-none'));
+            document.getElementById(section).classList.remove('d-none');
+        });
+    });
+
+    // Xử lý form thêm sản phẩm
+    document.getElementById('saveProduct').addEventListener('click', () => {
+        const form = document.getElementById('addProductForm');
+        if (form.checkValidity()) {
+            showNotification('Thành công', 'Sản phẩm đã được thêm thành công!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    // Xử lý form thêm danh mục
+    document.getElementById('saveCategory').addEventListener('click', () => {
+        const form = document.getElementById('addCategoryForm');
+        if (form.checkValidity()) {
+            showNotification('Thành công', 'Danh mục đã được thêm thành công!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    // Xử lý cập nhật trạng thái đơn hàng
+    document.querySelectorAll('.order-status').forEach(select => {
+        select.addEventListener('change', (e) => {
+            const status = e.target.value;
+            showNotification('Thành công', `Đã cập nhật trạng thái đơn hàng thành: ${status}`);
+        });
+    });
+
+    // Xử lý form cài đặt
+    document.getElementById('settingsForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        showNotification('Thành công', 'Cài đặt đã được lưu thành công!');
+    });
+
+    // Xử lý xóa sản phẩm
+    document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const result = await showConfirm('Xác nhận', 'Bạn có chắc chắn muốn xóa sản phẩm này?');
+            if (result) {
+                showNotification('Thành công', 'Sản phẩm đã được xóa!');
+            }
+        });
+    });
+
+    // Xử lý xóa danh mục
+    document.querySelectorAll('.delete-category').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const result = await showConfirm('Xác nhận', 'Bạn có chắc chắn muốn xóa danh mục này?');
+            if (result) {
+                showNotification('Thành công', 'Danh mục đã được xóa!');
+            }
+        });
+    });
+
+    // Xử lý xem chi tiết đơn hàng
+    document.querySelectorAll('.view-order').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const orderId = e.target.dataset.id;
+            const modal = new bootstrap.Modal(document.getElementById('viewOrderModal'));
+            
+            // Dữ liệu mẫu cho đơn hàng
+            const orderData = {
+                id: orderId,
+                date: '01/01/2024',
+                status: 'Đang xử lý',
+                paymentMethod: 'Thanh toán khi nhận hàng',
+                customer: {
+                    name: 'Nguyễn Văn A',
+                    email: 'nguyenvana@example.com',
+                    phone: '0123456789',
+                    address: '123 Đường ABC, Quận 1, TP.HCM'
+                },
+                items: [
+                    {
+                        name: 'Bàn ăn gỗ',
+                        price: '2.500.000đ',
+                        quantity: 2,
+                        total: '5.000.000đ'
+                    },
+                    {
+                        name: 'Ghế ăn',
+                        price: '500.000đ',
+                        quantity: 4,
+                        total: '2.000.000đ'
+                    }
+                ],
+                subtotal: '7.000.000đ',
+                shipping: '50.000đ',
+                total: '7.050.000đ'
+            };
+            
+            // Điền thông tin vào modal
+            document.getElementById('orderId').textContent = orderData.id;
+            document.getElementById('orderDate').textContent = orderData.date;
+            document.getElementById('orderStatus').textContent = orderData.status;
+            document.getElementById('paymentMethod').textContent = orderData.paymentMethod;
+            document.getElementById('customerName').textContent = orderData.customer.name;
+            document.getElementById('customerEmail').textContent = orderData.customer.email;
+            document.getElementById('customerPhone').textContent = orderData.customer.phone;
+            document.getElementById('customerAddress').textContent = orderData.customer.address;
+            
+            // Thêm sản phẩm vào bảng
+            const orderItems = document.getElementById('orderItems');
+            orderItems.innerHTML = orderData.items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.total}</td>
+                </tr>
+            `).join('');
+            
+            // Cập nhật tổng tiền
+            document.getElementById('subtotal').textContent = orderData.subtotal;
+            document.getElementById('shipping').textContent = orderData.shipping;
+            document.getElementById('total').textContent = orderData.total;
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    });
+
+    // Xử lý in đơn hàng
+    document.getElementById('printOrder').addEventListener('click', () => {
+        showNotification('Thông báo', 'Đang in đơn hàng...', 'info');
+    });
+
+    // Xử lý chỉnh sửa sản phẩm
+    document.querySelectorAll('.edit-product').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.id;
+            const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+            
+            // Lấy thông tin sản phẩm từ hàng trong bảng
+            const row = e.target.closest('tr');
+            const name = row.cells[2].textContent;
+            const price = row.cells[3].textContent.replace(/[^\d]/g, '');
+            const category = row.cells[4].textContent;
+            const status = row.cells[5].querySelector('.badge').textContent.trim() === 'Còn hàng' ? 'in_stock' : 'out_of_stock';
+            
+            // Điền thông tin vào form
+            const form = document.getElementById('editProductForm');
+            form.querySelector('[name="name"]').value = name;
+            form.querySelector('[name="price"]').value = price;
+            form.querySelector('[name="category"]').value = category;
+            form.querySelector('[name="status"]').value = status;
+            
+            // Lưu productId vào form để sử dụng khi lưu
+            form.dataset.productId = productId;
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    });
+
+    // Xử lý lưu thông tin sản phẩm đã chỉnh sửa
+    document.getElementById('saveEditProduct').addEventListener('click', () => {
+        const form = document.getElementById('editProductForm');
+        if (form.checkValidity()) {
+            const productId = form.dataset.productId;
+            showNotification('Thành công', `Đã cập nhật thông tin sản phẩm ${productId} thành công!`);
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    // Xử lý chỉnh sửa danh mục
+    document.querySelectorAll('.edit-category').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const categoryId = e.target.dataset.id;
+            const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+            
+            // Lấy thông tin danh mục từ hàng trong bảng
+            const row = e.target.closest('tr');
+            const name = row.cells[1].textContent;
+            const description = row.cells[2].textContent;
+            const productCount = row.cells[3].textContent;
+            
+            // Điền thông tin vào form
+            const form = document.getElementById('editCategoryForm');
+            form.querySelector('[name="name"]').value = name;
+            form.querySelector('[name="description"]').value = description;
+            
+            // Lưu categoryId vào form để sử dụng khi lưu
+            form.dataset.categoryId = categoryId;
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    });
+
+    // Xử lý lưu thông tin danh mục đã chỉnh sửa
+    document.getElementById('saveEditCategory').addEventListener('click', () => {
+        const form = document.getElementById('editCategoryForm');
+        if (form.checkValidity()) {
+            const categoryId = form.dataset.categoryId;
+            showNotification('Thành công', `Đã cập nhật thông tin danh mục ${categoryId} thành công!`);
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editCategoryModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    // Xử lý chỉnh sửa người dùng
+    document.querySelectorAll('.edit-user').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const userId = e.target.dataset.id;
+            const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            
+            // Lấy thông tin người dùng từ hàng trong bảng
+            const row = e.target.closest('tr');
+            const username = row.cells[1].textContent;
+            const email = row.cells[2].textContent;
+            const role = row.cells[3].textContent;
+            const status = row.cells[4].querySelector('.badge').textContent.trim() === 'Hoạt động' ? 'active' : 'inactive';
+            
+            // Điền thông tin vào form
+            const form = document.getElementById('editUserForm');
+            form.querySelector('[name="username"]').value = username;
+            form.querySelector('[name="email"]').value = email;
+            form.querySelector('[name="role"]').value = role.toLowerCase();
+            form.querySelector('[name="status"]').value = status;
+            
+            // Lưu userId vào form để sử dụng khi lưu
+            form.dataset.userId = userId;
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    });
+
+    // Xử lý lưu thông tin người dùng
+    document.getElementById('saveUser').addEventListener('click', () => {
+        const form = document.getElementById('editUserForm');
+        if (form.checkValidity()) {
+            const userId = form.dataset.userId;
+            showNotification('Thành công', `Đã cập nhật thông tin người dùng ${userId} thành công!`);
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    // Xử lý xóa người dùng
+    document.querySelectorAll('.delete-user').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const result = await showConfirm('Xác nhận', 'Bạn có chắc chắn muốn xóa người dùng này?');
+            if (result) {
+                showNotification('Thành công', 'Người dùng đã được xóa!');
+            }
+        });
+    });
+</script>
