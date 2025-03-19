@@ -1,0 +1,137 @@
+@charset "UTF-8";
+.cart-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-badge {
+  top: -12px;
+  right: -12px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 7px;
+  border-radius: 75%;
+}
+
+.navbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.navbar-brand img {
+  height: 40px;
+}
+
+.navbar-nav .nav-link {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.search-input {
+  border: 1px solid #ddd;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 45px;
+  /* Chừa chỗ cho icon */
+  box-shadow: none;
+}
+
+.search-btn {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 5px;
+  /* Đẩy sát vào mép input */
+  box-shadow: none;
+}
+
+.search-btn i {
+  font-size: 15px;
+  color: #333;
+}
+
+#icon-navbar {
+  font-size: 30px;
+  border-radius: 25px;
+}
+
+.navbar-toggler .fas.fa-bars {
+  font-size: 30px;
+  border-radius: 25px;
+}
+
+.link-hover:hover {
+  color: #21d192 !important;
+  transform: translateX(5px);
+  transition: 0.3s ease;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.border {
+  border-left: 4px solid #21d192;
+}
+
+/* Overlay nền mờ */
+#loginModal, #signupModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Lớp phủ mờ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+/* Cập nhật modal */
+#loginModal, #signupModal .card {
+  border-radius: 10px;
+  color: black;
+  /* Chữ dễ đọc */
+}
+
+/* Nút đóng */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-2 {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  color: #21d192 !important;
+  transform: translateX(5px);
+  transition: 0.3s ease;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=app.css.map */

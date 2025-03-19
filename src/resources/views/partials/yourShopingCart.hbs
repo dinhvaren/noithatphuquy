@@ -1,0 +1,257 @@
+<style>
+        .cart-wrapper {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #4f46e5, #4338ca);
+        }
+
+        .remove-btn {
+            color: #dc2626;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            color: #991b1b;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            background: #f3f4f6;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .discount-badge {
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.875rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+</style> 
+
+
+    <div class="cart-wrapper">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Cart Items Section -->
+                <div class="col-lg-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0">Giỏ Hàng Của Bạn</h4>
+                        <span class="text-muted">3 sản phẩm</span>
+                    </div>
+
+                    <!-- Product Cards -->
+                    <div class="d-flex flex-column gap-3">
+                        <!-- Product 1 -->
+                        <div class="product-card p-3 shadow-sm">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="/img/giuong2.jpg" alt="Giường Ngủ" class="product-image">
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                                    <p class="text-muted mb-0">Nội Thất Phòng Ngủ</p>
+                                    <span class="discount-badge mt-2">Giảm 20%</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="quantity-btn" onclick="updateQuantity(1, -1)">-</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn" onclick="updateQuantity(1, 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="fw-bold">8.500.000₫</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <i class="fas fa-trash remove-btn"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card p-3 shadow-sm">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="/img/giuong3.jpg" alt="Giường Ngủ" class="product-image">
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="mb-1">Giường Ngủ Cao Cấp</h6>
+                                    <p class="text-muted mb-0">Nội Thất Phòng Ngủ</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="quantity-btn" onclick="updateQuantity(2, -1)">-</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn" onclick="updateQuantity(2, 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="fw-bold">12.900.000₫</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <i class="fas fa-trash remove-btn"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card p-3 shadow-sm">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="/img/giuong2.jpg" alt="Giường Ngủ" class="product-image">
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="mb-1">Giường Ngủ Tân Cổ Điển</h6>
+                                    <p class="text-muted mb-0">Nội Thất Phòng Ngủ</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="quantity-btn" onclick="updateQuantity(3, -1)">-</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn" onclick="updateQuantity(3, 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="fw-bold">9.900.000₫</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <i class="fas fa-trash remove-btn"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="col-lg-4">
+                    <div class="summary-card p-4 shadow-sm">
+                        <h5 class="mb-4">Tổng Đơn Hàng</h5>
+                        
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Tạm tính</span>
+                            <span>31.300.000₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Giảm giá</span>
+                            <span class="text-success">-1.700.000₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Phí vận chuyển</span>
+                            <span>Miễn phí</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="fw-bold">Tổng cộng</span>
+                            <span class="fw-bold">29.600.000₫</span>
+                        </div>
+
+                        <!-- Mã giảm giá -->
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá">
+                                <button class="btn btn-outline-secondary" type="button">Áp dụng</button>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary checkout-btn w-100 mb-3">
+                            Tiến hành thanh toán
+                        </button>
+                        
+                        <div class="d-flex justify-content-center gap-2">
+                            <i class="fas fa-shield-alt text-success"></i>
+                            <small class="text-muted">Thanh toán an toàn</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(productId, change) {
+            const input = event.target.parentElement.querySelector('.quantity-input');
+            let value = parseInt(input.value) + change;
+            if (value >= 1) {
+                input.value = value;
+                updateTotal();
+            }
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function updateTotal() {
+            // Cập nhật tổng tiền khi thay đổi số lượng
+            // Code sẽ được thêm sau
+        }
+
+        // Xử lý nút xóa sản phẩm
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                productCard.remove();
+                updateTotal();
+            });
+        });
+    </script>

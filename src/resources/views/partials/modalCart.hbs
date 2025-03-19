@@ -1,0 +1,43 @@
+<!-- Cart Modal -->
+<div class="modal" id="cartModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Giỏ Hàng</h5>
+                <button type="button" class="btn-close" id="closeCartModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items">
+                    <!-- Cart Item -->
+                    <div class="cart-item d-flex align-items-center mb-3">
+                        <img src="/img/giuong2.jpg" alt="Product" class="rounded"
+                            style="width: 80px; height: 80px; object-fit: cover;">
+                        <div class="ms-3 flex-grow-1">
+                            <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted">8.500.000đ</span>
+                                <div class="quantity-controls ms-3">
+                                    <button class="btn btn-sm btn-outline-secondary">-</button>
+                                    <span class="mx-2">1</span>
+                                    <button class="btn btn-sm btn-outline-secondary">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn text-danger ms-3">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <strong>Tổng tiền:</strong>
+                    <span class="ms-2 text-primary">8.500.000đ</span>
+                </div>
+                <button class="btn btn-primary">Thanh Toán</button>
+            </div>
+        </div>
+    </div>
+</div>

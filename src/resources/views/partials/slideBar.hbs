@@ -1,0 +1,726 @@
+<div class="course-slider-section py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title mb-0">Sản phẩm nổi bật</h2>
+            <div class="slider-controls">
+                <button class="btn btn-prev me-2" onclick="moveSlider(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-next" onclick="moveSlider(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="position-relative">
+            <div class="course-slider" id="courseSlider">
+                <!-- Course Card 1 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/giuong.jpg" class="card-img-top" alt="Giường ngủ">
+                            <button class="favorite-btn" data-product-id="1">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-25%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Giường ngủ cao cấp</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng ngủ
+                                </span>
+                                <span class="level">Cao cấp</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">15,000,000₫</span>
+                                <span class="discounted-price">11,250,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(13,245)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/tudo.jpg" class="card-img-top" alt="Tủ đồ">
+                            <button class="favorite-btn" data-product-id="2">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-30%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tủ đồ thông minh</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng khách
+                                </span>
+                                <span class="level">Hiện đại</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">12,000,000₫</span>
+                                <span class="discounted-price">8,400,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(9,300)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 3 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/kebep.jpg" class="card-img-top" alt="Kệ bếp">
+                            <button class="favorite-btn" data-product-id="3">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-15%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Kệ bếp đa năng</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng bếp
+                                </span>
+                                <span class="level">Tiện nghi</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">18,000,000₫</span>
+                                <span class="discounted-price">15,300,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(8,890)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 4 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/ghe2.jpg" class="card-img-top" alt="Ghế">
+                            <button class="favorite-btn" data-product-id="4">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-20%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ghế sofa hiện đại</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng khách
+                                </span>
+                                <span class="level">Sang trọng</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">25,000,000₫</span>
+                                <span class="discounted-price">20,000,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(13,245)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 5 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/giuong3.jpg" class="card-img-top" alt="Giường ngủ">
+                            <button class="favorite-btn" data-product-id="5">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-25%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Giường Ngủ Tân Cổ Điển</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng ngủ
+                                </span>
+                                <span class="level">Sang trọng</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">22,000,000₫</span>
+                                <span class="discounted-price">16,500,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(7,245)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 6 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/tudo2.jpg" class="card-img-top" alt="Tủ đồ">
+                            <button class="favorite-btn" data-product-id="6">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-25%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tủ Quần Áo Cao Cấp</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng ngủ
+                                </span>
+                                <span class="level">Hiện đại</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">20,000,000₫</span>
+                                <span class="discounted-price">15,000,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(5,890)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 7 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/kebep2.jpg" class="card-img-top" alt="Kệ bếp">
+                            <button class="favorite-btn" data-product-id="7">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-20%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tủ Bếp Thông Minh</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng bếp
+                                </span>
+                                <span class="level">Cao cấp</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">35,000,000₫</span>
+                                <span class="discounted-price">28,000,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(6,120)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 8 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/ghe3.jpg" class="card-img-top" alt="Ghế">
+                            <button class="favorite-btn" data-product-id="8">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-30%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bộ Sofa Phòng Khách</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng khách
+                                </span>
+                                <span class="level">Tân cổ điển</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">45,000,000₫</span>
+                                <span class="discounted-price">31,500,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(4,780)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 9 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/kebep2.jpg" class="card-img-top" alt="Bàn">
+                            <button class="favorite-btn" data-product-id="9">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-15%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bàn Ăn Hiện Đại</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng ăn
+                                </span>
+                                <span class="level">Sang trọng</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">28,000,000₫</span>
+                                <span class="discounted-price">23,800,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">(3,450)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 10 -->
+                <div class="course-card">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img src="/img/kebep2.jpg" class="card-img-top" alt="Kệ">
+                            <button class="favorite-btn" data-product-id="10">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                            <div class="discount-badge">-25%</div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Kệ Tivi Phòng Khách</h5>
+                            <div class="card-info">
+                                <span class="duration">
+                                    <i class="far fa-clock me-1"></i>
+                                    Phòng khách
+                                </span>
+                                <span class="level">Hiện đại</span>
+                            </div>
+                            <div class="price-container">
+                                <span class="original-price">15,000,000₫</span>
+                                <span class="discounted-price">11,250,000₫</span>
+                            </div>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-count">(2,890)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.course-slider-section {
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.slider-controls .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.slider-controls .btn:hover {
+    background-color: #c8a165;
+    border-color: #c8a165;
+    color: #fff;
+}
+
+.course-slider {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 1rem 0.5rem;
+}
+
+.course-card {
+    min-width: 300px;
+    flex: 0 0 auto;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
+}
+
+.card-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stars {
+    color: #f59e0b;
+}
+
+.rating-count {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+@media (max-width: 768px) {
+    .course-card {
+        min-width: 260px;
+    }
+    
+    .card-img-container {
+        height: 180px;
+    }
+}
+
+.course-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.course-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.course-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.course-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.course-card:hover .course-overlay {
+    opacity: 1;
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.1);
+}
+
+.course-content {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.course-content h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.course-content p {
+    margin: 5px 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.course-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.discount {
+    background-color: #ff4444;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 0;
+    line-height: 1;
+}
+
+.favorite-btn i {
+    color: #6b7280;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.favorite-btn:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.favorite-btn:hover i {
+    color: #ff4444;
+}
+
+.favorite-btn.active {
+    background: #ffffff;
+}
+
+.favorite-btn.active i {
+    color: #ff4444;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 2;
+}
+
+.price-container {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.original-price {
+    color: #6b7280;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+}
+
+.discounted-price {
+    color: #c8a165;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('courseSlider');
+    const cards = slider.querySelectorAll('.course-card');
+    const cardWidth = cards[0].offsetWidth + 24; // Thêm gap 1.5rem (24px)
+    const visibleCards = Math.floor(slider.offsetWidth / cardWidth);
+    let currentIndex = 0;
+
+    window.moveSlider = function(direction) {
+        const maxIndex = cards.length - visibleCards;
+        currentIndex = Math.max(0, Math.min(currentIndex + direction, maxIndex));
+        
+        const scrollPosition = currentIndex * cardWidth;
+        slider.scroll({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+
+        // Cập nhật trạng thái nút
+        document.querySelector('.btn-prev').disabled = currentIndex === 0;
+        document.querySelector('.btn-next').disabled = currentIndex === maxIndex;
+    };
+
+    // Khởi tạo trạng thái nút ban đầu
+    document.querySelector('.btn-prev').disabled = true;
+
+    // Thêm xử lý cho nút yêu thích
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    
+    favoriteBtns.forEach(btn => {
+        // Kiểm tra trạng thái đã lưu
+        const productId = btn.dataset.productId;
+        const isLiked = localStorage.getItem(`wishlist_${productId}`) === 'true';
+        if (isLiked) {
+            btn.classList.add('active');
+            btn.querySelector('i').classList.remove('bi-heart');
+            btn.querySelector('i').classList.add('bi-heart-fill');
+        }
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            const icon = this.querySelector('i');
+            
+            // Toggle giữa heart và heart-fill
+            if (this.classList.contains('active')) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+            } else {
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+            }
+
+            // Lưu trạng thái
+            const productId = this.dataset.productId;
+            const isLiked = this.classList.contains('active');
+            localStorage.setItem(`wishlist_${productId}`, isLiked);
+        });
+    });
+});
+</script>

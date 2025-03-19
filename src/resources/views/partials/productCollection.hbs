@@ -1,0 +1,472 @@
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .filter-sidebar {
+            background: white;
+            border-radius: 12px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .price {
+            color: #C19977;
+            font-weight: 600;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .wishlist-btn.active {
+            background: #fee2e2;
+        }
+
+        .wishlist-btn.active i {
+            color: #dc2626;
+        }
+
+        .wishlist-btn i {
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+        }
+
+        .category-badge {
+            background: #e5e7eb;
+            color: #4b5563;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .filter-group {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tùy chỉnh thanh range input */
+        .form-range::-webkit-slider-thumb {
+            background: #C19977;
+        }
+        
+        .form-range::-moz-range-thumb {
+            background: #C19977;
+        }
+        
+        .form-range::-webkit-slider-runnable-track {
+            background: #e5e7eb;
+        }
+        
+        .form-range::-moz-range-track {
+            background: #e5e7eb;
+        }
+        
+        .form-range:focus::-webkit-slider-thumb {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+        }
+        
+        .form-range:focus::-moz-range-thumb {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+        }
+
+        .color-option {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .color-option.selected::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 2px solid #C19977;
+            border-radius: 50%;
+        }
+
+        .sort-btn {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .sort-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .cart-btn {
+            background: #C19977;
+            color: white;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .cart-btn:hover {
+            background: #9b7b5f;
+            transform: translateY(-2px);
+        }
+    </style>
+    <div class="container py-5">
+        <!-- Top Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0">Sản Phẩm</h4>
+            <div class="d-flex gap-2 align-items-center">
+                <span class="text-muted">Sắp xếp theo:</span>
+                <button class="sort-btn">
+                    Mới nhất <i class="bi bi-chevron-down ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Filters Sidebar -->
+            <div class="col-lg-3">
+                <div class="filter-sidebar p-4 shadow-sm">
+                    <div class="filter-group">
+                        <h6 class="mb-3">Danh Mục</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="phongkhach">
+                            <label class="form-check-label" for="phongkhach">
+                                Nội Thất Phòng Khách
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="phongngu">
+                            <label class="form-check-label" for="phongngu">
+                                Nội Thất Phòng Ngủ
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="phongbep">
+                            <label class="form-check-label" for="phongbep">
+                                Nội Thất Phòng Bếp
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="vanphong">
+                            <label class="form-check-label" for="vanphong">
+                                Nội Thất Văn Phòng
+                            </label>
+                        </div>
+                    </div>
+                    
+
+                    <div class="filter-group">
+                        <h6 class="mb-3">Khoảng Giá</h6>
+                        <input type="range" class="form-range" id="priceRange" min="0" max="50000000" value="0" step="1000000">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted" id="currentPrice">0đ</span>
+                            <span class="text-muted">50.000.000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h6 class="mb-3">Màu Sắc</h6>
+                        <div class="d-flex gap-2">
+                            <div class="color-option selected" style="background: #000000;"></div>
+                            <div class="color-option" style="background: #964B00;"></div>
+                            <div class="color-option" style="background: #FFFFFF;"></div>
+                            <div class="color-option" style="background: #808080;"></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h6 class="mb-3">Đánh Giá</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="rating" id="rating4">
+                            <label class="form-check-label" for="rating4">
+                                <i class="bi bi-star-fill text-warning"></i> 4 sao trở lên
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="rating" id="rating3">
+                            <label class="form-check-label" for="rating3">
+                                <i class="bi bi-star-fill text-warning"></i> 3 sao trở lên
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-primary w-100">Lọc</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-9">
+                <div class="row g-4">
+                    <!-- Product Card 1 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.5)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">8.500.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Cao Cấp</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">(4.8)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">12.900.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-10%</span>
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Tân Cổ Điển</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.6)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">9.900.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Gỗ Tự Nhiên</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">(4.9)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">15.500.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 5 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-20%</span>
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Thông Minh</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.7)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">11.200.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 6 -->
+                    <div class="col-md-4">
+                        <div class="product-card shadow-sm">
+                            <div class="position-relative">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <button class="wishlist-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Bọc Nệm</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.5)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">13.800.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Xử lý wishlist buttons
+    const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+    
+    wishlistBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            
+            const icon = this.querySelector('i');
+            if (this.classList.contains('active')) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+            } else {
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+            }
+        });
+    });
+
+    // Xử lý price range
+    const priceRange = document.getElementById('priceRange');
+    const currentPrice = document.getElementById('currentPrice');
+
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+    }
+
+    priceRange.addEventListener('input', function() {
+        currentPrice.textContent = formatPrice(this.value);
+    });
+});
+</script>

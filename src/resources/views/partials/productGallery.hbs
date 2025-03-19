@@ -1,0 +1,186 @@
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <!-- Sofa Section - Large -->
+        <div class="col-lg-8 col-md-12">
+            <div class="position-relative">
+                <img src="/img/ghe.jpg" alt="Ghế Sofa" class="w-100 object-fit-cover main-image">
+                <div class="overlay">
+                    <div class="content">
+                        <h3>SOFA</h3>
+                        <p>Thiết kế sang trọng, hiện đại</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-4 col-md-12">
+            <div class="row g-0">
+                <!-- Tủ Section -->
+                <div class="col-12">
+                    <div class="position-relative">
+                        <img src="/img/tudo2.jpg" alt="Tủ đồ" class="w-100 object-fit-cover sub-image">
+                        <div class="overlay">
+                            <div class="content">
+                                <h3>TỦ ĐỒ</h3>
+                                <p>Không gian lưu trữ thông minh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Giường Section -->
+                <div class="col-12">
+                    <div class="position-relative">
+                        <img src="/img/giuong2.jpg" alt="Giường" class="w-100 object-fit-cover sub-image">
+                        <div class="overlay">
+                            <div class="content">
+                                <h3>GIƯỜNG</h3>
+                                <p>Nghỉ ngơi thoải mái</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="col-lg-4 col-md-6">
+            <div class="position-relative">
+                <img src="/img/ghe2.jpg" alt="Ghế" class="w-100 object-fit-cover sub-image">
+                <div class="overlay">
+                    <div class="content">
+                        <h3>GHẾ</h3>
+                        <p>Đa dạng mẫu mã</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="position-relative">
+                <img src="/img/kebep2.jpg" alt="Kệ bếp" class="w-100 object-fit-cover sub-image">
+                <div class="overlay">
+                    <div class="content">
+                        <h3>KỆ BẾP</h3>
+                        <p>Tiện nghi, hiện đại</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+            <div class="position-relative">
+                <img src="/img/tudo3.jpg" alt="Tủ đồ" class="w-100 object-fit-cover sub-image">
+                <div class="overlay">
+                    <div class="content">
+                        <h3>TỦ ĐỒ</h3>
+                        <p>Thiết kế độc đáo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.main-image {
+    height: 570px !important;
+}
+
+.sub-image {
+    height: 285px !important;
+}
+
+.position-relative {
+    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.position-relative img {
+    transition: transform 0.5s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.position-relative:hover img {
+    transform: scale(1.05);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    padding: 20px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.position-relative:hover .overlay {
+    opacity: 1;
+}
+
+.overlay .content {
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.position-relative:hover .overlay .content {
+    transform: translateY(0);
+}
+
+.overlay h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.overlay p {
+    margin: 5px 0 0;
+    font-size: 1rem;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.col-lg-8, .col-lg-4, .col-md-12, .col-md-6 {
+    padding: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+    .main-image {
+        height: 400px !important;
+    }
+    .sub-image {
+        height: 250px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .main-image {
+        height: 300px !important;
+    }
+    .sub-image {
+        height: 200px !important;
+    }
+}
+</style> 
+</style> 

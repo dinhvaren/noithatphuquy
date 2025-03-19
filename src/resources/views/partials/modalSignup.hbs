@@ -1,0 +1,92 @@
+<!-- Modal Sign Up -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="signupModalLabel" style="color: #C19977;">Đăng Ký</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label" style="color: #4b5563;">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Nhập họ và tên"
+                            style="border-color: #e5e7eb;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupEmail" class="form-label" style="color: #4b5563;">Email</label>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="Nhập email của bạn"
+                            style="border-color: #e5e7eb;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupPassword" class="form-label" style="color: #4b5563;">Mật khẩu</label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Nhập mật khẩu"
+                            style="border-color: #e5e7eb;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label" style="color: #4b5563;">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Nhập lại mật khẩu"
+                            style="border-color: #e5e7eb;">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms"
+                            style="background-color: #C19977; border-color: #C19977;">
+                        <label class="form-check-label" for="agreeTerms" style="color: #4b5563;">
+                            Tôi đồng ý với <a href="#" style="color: #C19977;">điều khoản</a> và 
+                            <a href="#" style="color: #C19977;">chính sách bảo mật</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3"
+                        style="background-color: #C19977; border-color: #C19977;">
+                        Đăng Ký
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center border-0">
+                <p class="mb-0" style="color: #4b5563;">Đã có tài khoản? 
+                    <a href="#" id="openLogin" class="text-decoration-none" style="color: #C19977;">Đăng nhập</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control:focus {
+        border-color: #C19977;
+        box-shadow: 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+    }
+
+    .btn-primary:hover {
+        background-color: #b38a68;
+        border-color: #b38a68;
+    }
+
+    .btn-primary:active {
+        background-color: #9b7b5f !important;
+        border-color: #9b7b5f !important;
+    }
+
+    .form-check-input:checked {
+        background-color: #C19977;
+        border-color: #C19977;
+    }
+
+    .form-check-input:focus {
+        border-color: #C19977;
+        box-shadow: 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+    }
+
+    #openLogin:hover {
+        color: #b38a68 !important;
+    }
+
+    .modal-content {
+        border: none;
+        border-radius: 0.5rem;
+    }
+
+    .btn-close:focus {
+        box-shadow: 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+    }
+</style>
