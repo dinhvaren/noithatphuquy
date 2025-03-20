@@ -4,9 +4,14 @@ const jwt = require('jsonwebtoken'); // JWT để tạo token đăng nhập
 const mongoose = require('mongoose'); // Thêm mongoose để tạo ObjectId
 
 class HomeController {
+
+    dashboard(req, res, next) {
+        res.render('DashBoard', { page: { title: 'Trang chủ' } });
+    }
+
     // Hiển thị trang chủ
     home(req, res, next) {
-        res.render('home', { page: { title: 'Trang chủ' } });
+        res.render('homePage', { page: { title: 'Trang chủ' } });
     }
 
     // Xử lý đăng nhập
@@ -23,6 +28,11 @@ class HomeController {
             return res.status(400).json({ message: 'Mật khẩu không khớp' });
         }
         res.send('Đăng ký thành công');
+    }
+
+    // Hiển thị trang thiết kế nội thất
+    interiorDesign(req, res, next) {
+        res.render('interior-design', { page: { title: 'Thiết kế nội thất' } });
     }
 }
 

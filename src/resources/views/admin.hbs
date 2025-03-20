@@ -1412,24 +1412,24 @@
         button.addEventListener('click', (e) => {
             const userId = e.target.dataset.id;
             const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-            
+
             // Lấy thông tin người dùng từ hàng trong bảng
             const row = e.target.closest('tr');
             const username = row.cells[1].textContent;
             const email = row.cells[2].textContent;
             const role = row.cells[3].textContent;
             const status = row.cells[4].querySelector('.badge').textContent.trim() === 'Hoạt động' ? 'active' : 'inactive';
-            
+
             // Điền thông tin vào form
             const form = document.getElementById('editUserForm');
             form.querySelector('[name="username"]').value = username;
             form.querySelector('[name="email"]').value = email;
             form.querySelector('[name="role"]').value = role.toLowerCase();
             form.querySelector('[name="status"]').value = status;
-            
+
             // Lưu userId vào form để sử dụng khi lưu
             form.dataset.userId = userId;
-            
+
             // Hiển thị modal
             modal.show();
         });
