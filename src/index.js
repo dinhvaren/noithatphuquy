@@ -15,7 +15,7 @@ const port = 3000;
 // Import file định tuyến
 const route = require('./routes');
 // Import cấu hình database
-const db = require('./config/db');
+const db = require('./config/db/database');
 
 // Kết nối đến cơ sở dữ liệu
 db.connect();

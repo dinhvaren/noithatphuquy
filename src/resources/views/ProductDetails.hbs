@@ -1,0 +1,625 @@
+
+    <style>
+        .product-gallery {
+            position: sticky;
+            top: 20px;
+        }
+
+        /* Hình ảnh chính */
+        .product-gallery #mainImage {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Hình thumbnail */
+        .thumbnail-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .thumbnail-image.active {
+            border-color: #C19977;
+        }
+
+        /* Điều chỉnh phần input số lượng và nút */
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 120px;
+            height: 38px;
+        }
+
+        .quantity-input .btn {
+            width: 38px;
+            height: 100%;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border: none;
+            color: #212529;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .quantity-input .btn:hover:not(:disabled) {
+            background: #e9ecef;
+        }
+
+        .quantity-input .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quantity-input input {
+            width: 44px;
+            height: 100%;
+            text-align: center;
+            border: none;
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            font-weight: 500;
+            padding: 0;
+        }
+
+        .quantity-input input:focus {
+            outline: none;
+        }
+
+        .add-to-cart-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-to-cart-section .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            height: 38px;
+        }
+
+        .add-to-cart-section .btn-outline-primary {
+            width: 38px;
+            padding: 0;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .specifications-table td {
+            padding: 12px;
+        }
+
+        .specifications-table tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+
+        /* Hình trong phần đánh giá */
+        .review-images img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .review-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background-color: #C19977;
+            border-color: #C19977;
+        }
+
+        .btn-primary:hover {
+            background-color: #9b7b5f;
+            border-color: #9b7b5f;
+        }
+
+        .btn-outline-primary {
+            color: #C19977;
+            border-color: #C19977;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #C19977;
+            border-color: #C19977;
+        }
+
+        .product-features li {
+            margin-bottom: 10px;
+        }
+
+        .review-form {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .rating-input {
+            display: none;
+        }
+
+        /* Style cho rating stars */
+        .rating-stars .bi-star-fill {
+            color: #ffc107; /* Màu vàng */
+        }
+
+        .rating-stars .bi-star-half {
+            color: #ffc107;
+        }
+
+        .rating-stars .bi-star {
+            color: #ffc107;
+        }
+
+        /* Style cho rating input */
+        .rating-label {
+            color: #e4e4e4;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .rating-label:hover,
+        .rating-label:hover ~ .rating-label,
+        .rating-input:checked ~ .rating-label {
+            color: #ffc107;
+        }
+
+        /* Avatar người đánh giá */
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Style cho nút yêu thích */
+        .btn-outline-primary.active i.bi-heart-fill {
+            color: #dc3545;
+        }
+
+        .btn-outline-primary:hover i.bi-heart-fill {
+            color: white;
+        }
+
+        /* Style cho toast notification */
+        .toast-container {
+            z-index: 1050;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast-container.hiding {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{> header}}
+
+    <div class="container py-5">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/products" class="text-decoration-none">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">Giường Ngủ Cao Cấp</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Product Gallery -->
+            <div class="col-lg-6 mb-4">
+                <div class="product-gallery">
+                    <img src="/img/giuong1.jpg" class="img-fluid rounded mb-3" id="mainImage" alt="Giường Ngủ">
+                    <div class="d-flex gap-2">
+                        <img src="/img/giuong1.jpg" class="thumbnail-image active" onclick="changeImage(this.src)" alt="Thumbnail 1">
+                        <img src="/img/giuong2.jpg" class="thumbnail-image" onclick="changeImage(this.src)" alt="Thumbnail 2">
+                        <img src="/img/giuong3.jpg" class="thumbnail-image" onclick="changeImage(this.src)" alt="Thumbnail 3">
+                        <img src="/img/giuong.jpg" class="thumbnail-image" onclick="changeImage(this.src)" alt="Thumbnail 4">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-6">
+                <h1 class="h2 mb-3">Giường Ngủ Cao Cấp</h1>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rating-stars me-2">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <span class="text-muted">(4.5/5 - 28 đánh giá)</span>
+                </div>
+                <div class="mb-3">
+                    <span class="h3 text-primary me-2">8.500.000₫</span>
+                    <span class="text-decoration-line-through text-muted">10.000.000₫</span>
+                    <span class="badge bg-danger ms-2">-15%</span>
+                </div>
+                <p class="product-description mb-4">
+                    Giường ngủ cao cấp được thiết kế tinh tế với chất liệu gỗ tự nhiên cao cấp, 
+                    kết hợp với nệm êm ái tạo nên không gian nghỉ ngơi thoải mái và sang trọng cho phòng ngủ của bạn.
+                </p>
+
+                <!-- Product Features -->
+                <ul class="product-features list-unstyled mb-4">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Chất liệu gỗ tự nhiên cao cấp</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Thiết kế hiện đại, sang trọng</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Bảo hành 5 năm</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Miễn phí vận chuyển & lắp đặt</li>
+                </ul>
+
+                <!-- Add to Cart -->
+                <div class="add-to-cart-section mb-4">
+                    <div class="quantity-input">
+                        <button class="btn" type="button" onclick="updateQuantity(-1)">−</button>
+                        <input type="text" id="quantity" value="1" min="1" max="99">
+                        <button class="btn" type="button" onclick="updateQuantity(1)">+</button>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ hàng
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="bi bi-heart"></i>
+                    </button>
+                </div>
+
+                <!-- Specifications -->
+                <div class="specifications mb-4">
+                    <h5 class="mb-3">Thông số kỹ thuật</h5>
+                    <table class="table specifications-table">
+                        <tr>
+                            <td width="40%">Kích thước</td>
+                            <td>2000 x 1800 x 1100 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Chất liệu</td>
+                            <td>Gỗ sồi tự nhiên</td>
+                        </tr>
+                        <tr>
+                            <td>Màu sắc</td>
+                            <td>Nâu gỗ tự nhiên</td>
+                        </tr>
+                        <tr>
+                            <td>Xuất xứ</td>
+                            <td>Việt Nam</td>
+                        </tr>
+                        <tr>
+                            <td>Bảo hành</td>
+                            <td>5 năm</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section mt-5">
+            <h3 class="mb-4">Đánh giá sản phẩm</h3>
+
+            <!-- Review Statistics -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h2 class="mb-0">4.5/5</h2>
+                        <div class="rating-stars mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                        </div>
+                        <p class="text-muted mb-0">28 đánh giá</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="rating-bars">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-2">5 sao</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar bg-warning" style="width: 75%"></div>
+                            </div>
+                            <span class="ms-2">18</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-2">4 sao</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar bg-warning" style="width: 20%"></div>
+                            </div>
+                            <span class="ms-2">6</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-2">3 sao</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar bg-warning" style="width: 10%"></div>
+                            </div>
+                            <span class="ms-2">3</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="me-2">2 sao</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar bg-warning" style="width: 3%"></div>
+                            </div>
+                            <span class="ms-2">1</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">1 sao</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar bg-warning" style="width: 0%"></div>
+                            </div>
+                            <span class="ms-2">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Form -->
+            <div class="review-form mb-5">
+                <h5 class="mb-3">Viết đánh giá của bạn</h5>
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Đánh giá của bạn</label>
+                        <div class="rating d-flex flex-row-reverse justify-content-end">
+                            <input type="radio" name="rating" id="star5" class="rating-input" value="5">
+                            <label for="star5" class="rating-label"><i class="bi bi-star-fill"></i></label>
+                            <input type="radio" name="rating" id="star4" class="rating-input" value="4">
+                            <label for="star4" class="rating-label"><i class="bi bi-star-fill"></i></label>
+                            <input type="radio" name="rating" id="star3" class="rating-input" value="3">
+                            <label for="star3" class="rating-label"><i class="bi bi-star-fill"></i></label>
+                            <input type="radio" name="rating" id="star2" class="rating-input" value="2">
+                            <label for="star2" class="rating-label"><i class="bi bi-star-fill"></i></label>
+                            <input type="radio" name="rating" id="star1" class="rating-input" value="1">
+                            <label for="star1" class="rating-label"><i class="bi bi-star-fill"></i></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewTitle" class="form-label">Tiêu đề</label>
+                        <input type="text" class="form-control" id="reviewTitle" placeholder="Nhập tiêu đề đánh giá">
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewContent" class="form-label">Nội dung đánh giá</label>
+                        <textarea class="form-control" id="reviewContent" rows="3" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Thêm hình ảnh (tùy chọn)</label>
+                        <input type="file" class="form-control" multiple accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+            </div>
+
+            <!-- Review List -->
+            <div class="review-list">
+                <!-- Review Item 1 -->
+                <div class="review-item border-bottom pb-4 mb-4">
+                    <div class="d-flex mb-3">
+                        <img src="/img/user/user1.jpg" class="review-avatar me-3" alt="User Avatar">
+                        <div>
+                            <h6 class="mb-1">Phùng Thanh Độ</h6>
+                            <div class="rating-stars mb-1">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                            <span class="review-date">20/03/2024</span>
+                        </div>
+                    </div>
+                    <h6 class="mb-2">Sản phẩm tuyệt vời!</h6>
+                    <p class="mb-3">
+                        Chất lượng sản phẩm rất tốt, gỗ chắc chắn và được gia công tỉ mỉ. 
+                        Nhân viên giao hàng và lắp đặt nhiệt tình, chuyên nghiệp.
+                    </p>
+                    <div class="review-images mb-3">
+                        <img src="/img/giuong1.jpg" alt="Review Image 1">
+                        <img src="/img/giuong2.jpg" alt="Review Image 2">
+                    </div>
+                </div>
+
+                <!-- Review Item 2 -->
+                <div class="review-item border-bottom pb-4 mb-4">
+                    <div class="d-flex mb-3">
+                        <img src="/img/user/user2.jpg" class="review-avatar me-3" alt="User Avatar">
+                        <div>
+                            <h6 class="mb-1">Shigeo Tokuda</h6>
+                            <div class="rating-stars mb-1">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                            </div>
+                            <span class="review-date">19/03/2024</span>
+                        </div>
+                    </div>
+                    <h6 class="mb-2">Đáng tiền</h6>
+                    <p>
+                        Giá cả hợp lý cho một sản phẩm chất lượng cao. 
+                        Thiết kế đẹp và phù hợp với không gian phòng ngủ của tôi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Review pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Trước</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Sau</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    {{> footer}}
+
+    <script>
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumbnail-image').forEach(img => {
+                img.classList.remove('active');
+                if (img.src === src) {
+                    img.classList.add('active');
+                }
+            });
+        }
+
+        function updateQuantity(change) {
+            const input = document.getElementById('quantity');
+            const currentValue = parseInt(input.value) || 1;
+            const maxQuantity = 99;
+            const newValue = currentValue + change;
+            
+            if (newValue >= 1 && newValue <= maxQuantity) {
+                input.value = newValue;
+            }
+            
+            updateQuantityButtonStates();
+        }
+
+        function updateQuantityButtonStates() {
+            const input = document.getElementById('quantity');
+            const currentValue = parseInt(input.value) || 1;
+            const maxQuantity = 99;
+            
+            const [decreaseBtn, increaseBtn] = input.parentElement.querySelectorAll('.btn');
+            
+            decreaseBtn.disabled = currentValue <= 1;
+            increaseBtn.disabled = currentValue >= maxQuantity;
+        }
+
+        document.getElementById('quantity').addEventListener('input', function(e) {
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value === '') value = '1';
+            value = Math.max(1, Math.min(99, parseInt(value)));
+            this.value = value;
+            updateQuantityButtonStates();
+        });
+
+        document.getElementById('quantity').addEventListener('blur', function() {
+            if (this.value === '' || isNaN(this.value)) {
+                this.value = '1';
+            }
+            updateQuantityButtonStates();
+        });
+
+        document.getElementById('quantity').addEventListener('keypress', function(e) {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', updateQuantityButtonStates);
+
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-container');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = `
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Thông báo</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" onclick="this.closest('.toast-container').remove()"></button>
+                        </div>
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', toast);
+            
+            const toastElement = document.querySelector('.toast-container');
+            setTimeout(() => {
+                if (toastElement) {
+                    toastElement.classList.add('hiding');
+                    setTimeout(() => {
+                        toastElement.remove();
+                    }, 300);
+                }
+            }, 1500);
+        }
+
+        document.querySelector('.add-to-cart-section .btn-primary').addEventListener('click', function() {
+            const quantity = document.getElementById('quantity').value;
+            const productName = document.querySelector('h1').textContent;
+            showToast(`Đã thêm ${quantity} sản phẩm "${productName}" vào giỏ hàng`);
+        });
+
+        document.querySelector('.add-to-cart-section .btn-outline-primary').addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('bi-heart')) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+                icon.style.color = '#dc3545';
+                this.classList.add('active');
+                showToast('Đã thêm sản phẩm vào danh sách yêu thích');
+            } else {
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+                icon.style.color = '';
+                this.classList.remove('active');
+            }
+        });
+
+        document.querySelector('.review-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã gửi đánh giá!');
+            this.reset();
+        });
+    </script>

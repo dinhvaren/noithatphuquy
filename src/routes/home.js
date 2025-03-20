@@ -6,6 +6,7 @@ router.post('/login', homeController.login)
 router.post('/signup', homeController.signup)
 router.get('/interior-design', homeController.interiorDesign);
 router.get('/homepage', homeController.home);
+router.get('/product-details', homeController.productDetails);
 router.get('/', homeController.dashboard);
 
 module.exports = router;

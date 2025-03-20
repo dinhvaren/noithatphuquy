@@ -34,6 +34,10 @@ class HomeController {
     interiorDesign(req, res, next) {
         res.render('Interior-design', { page: { title: 'Thiết kế nội thất' } });
     }
+
+    productDetails(req, res, next) {
+        res.render('ProductDetails', { page: { title: 'Chi tiết sản phẩm - Nội Thất Phú Quý' } });
+    }
 }
 
 module.exports = new HomeController();

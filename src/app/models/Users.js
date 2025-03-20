@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify');
 const mongooseDelete = require('mongoose-delete');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const Schema = mongoose.Schema;
 const Users = new Schema(
@@ -21,33 +19,6 @@ const Users = new Schema(
     },
     { timestamps: true },
 );
-Users.pre('save', async function (next) {
-    if (this.isModified('password')) {
-        this.password = await bcrypt.hash(this.password, 10);
-    }
-    if (!this.slug) {
-        // Nếu slug chưa được tạo, tiến hành tạo slug từ tên sản phẩm
-        let newSlug = slugify(this.name, { lower: true, strict: true });
-
-        // Kiểm tra xem slug đã tồn tại trong database chưa
-        let existingCourse = await mongoose
-            .model('Users')
-            .findOne({ slug: newSlug });
-
-        let counter = 1; // Biến đếm để tạo slug duy nhất nếu bị trùng
-        while (existingCourse) {
-            // Nếu slug đã tồn tại, thêm số thứ tự vào cuối để tránh trùng lặp
-            newSlug = `${slugify(this.name, { lower: true, strict: true })}-${counter}`;
-            existingCourse = await mongoose
-                .model('Users')
-                .findOne({ slug: newSlug });
-            counter++; // Tăng biến đếm để thử slug mới
-        }
-
-        this.slug = newSlug; // Gán slug mới vào tài liệu trước khi lưu
-    }
-    next(); // Tiếp tục quá trình lưu vào database
-});
 
 Users.plugin(mongooseDelete, {
     deletedAt: true,
