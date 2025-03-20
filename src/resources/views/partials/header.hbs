@@ -349,44 +349,65 @@
         }
 
         // Xử lý modal login/signup
-        function setupModalHandlers(modal, triggerBtn, closeBtn) {
+        function setupModalHandlers(modal, triggerBtns, closeBtn) {
             if (modal) {
                 modal.style.display = "none";
                 modal.setAttribute("aria-hidden", "true");
                 modal.setAttribute("tabindex", "-1");
 
-                triggerBtn?.addEventListener("click", function () {
-                    modal.classList.add("show");
-                    modal.style.display = "block";
-                    modal.removeAttribute("aria-hidden");
-                    modal.removeAttribute("tabindex");
-                    document.body.style.overflow = "hidden";
+                // Xử lý nhiều nút trigger
+                if (Array.isArray(triggerBtns)) {
+                    triggerBtns.forEach(btn => {
+                        btn?.addEventListener("click", function () {
+                            modal.classList.add("show");
+                            modal.style.display = "block";
+                            modal.removeAttribute("aria-hidden");
+                            modal.removeAttribute("tabindex");
+                            document.body.style.overflow = "hidden";
+                        });
+                    });
+                }
+
+                // Xử lý đóng modal khi click nút close
+                closeBtn?.addEventListener("click", function () {
+                    closeAllModals();
                 });
 
-                closeBtn?.addEventListener("click", function () {
-                    modal.classList.remove("show");
-                    modal.style.display = "none";
-                    modal.setAttribute("aria-hidden", "true");
-                    modal.setAttribute("tabindex", "-1");
-                    document.body.style.overflow = "";
+                // Xử lý đóng modal khi click ra ngoài
+                modal.addEventListener("click", function (event) {
+                    if (event.target === modal) {
+                        closeAllModals();
+                    }
                 });
             }
         }
 
-        setupModalHandlers(loginModal, loginBtnDesktop, closeLoginBtn);
-        setupModalHandlers(signupModal, signupBtn, closeSingUpBtn);
+        // Hàm đóng tất cả modal
+        function closeAllModals() {
+            const modals = [loginModal, signupModal];
+            modals.forEach(modal => {
+                if (modal) {
+                    modal.classList.remove("show");
+                    modal.style.display = "none";
+                    modal.setAttribute("aria-hidden", "true");
+                    modal.setAttribute("tabindex", "-1");
+                }
+            });
+            document.body.style.overflow = "";
+        }
+
+        // Truyền cả hai nút đăng nhập (desktop và mobile) vào mảng
+        setupModalHandlers(loginModal, [loginBtnDesktop, loginBtnMobile], closeLoginBtn);
+        setupModalHandlers(signupModal, [signupBtn], closeSingUpBtn);
 
         openLoginBtn?.addEventListener("click", function (event) {
             event.preventDefault();
-            if (signupModal) {
-                signupModal.classList.remove("show");
-                signupModal.style.display = "none";
-                signupModal.setAttribute("aria-hidden", "true");
-            }
+            closeAllModals();
             if (loginModal) {
                 loginModal.classList.add("show");
                 loginModal.style.display = "block";
                 loginModal.removeAttribute("aria-hidden");
+                document.body.style.overflow = "hidden";
             }
         });
 
@@ -424,16 +445,57 @@
             overlay.className = "navbar-overlay";
             body.appendChild(overlay);
 
-            navbarToggler.addEventListener("click", function () {
-                navbarCollapse.classList.toggle("show");
-                overlay.classList.toggle("show");
-                body.style.overflow = navbarCollapse.classList.contains("show") ? "hidden" : "";
-            });
-
-            overlay.addEventListener("click", function () {
+            function closeMenu() {
                 navbarCollapse.classList.remove("show");
                 overlay.classList.remove("show");
                 body.style.overflow = "";
+                if (iconNavbar) {
+                    iconNavbar.classList.remove("fa-times");
+                    iconNavbar.classList.add("fa-bars");
+                }
+                // Thêm xử lý cho nút toggle
+                if (navbarToggler) {
+                    navbarToggler.setAttribute("aria-expanded", "false");
+                }
+            }
+
+            function toggleMenu() {
+                const isExpanded = navbarCollapse.classList.contains("show");
+                navbarCollapse.classList.toggle("show");
+                overlay.classList.toggle("show");
+                body.style.overflow = !isExpanded ? "hidden" : "";
+                if (iconNavbar) {
+                    iconNavbar.classList.toggle("fa-bars");
+                    iconNavbar.classList.toggle("fa-times");
+                }
+                // Cập nhật trạng thái của nút toggle
+                if (navbarToggler) {
+                    navbarToggler.setAttribute("aria-expanded", !isExpanded);
+                }
+            }
+
+            // Xử lý click vào overlay
+            overlay.addEventListener("click", function(e) {
+                if (e.target === overlay) {
+                    closeMenu();
+                }
+            });
+
+            navbarToggler.addEventListener("click", toggleMenu);
+            closeButton.addEventListener("click", closeMenu);
+
+            // Thêm xử lý cho icon navbar
+            iconNavbar?.addEventListener("click", toggleMenu);
+
+            // Thêm xử lý cho các link trong menu
+            const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Chỉ đóng menu nếu đang ở chế độ mobile và link không phải là dropdown
+                    if (window.innerWidth < 992 && !this.classList.contains('dropdown-toggle')) {
+                        closeMenu();
+                    }
+                });
             });
         }
 
@@ -716,5 +778,21 @@
 
     #searchModal .btn-close {
         padding: 0.5rem;
+    }
+
+    /* Thêm CSS cho overlay */
+    .navbar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .navbar-overlay.show {
+        display: block;
     }
 </style>

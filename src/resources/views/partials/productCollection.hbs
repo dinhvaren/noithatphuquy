@@ -36,19 +36,22 @@
 
         .discount-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 0;
+            left: 0;
             background: #dc2626;
             color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 5px 15px;
             font-size: 0.875rem;
+            font-weight: bold;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+            z-index: 1;
+            border-radius: 12px 0 0 0;
         }
 
         .wishlist-btn {
             position: absolute;
             top: 10px;
-            left: 10px;
+            right: 10px;
             background: white;
             border: none;
             width: 32px;
@@ -60,6 +63,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 2;
         }
 
         .wishlist-btn:hover {
