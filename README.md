@@ -82,11 +82,11 @@ src/
 
 ## Liên Hệ
 
-- **Địa chỉ:** 123 Đường ABC, Quận XYZ, TP.HCM
-- **Hotline:** 093.579.8694
-- **Email:** contact@phuquy.com
-- **Website:** www.noithatphuquy.com
+- **Địa chỉ:** 405-407 Ngô Gia Tự, P2, Q10, TPHCM
+- **Hotline:** 093.889.9576 - 093.579.8694
+- **Email:** noithatphuquy@gmail.com
+- **Website:** www.noithatphuquy.vn
 
 ## Giấy Phép
 
-© 2024 Nội Thất Phú Quý. All rights reserved. 
+© 2025 Nội Thất Phú Quý. All rights reserved. 
