@@ -48,7 +48,7 @@ Website Nội Thất Phú Quý là nền tảng thương mại điện tử chuy
 
 1. Clone repository:
 ```bash
-git clone [https://github.com/dinhvaren/nothatphuquy.git]
+git clone https://github.com/dinhvaren/nothatphuquy.git
 ```
 
 2. Cài đặt dependencies:
