@@ -1,6 +1,6 @@
 # Website Nội Thất Phú Quý
 
-![Logo Nội Thất Phú Quý](./src/public/img/logo1.png)
+![Logo Nội Thất Phú Quý](./src/public/img/logo.svg)
 
 ## Giới Thiệu
 
