@@ -11,7 +11,7 @@ class HomeController {
 
     // Hiển thị trang chủ
     home(req, res, next) {
-        res.render('homePage', { page: { title: 'Trang chủ' } });
+        res.render('HomePage', { page: { title: 'Trang chủ' } });
     }
 
     // Xử lý đăng nhập
@@ -32,7 +32,7 @@ class HomeController {
 
     // Hiển thị trang thiết kế nội thất
     interiorDesign(req, res, next) {
-        res.render('interior-design', { page: { title: 'Thiết kế nội thất' } });
+        res.render('Interior-design', { page: { title: 'Thiết kế nội thất' } });
     }
 }
 

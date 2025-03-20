@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1346.04 446.08">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: .81;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        stroke-width: 0px;
+      }
+
+      .cls-5 {
+        fill: #231f20;
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: .25px;
+      }
+
+      .cls-6, .cls-7, .cls-8 {
+        font-size: 61.13px;
+      }
+
+      .cls-6, .cls-7, .cls-8, .cls-9, .cls-10, .cls-11 {
+        font-family: SitkaText, Sitka;
+        font-variation-settings: 'opsz' 11, 'wght' 400;
+      }
+
+      .cls-6, .cls-10 {
+        fill: #000;
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-12 {
+        opacity: .57;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-13 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-14 {
+        opacity: .36;
+      }
+
+      .cls-7 {
+        fill: #545858;
+      }
+
+      .cls-8 {
+        fill: #b7b5ba;
+      }
+
+      .cls-9 {
+        fill: #8a9091;
+      }
+
+      .cls-9, .cls-10, .cls-11 {
+        font-size: 214.2px;
+      }
+
+      .cls-15 {
+        opacity: .25;
+      }
+
+      .cls-11 {
+        fill: #c4c8cc;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="39" y1="122.53" x2="328.97" y2="268.29" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c1a785"/>
+      <stop offset=".2" stop-color="#f3d7ad"/>
+      <stop offset=".53" stop-color="#f9e0b3"/>
+      <stop offset="1" stop-color="#beac89"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0" y1="278.84" x2="104.9" y2="278.84" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="201.87" y1="227.67" x2="366.73" y2="310.54" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <path class="cls-2" d="M0,100.41c.35,14.1.7,28.21,1.04,42.31,19.57-.13,39.14-.25,58.71-.38,2.18-.12,5.14-.19,8.63.01.54.03,8.41.52,15.44,2.49,15.79,4.43,26.49,15.5,26.49,15.5,13.86,14.35,15.37,32.11,15.62,37.35.06,3.81.02,26.24-18.07,43.94-18.44,18.05-41.42,17.28-45.16,17.09v41.01c8.56.43,35.14.7,61.52-17.09,25.77-17.38,35.58-41.35,38.51-49.5,2.76,7.93,12.36,32.29,38.39,49.8,26,17.49,52.15,17.21,60.54,16.78-.1-13.96-.2-27.91-.31-41.87-3.33.22-28.18,1.44-46.69-18.31-17.33-18.49-15.86-41.23-15.56-44.86.53-5.11,2.77-20.24,15.11-33.6,14.42-15.62,32.61-17.98,37.21-18.45,24.37.08,48.73.15,73.1.23v-42.11h-76.08c-9.4.93-35.99,4.83-59.29,26.24-16.12,14.81-23.48,31.39-26.73,40.46-3.1-9.02-10.4-26.17-27.04-41.26-24.38-22.11-52.47-24.97-61.48-25.52-11.89-.15-23.87-.25-35.93-.3-12.76-.05-25.42-.05-37.99,0Z"/>
+      <path class="cls-3" d="M0,163.21v231.25l41.93-.37v-188.59l62.77-.49c.29-2.66,1.4-15.29-7.45-26.85-9.31-12.18-22.69-14.1-25.15-14.4-24.04-.18-48.07-.37-72.11-.55Z"/>
+      <path class="cls-4" d="M324.54,163.21v231.25h-41.75v-188.96l-62.44-.18c-.31-2.36-1.9-16.37,8.12-28.62,9.41-11.5,22.3-13.2,24.9-13.49h71.16Z"/>
+    </g>
+    <path class="cls-5" d="M407.1,81.37c-.39-3.79,155-30.87,466.21-81.25,314.08,50.74,470.93,78,470.54,81.78-.39,3.78-157.23-15.81-470.54-58.75-310.42,42.58-465.82,61.99-466.21,58.21Z"/>
+  </g>
+  <g id="Layer_2" data-name="Layer 2">
+    <g class="cls-12">
+      <text class="cls-8" transform="translate(487.42 394.17)"><tspan x="0" y="0">XƯỞNG MỘC &amp; NỘI TH</tspan><tspan class="cls-13" x="676.29" y="0">Ấ</tspan><tspan x="712.89" y="0">T</tspan></text>
+    </g>
+    <g class="cls-14">
+      <text class="cls-7" transform="translate(486.06 394.72)"><tspan x="0" y="0">XƯỞNG MỘC &amp; NỘI TH</tspan><tspan class="cls-13" x="676.29" y="0">Ấ</tspan><tspan x="712.89" y="0">T</tspan></text>
+    </g>
+    <text class="cls-6" transform="translate(484.63 395.37)"><tspan x="0" y="0">XƯỞNG MỘC &amp; NỘI TH</tspan><tspan class="cls-13" x="676.29" y="0">Ấ</tspan><tspan x="712.89" y="0">T</tspan></text>
+  </g>
+  <g id="Layer_3" data-name="Layer 3">
+    <g class="cls-15">
+      <text class="cls-11" transform="translate(378.93 290.38)"><tspan x="0" y="0">PHÚ QUÝ</tspan></text>
+    </g>
+    <g class="cls-1">
+      <text class="cls-9" transform="translate(387.21 286.22)"><tspan x="0" y="0">PHÚ QUÝ</tspan></text>
+    </g>
+    <text class="cls-10" transform="translate(396.64 283.07)"><tspan x="0" y="0">PHÚ QUÝ</tspan></text>
+  </g>
+</svg>
