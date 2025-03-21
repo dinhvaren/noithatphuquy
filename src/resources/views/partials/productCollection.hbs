@@ -302,15 +302,17 @@
             <div class="row g-4">
                 <!-- Product Card 1 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
                                 <span class="discount-badge">-15%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
@@ -329,183 +331,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 2 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Cao Cấp</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="text-muted ms-2">(4.8)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">12.900.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <span class="discount-badge">-10%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Tân Cổ Điển</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                    <span class="text-muted ms-2">(4.6)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">9.900.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 4 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Gỗ Tự Nhiên</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="text-muted ms-2">(4.9)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">15.500.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 5 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <span class="discount-badge">-20%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Thông Minh</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                    <span class="text-muted ms-2">(4.7)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">11.200.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 6 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Bọc Nệm</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                    <span class="text-muted ms-2">(4.5)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">13.800.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 7 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
                                 <span class="discount-badge">-15%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
@@ -524,53 +366,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Product Card 8 -->
+                <!-- Product Card 3 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
-                            <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Cao Cấp</h6>
-                                <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="text-muted ms-2">(4.8)</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">12.900.000đ</span>
-                                    <button class="btn cart-btn">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Product Card 9 -->
-                <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
                                 <span class="discount-badge">-10%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Tân Cổ Điển</h6>
@@ -589,20 +401,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Product Card 10 -->
+                <!-- Product Card 4 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Gỗ Tự Nhiên</h6>
@@ -621,21 +436,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Product Card 11 -->
+                <!-- Product Card 5 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
                                 <span class="discount-badge">-20%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Thông Minh</h6>
@@ -654,20 +471,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Product Card 12 -->
+                <!-- Product Card 6 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
-                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
                                 <h6 class="mb-1">Giường Ngủ Bọc Nệm</h6>
@@ -686,22 +506,234 @@
                                     </button>
                                 </div>
                             </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 7 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
                         </div>
-                    </a>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.5)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">8.500.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 8 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Cao Cấp</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">(4.8)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">12.900.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 9 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-10%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Tân Cổ Điển</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.6)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">9.900.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 10 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong2.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-10%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Gỗ Tự Nhiên</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-2">(4.9)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">15.500.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 11 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong3.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-20%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Thông Minh</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.7)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">11.200.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card 12 -->
+                <div class="col-md-4">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
+                                <img src="/img/giuong.jpg" class="product-image w-100" alt="Giường Ngủ">
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
+                            <div class="p-3">
+                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
+                                <h6 class="mb-1">Giường Ngủ Bọc Nệm</h6>
+                                <div class="rating-stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-muted ms-2">(4.5)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price">13.800.000đ</span>
+                                    <button class="btn cart-btn">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Sản phẩm trang 2 -->
                 <!-- Product Card 13 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/tudo.jpg" class="product-image w-100" alt="Tủ Đồ">
                                 <span class="discount-badge">-25%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Khách</span>
                                 <h6 class="mb-1">Sofa Da Cao Cấp</h6>
@@ -720,20 +752,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 14 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/tudo2.jpg" class="product-image w-100" alt="Tủ Đồ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-25%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Khách</span>
                                 <h6 class="mb-1">Bàn Trà Hiện Đại</h6>
@@ -752,21 +787,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 15 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/tudo3.jpg" class="product-image w-100" alt="Tủ Đồ">
                                 <span class="discount-badge">-30%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Khách</span>
                                 <h6 class="mb-1">Kệ TV Thông Minh</h6>
@@ -785,20 +822,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 16 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/kebep.jpg" class="product-image w-100" alt="Kệ Bếp">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-20%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Bếp</span>
                                 <h6 class="mb-1">Tủ Bếp Gỗ Sồi</h6>
@@ -817,21 +857,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 17 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/kebep2.jpg" class="product-image w-100" alt="Kệ Bếp">
                                 <span class="discount-badge">-20%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Bếp</span>
                                 <h6 class="mb-1">Bàn Ăn 6 Người</h6>
@@ -850,20 +892,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 18 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/kebep3.jpg" class="product-image w-100" alt="Kệ Bếp">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-20%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Ghế Xoay Ergonomic</h6>
@@ -882,21 +927,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 19 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/ghe.jpg" class="product-image w-100" alt="Ghế">
                                 <span class="discount-badge">-15%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Bàn Làm Việc Thông Minh</h6>
@@ -915,20 +962,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 20 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/ghe2.jpg" class="product-image w-100" alt="Ghế">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Tủ Tài Liệu Đa Năng</h6>
@@ -947,21 +997,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 21 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/ghe3.jpg" class="product-image w-100" alt="Ghế">
                                 <span class="discount-badge">-25%</span>
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Sofa Tiếp Khách</h6>
@@ -980,20 +1032,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 22 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/tudo4.jpg" class="product-image w-100" alt="Tủ Đồ">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-25%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Kệ Sách Đa Năng</h6>
@@ -1012,20 +1067,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 23 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/kebep.jpg" class="product-image w-100" alt="Kệ Bếp">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-20%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Bàn Họp 10 Người</h6>
@@ -1044,20 +1102,23 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Product Card 24 -->
                 <div class="col-md-4">
-                    <a href="/product-details" class="product-link">
-                        <div class="product-card shadow-sm">
-                            <div class="position-relative">
+                    <div class="product-card shadow-sm">
+                        <div class="position-relative">
+                            <a href="/product-details" class="product-link">
                                 <img src="/img/ghe.jpg" class="product-image w-100" alt="Ghế">
-                                <button class="wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </div>
+                                <span class="discount-badge">-15%</span>
+                            </a>
+                            <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <a href="/product-details" class="product-link">
                             <div class="p-3">
                                 <span class="category-badge mb-2 d-inline-block">Nội Thất Văn Phòng</span>
                                 <h6 class="mb-1">Ghế Phòng Họp Cao Cấp</h6>
@@ -1076,8 +1137,8 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1109,7 +1170,10 @@
         // Xử lý wishlist buttons
         const wishlistBtns = document.querySelectorAll('.wishlist-btn');
         wishlistBtns.forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 this.classList.toggle('active');
                 const icon = this.querySelector('i');
                 if (this.classList.contains('active')) {
