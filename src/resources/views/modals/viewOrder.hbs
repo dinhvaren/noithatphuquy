@@ -1,0 +1,139 @@
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Thông tin đơn hàng</h6>
+                        <p><strong>Mã đơn hàng:</strong> <span id="orderId"></span></p>
+                        <p><strong>Ngày đặt:</strong> <span id="orderDate"></span></p>
+                        <p><strong>Trạng thái:</strong> <span id="orderStatus"></span></p>
+                        <p><strong>Phương thức thanh toán:</strong> <span id="paymentMethod"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Thông tin khách hàng</h6>
+                        <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
+                        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+                        <p><strong>Số điện thoại:</strong> <span id="customerPhone"></span></p>
+                        <p><strong>Địa chỉ:</strong> <span id="customerAddress"></span></p>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItems">
+                            <!-- Sản phẩm sẽ được thêm vào đây -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tạm tính:</strong></td>
+                                <td><span id="subtotal"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Phí vận chuyển:</strong></td>
+                                <td><span id="shipping"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                                <td><strong><span id="total"></span></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="printOrder">
+                    <i class="bi bi-printer"></i> In đơn hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Xử lý xem chi tiết đơn hàng
+    document.querySelectorAll('.view-order').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const orderId = e.target.dataset.id;
+            const modal = new bootstrap.Modal(document.getElementById('viewOrderModal'));
+            
+            // Dữ liệu mẫu cho đơn hàng
+            const orderData = {
+                id: orderId,
+                date: '01/01/2024',
+                status: 'Đang xử lý',
+                paymentMethod: 'Thanh toán khi nhận hàng',
+                customer: {
+                    name: 'Nguyễn Văn A',
+                    email: 'nguyenvana@example.com',
+                    phone: '0123456789',
+                    address: '123 Đường ABC, Quận 1, TP.HCM'
+                },
+                items: [
+                    {
+                        name: 'Bàn ăn gỗ',
+                        price: '2.500.000đ',
+                        quantity: 2,
+                        total: '5.000.000đ'
+                    },
+                    {
+                        name: 'Ghế ăn',
+                        price: '500.000đ',
+                        quantity: 4,
+                        total: '2.000.000đ'
+                    }
+                ],
+                subtotal: '7.000.000đ',
+                shipping: '50.000đ',
+                total: '7.050.000đ'
+            };
+            
+            // Điền thông tin vào modal
+            document.getElementById('orderId').textContent = orderData.id;
+            document.getElementById('orderDate').textContent = orderData.date;
+            document.getElementById('orderStatus').textContent = orderData.status;
+            document.getElementById('paymentMethod').textContent = orderData.paymentMethod;
+            document.getElementById('customerName').textContent = orderData.customer.name;
+            document.getElementById('customerEmail').textContent = orderData.customer.email;
+            document.getElementById('customerPhone').textContent = orderData.customer.phone;
+            document.getElementById('customerAddress').textContent = orderData.customer.address;
+            
+            // Thêm sản phẩm vào bảng
+            const orderItems = document.getElementById('orderItems');
+            orderItems.innerHTML = orderData.items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.total}</td>
+                </tr>
+            `).join('');
+            
+            // Cập nhật tổng tiền
+            document.getElementById('subtotal').textContent = orderData.subtotal;
+            document.getElementById('shipping').textContent = orderData.shipping;
+            document.getElementById('total').textContent = orderData.total;
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    });
+
+    // Xử lý in đơn hàng
+    document.getElementById('printOrder').addEventListener('click', () => {
+        showNotification('Thông báo', 'Đang in đơn hàng...', 'info');
+    });
+</script> 

@@ -1,0 +1,99 @@
+<!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="notificationIcon" class="mb-3">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                </div>
+                <p id="notificationMessage" class="mb-0"></p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Hàm hiển thị thông báo
+    function showNotification(title, message, type = 'success') {
+        const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+        const notificationIcon = document.getElementById('notificationIcon');
+        
+        // Cập nhật tiêu đề và nội dung
+        document.getElementById('notificationTitle').textContent = title;
+        document.getElementById('notificationMessage').textContent = message;
+        
+        // Cập nhật icon và màu sắc theo loại thông báo
+        let iconClass, iconColor;
+        switch(type) {
+            case 'success':
+                iconClass = 'bi-check-circle-fill';
+                iconColor = 'var(--success-color)';
+                break;
+            case 'error':
+                iconClass = 'bi-x-circle-fill';
+                iconColor = 'var(--danger-color)';
+                break;
+            case 'warning':
+                iconClass = 'bi-exclamation-circle-fill';
+                iconColor = 'var(--warning-color)';
+                break;
+            case 'info':
+                iconClass = 'bi-info-circle-fill';
+                iconColor = 'var(--accent-color)';
+                break;
+        }
+        
+        notificationIcon.innerHTML = `<i class="bi ${iconClass}" style="font-size: 3rem; color: ${iconColor}"></i>`;
+        
+        // Hiển thị modal
+        modal.show();
+        
+        // Tự động đóng sau 3 giây
+        setTimeout(() => {
+            modal.hide();
+        }, 3000);
+    }
+
+    // Hàm xác nhận
+    function showConfirm(title, message) {
+        return new Promise((resolve) => {
+            const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+            const modalContent = document.getElementById('notificationModal').querySelector('.modal-content');
+            
+            // Cập nhật nội dung modal
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            document.getElementById('notificationIcon').innerHTML = `
+                <i class="bi bi-exclamation-triangle-fill" style="font-size: 3rem; color: var(--warning-color)"></i>
+            `;
+            
+            // Thêm nút xác nhận và hủy
+            const footer = document.getElementById('notificationModal').querySelector('.modal-footer');
+            footer.innerHTML = `
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="confirmButton">Đồng ý</button>
+            `;
+            
+            // Xử lý sự kiện click
+            document.getElementById('confirmButton').addEventListener('click', () => {
+                modal.hide();
+                resolve(true);
+            });
+            
+            // Xử lý khi modal đóng
+            document.getElementById('notificationModal').addEventListener('hidden.bs.modal', () => {
+                resolve(false);
+            }, { once: true });
+            
+            // Hiển thị modal
+            modal.show();
+        });
+    }
+</script> 

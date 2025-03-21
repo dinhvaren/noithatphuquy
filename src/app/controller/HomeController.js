@@ -37,6 +37,37 @@ class HomeController {
     productDetails(req, res, next) {
         res.render('ProductDetails', { page: { title: 'Chi tiết sản phẩm - Nội Thất Phú Quý' } });
     }
+
+    // Hiển thị trang giỏ hàng
+    cart(req, res, next) {
+        res.render('Cart', { page: { title: 'Giỏ hàng' } });
+    }
+
+    // Hiển thị trang danh sách yêu thích
+    wishlist(req, res, next) {
+        res.render('Wishlist', { page: { title: 'Danh sách yêu thích' } });
+    }
+
+    // Hiển thị trang liên hệ
+    contact(req, res, next) {
+        res.render('Contact', { page: { title: 'Liên hệ' } });
+    }
+
+    // Hiển thị trang tin tức
+    news(req, res, next) {
+        res.render('News', { page: { title: 'Tin tức' } });
+    }
+
+    // Hiển thị trang giới thiệu
+    about(req, res, next) {
+        res.render('About', { page: { title: 'Giới thiệu' } });
+    }
+
+    // Xử lý đăng xuất
+    logout(req, res, next) {
+        res.clearCookie('token');
+        res.redirect('/');
+    }
 }
 
 module.exports = new HomeController();

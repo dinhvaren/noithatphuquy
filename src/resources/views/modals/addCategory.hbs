@@ -1,0 +1,44 @@
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm danh mục mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description" placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveCategory">
+                    <i class="bi bi-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Xử lý form thêm danh mục
+    document.getElementById('saveCategory').addEventListener('click', () => {
+        const form = document.getElementById('addCategoryForm');
+        if (form.checkValidity()) {
+            showNotification('Thành công', 'Danh mục đã được thêm thành công!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+</script> 

@@ -46,6 +46,10 @@ app.engine(
         helpers: {
             sum: (a, b) => a + b, // Định nghĩa helper "sum" để cộng hai số trong template
         },
+        partialsDir: [
+            path.join(__dirname, 'resources/views/modals'),
+            path.join(__dirname, 'resources/views/partials')
+        ]
     }),
 );
 

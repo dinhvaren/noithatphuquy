@@ -1,0 +1,128 @@
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm sản phẩm mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giá</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục</label>
+                        <select class="form-select" name="category" required>
+                            <option value="" disabled selected>Chọn danh mục sản phẩm</option>
+                            <optgroup label="Nội Thất Phòng Khách">
+                                <option value="sofa-vang">Sofa văng</option>
+                                <option value="sofa-goc">Sofa góc</option>
+                                <option value="sofa-doi">Sofa đôi</option>
+                                <option value="ghe-don">Ghế đơn</option>
+                                <option value="ban-tra">Bàn trà</option>
+                                <option value="ke-tivi">Kệ tivi</option>
+                                <option value="tu-trang-tri">Tủ trang trí</option>
+                                <option value="den-trang-tri">Đèn trang trí</option>
+                                <option value="ban-console">Bàn console</option>
+                                <option value="guong-phong-khach">Gương phòng khách</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Bếp">
+                                <option value="ban-an-4-cho">Bàn ăn 4 chỗ</option>
+                                <option value="ban-an-6-cho">Bàn ăn 6 chỗ</option>
+                                <option value="ban-an-8-cho">Bàn ăn 8 chỗ</option>
+                                <option value="ghe-an-go">Ghế ăn gỗ</option>
+                                <option value="ghe-an-dem">Ghế ăn đệm</option>
+                                <option value="tu-bep-tren">Tủ bếp trên</option>
+                                <option value="tu-bep-duoi">Tủ bếp dưới</option>
+                                <option value="tu-bep-cao">Tủ bếp cao</option>
+                                <option value="tu-ruou">Tủ rượu</option>
+                                <option value="ban-bar">Bàn bar</option>
+                                <option value="ghe-bar">Ghế bar</option>
+                                <option value="dao-bep">Đảo bếp</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Phòng Ngủ">
+                                <option value="giuong-don">Giường đơn</option>
+                                <option value="giuong-doi">Giường đôi</option>
+                                <option value="giuong-tang">Giường tầng</option>
+                                <option value="tu-quan-ao-2-canh">Tủ quần áo 2 cánh</option>
+                                <option value="tu-quan-ao-3-canh">Tủ quần áo 3 cánh</option>
+                                <option value="tu-quan-ao-4-canh">Tủ quần áo 4 cánh</option>
+                                <option value="tu-dau-giuong">Tủ đầu giường</option>
+                                <option value="ban-trang-diem">Bàn trang điểm</option>
+                                <option value="ghe-phong-ngu">Ghế phòng ngủ</option>
+                                <option value="guong-phong-ngu">Gương phòng ngủ</option>
+                                <option value="dem">Đệm</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Văn Phòng">
+                                <option value="ban-lam-viec-don">Bàn làm việc đơn</option>
+                                <option value="ban-lam-viec-doi">Bàn làm việc đôi</option>
+                                <option value="ban-lam-viec-goc">Bàn làm việc góc</option>
+                                <option value="ban-hop">Bàn họp</option>
+                                <option value="ghe-van-phong-co-dinh">Ghế văn phòng cố định</option>
+                                <option value="ghe-van-phong-xoay">Ghế văn phòng xoay</option>
+                                <option value="ghe-giam-doc">Ghế giám đốc</option>
+                                <option value="tu-tai-lieu-thap">Tủ tài liệu thấp</option>
+                                <option value="tu-tai-lieu-cao">Tủ tài liệu cao</option>
+                                <option value="ke-sach">Kệ sách</option>
+                                <option value="vach-ngan">Vách ngăn</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Trẻ Em">
+                                <option value="ban-hoc">Bàn học</option>
+                                <option value="ghe-hoc">Ghế học</option>
+                                <option value="giuong-tre-em">Giường trẻ em</option>
+                                <option value="tu-quan-ao-tre-em">Tủ quần áo trẻ em</option>
+                                <option value="tu-do-choi">Tủ đồ chơi</option>
+                                <option value="ke-sach-tre-em">Kệ sách trẻ em</option>
+                            </optgroup>
+                            <optgroup label="Nội Thất Tiện Ích">
+                                <option value="tu-giay">Tủ giày</option>
+                                <option value="ke-trang-tri">Kệ trang trí</option>
+                                <option value="binh-phong">Bình phong</option>
+                                <option value="banner-treo-tuong">Banner treo tường</option>
+                                <option value="rem-cua">Rèm cửa</option>
+                                <option value="tham-trang-tri">Thảm trang trí</option>
+                                <option value="goi-tua">Gối tựa</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveProduct">
+                    <i class="bi bi-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Xử lý form thêm sản phẩm
+    document.getElementById('saveProduct').addEventListener('click', () => {
+        const form = document.getElementById('addProductForm');
+        if (form.checkValidity()) {
+            showNotification('Thành công', 'Sản phẩm đã được thêm thành công!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+            modal.hide();
+            form.reset();
+        } else {
+            form.reportValidity();
+        }
+    });
+</script> 
