@@ -3,50 +3,45 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Chỉnh sửa danh mục</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">Chỉnh Sửa Danh Mục</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm">
+                <form id="editCategoryForm" method="POST">
+                    <input type="hidden" name="categoryId" value="{{category._id}}">
+                    
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" required placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                        <input type="text" class="form-control" name="name" value="{{category.name}}" required>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description" rows="3" placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                        <textarea class="form-control" name="description" rows="3">{{category.description}}</textarea>
                     </div>
+
                     <div class="mb-3">
-                        <label class="form-label">Vị trí hiển thị</label>
-                        <select class="form-select" name="position" required>
-                            <option value="" disabled selected>Chọn vị trí hiển thị</option>
-                            <option value="1">Đầu tiên</option>
-                            <option value="2">Thứ hai</option>
-                            <option value="3">Thứ ba</option>
-                            <option value="4">Thứ tư</option>
-                            <option value="5">Cuối cùng</option>
+                        <label class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                        {{#if category.image}}
+                            <div class="mt-2">
+                                <img src="{{category.image}}" alt="Hình ảnh danh mục" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="isActive" required>
+                            <option value="true" {{#if category.isActive}}selected{{/if}}>Hoạt động</option>
+                            <option value="false" {{#if (not category.isActive)}}selected{{/if}}>Không hoạt động</option>
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Hiển thị</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="isActive" id="activeYes" value="true" checked>
-                            <label class="form-check-label" for="activeYes">
-                                Có
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="isActive" id="activeNo" value="false">
-                            <label class="form-check-label" for="activeNo">
-                                Không
-                            </label>
-                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary" id="saveEditCategory">
+                <button type="button" class="btn btn-primary" id="saveCategoryChanges">
                     <i class="bi bi-save"></i> Lưu thay đổi
                 </button>
             </div>
@@ -55,42 +50,42 @@
 </div>
 
 <script>
-    // Xử lý chỉnh sửa danh mục
-    document.querySelectorAll('.edit-category').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const categoryId = e.target.dataset.id;
-            const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
-            
-            // Lấy thông tin danh mục từ hàng trong bảng
-            const row = e.target.closest('tr');
-            const name = row.cells[1].textContent;
-            const description = row.cells[2].textContent;
-            const productCount = row.cells[3].textContent;
-            
-            // Điền thông tin vào form
-            const form = document.getElementById('editCategoryForm');
-            form.querySelector('[name="name"]').value = name;
-            form.querySelector('[name="description"]').value = description;
-            
-            // Lưu categoryId vào form để sử dụng khi lưu
-            form.dataset.categoryId = categoryId;
-            
-            // Hiển thị modal
-            modal.show();
-        });
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    const editCategoryForm = document.getElementById('editCategoryForm');
+    const saveCategoryChanges = document.getElementById('saveCategoryChanges');
 
-    // Xử lý lưu thông tin danh mục đã chỉnh sửa
-    document.getElementById('saveEditCategory').addEventListener('click', () => {
-        const form = document.getElementById('editCategoryForm');
-        if (form.checkValidity()) {
-            const categoryId = form.dataset.categoryId;
-            showNotification('Thành công', `Đã cập nhật thông tin danh mục ${categoryId} thành công!`);
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editCategoryModal'));
-            modal.hide();
-            form.reset();
-        } else {
-            form.reportValidity();
+    saveCategoryChanges.addEventListener('click', async function() {
+        if (!editCategoryForm.checkValidity()) {
+            editCategoryForm.reportValidity();
+            return;
+        }
+
+        const formData = new FormData(editCategoryForm);
+        const categoryId = formData.get('categoryId');
+
+        try {
+            const response = await fetch(`/api/categories/${categoryId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+
+            if (response.ok) {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editCategoryModal'));
+                modal.hide();
+                showNotification('Thành công', 'Cập nhật danh mục thành công!');
+                // Reload trang sau khi cập nhật
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                const error = await response.json();
+                showNotification('Lỗi', error.message || 'Có lỗi xảy ra khi cập nhật danh mục!', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Lỗi', 'Có lỗi xảy ra khi cập nhật danh mục!', 'error');
         }
     });
+});
 </script> 

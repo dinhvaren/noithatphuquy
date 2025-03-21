@@ -1,10 +1,24 @@
-const {User} = require('../models/index');
+const {User, Category} = require('../models/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 class AdminController {
     index(req, res, next) {
-        res.render('Admin', { page: { title: 'Quản trị | Nội Thất Phú Quý' } });
+        User.find().lean()
+            .then(users => {
+                res.render('Admin', { 
+                    page: { title: 'Quản trị website' },
+                    users: users
+                });
+            })
+            .catch(next);
+            Category.find().lean()
+            .then(categories => {
+                res.render('Admin', {
+                    page: { title: 'Quản trị website' },
+                    categories: categories
+                });
+            })
     }
 
     // Xử lý hiển thị trang đăng nhập và xử lý đăng nhập
@@ -91,9 +105,11 @@ class AdminController {
 
     // Quản lý người dùng
     users(req, res, next) {
-
-    
-        res.render('AdminUsers', { page: { title: 'Quản lý người dùng' } });
+        User.find().lean()
+        .then(users => {
+            res.render('AdminUsers', { page: { title: 'Quản lý người dùng' }, users });
+        })
+        .catch(next);
     }
 
     // Thống kê
@@ -120,7 +136,14 @@ class AdminController {
 
     // Modal thêm mới sản phẩm
     createProductModal(req, res, next) {
-        res.render('modals/createProduct', { layout: false });
+        const name = req.body.name;
+        const description = req.body.description;
+        const category = new Category({name, description});
+        category.save()
+        .then(category => {
+            res.render('modals/createProduct', { layout: false, category });
+        })
+        .catch(next);
     }
 
     // Modal chỉnh sửa sản phẩm
@@ -137,14 +160,21 @@ class AdminController {
 
     // Modal thêm mới danh mục
     createCategoryModal(req, res, next) {
+        const categories = req.ra
         res.render('modals/createCategory', { layout: false });
     }
 
     // Modal chỉnh sửa danh mục
     editCategoryModal(req, res, next) {
-        const categoryId = req.params.id;
-        res.render('modals/editCategory', { layout: false, categoryId });
-    }
+            Category.findById(req.params.id).lean()
+                .then(category => {
+                    if (!category) {
+                        return res.status(404).send('Category not found');
+                    }
+                    res.render('modals/editCategory', { layout: false, category });
+                })
+                .catch(next);
+        }
 
     // Modal xem chi tiết đơn hàng
     viewOrderModal(req, res, next) {

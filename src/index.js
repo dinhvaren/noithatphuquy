@@ -49,6 +49,9 @@ app.engine(
             sum: (a, b) => a + b, // Định nghĩa helper "sum" để cộng hai số trong template
             eq: function (a, b) {
                 return a === b;
+            },
+            not: function(value) {
+                return !value;
             }
         },
         partialsDir: [
