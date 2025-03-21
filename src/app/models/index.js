@@ -1,111 +1,161 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Schema cho danh mục sản phẩm
+// Schema cho danh mục sản phẩm (Categories)
 const CategorySchema = new Schema({
-    name: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
-    description: String,
+    name: { type: String, required: true }, // Tên danh mục
+    description: String, // Mô tả danh mục
+    image: String, // Ảnh danh mục
+    isActive: { type: Boolean, default: true }, // Trạng thái hoạt động
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
 
-// Schema cho sản phẩm
+// Schema cho sản phẩm (Products)
 const ProductSchema = new Schema({
-    name: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
-    description: String,
-    price: { type: Number, required: true },
-    discountPercentage: { type: Number, default: 0 },
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-    images: [String],
-    rating: { type: Number, default: 0 },
-    ratingCount: { type: Number, default: 0 },
-    stock: { type: Number, default: 0 },
-    colors: [String],
+    name: { type: String, required: true }, // Tên sản phẩm
+    code: { type: String, required: true, unique: true }, // Mã sản phẩm
+    description: String, // Mô tả sản phẩm
+    price: { type: Number, required: true }, // Giá gốc
+    salePrice: { type: Number }, // Giá khuyến mãi
+    categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: true }, // ID danh mục
+    images: [String], // Mảng các ảnh sản phẩm
+    specifications: { // Thông số kỹ thuật
+        material: String, // Chất liệu
+        size: { // Kích thước
+            length: Number,
+            width: Number,
+            height: Number
+        },
+        color: String, // Màu sắc
+        warranty: Number // Thời gian bảo hành (tháng)
+    },
+    stock: { type: Number, default: 0 }, // Số lượng tồn kho
+    isActive: { type: Boolean, default: true }, // Trạng thái hoạt động
+    isFeatured: { type: Boolean, default: false }, // Sản phẩm nổi bật
+    isNewArrival: { type: Boolean, default: false }, // Sản phẩm mới
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
 
-// Schema cho đánh giá sản phẩm
-const ReviewSchema = new Schema({
-    product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    rating: { type: Number, required: true, min: 1, max: 5 },
-    comment: String,
-    createdAt: { type: Date, default: Date.now }
-});
-
-// Schema cho người dùng
+// Schema cho người dùng (Users)
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    fullName: String,
+    fullName: { type: String, required: true },
     phone: String,
-    address: String,
+    address: {
+        street: String,
+        ward: String,
+        district: String,
+        city: String
+    },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
-    wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+    isActive: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
 
-// Schema cho giỏ hàng
+// Schema cho giỏ hàng (Carts)
 const CartSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
-        product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
         quantity: { type: Number, required: true, min: 1 },
-        price: { type: Number, required: true }
+        price: { type: Number, required: true }, // Giá tại thời điểm thêm vào giỏ
+        name: String, // Tên sản phẩm tại thời điểm thêm vào giỏ
+        image: String // Ảnh sản phẩm tại thời điểm thêm vào giỏ
     }],
     totalAmount: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
 
-// Schema cho đơn hàng
+// Schema cho đơn hàng (Orders)
 const OrderSchema = new Schema({
-    orderNumber: { type: String, required: true, unique: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    orderNumber: { type: String, required: true, unique: true }, // Mã đơn hàng
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
-        product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
         quantity: { type: Number, required: true },
-        price: { type: Number, required: true }
+        price: { type: Number, required: true }, // Giá tại thời điểm đặt hàng
+        name: String, // Tên sản phẩm tại thời điểm đặt hàng
+        image: String // Ảnh sản phẩm tại thời điểm đặt hàng
     }],
     totalAmount: { type: Number, required: true },
     shippingAddress: {
-        fullName: String,
-        phone: String,
-        address: String,
-        city: String,
-        district: String,
-        ward: String
+        fullName: { type: String, required: true },
+        phone: { type: String, required: true },
+        street: { type: String, required: true },
+        ward: { type: String, required: true },
+        district: { type: String, required: true },
+        city: { type: String, required: true }
     },
-    paymentMethod: { type: String, required: true },
-    paymentStatus: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
+    paymentMethod: { type: String, required: true, enum: ['COD', 'Banking'] },
+    paymentStatus: { type: String, enum: ['Pending', 'Paid', 'Failed'], default: 'Pending' },
     orderStatus: { 
         type: String, 
-        enum: ['pending', 'confirmed', 'shipping', 'delivered', 'cancelled'],
-        default: 'pending'
+        enum: ['Pending', 'Confirmed', 'Shipping', 'Delivered', 'Cancelled'],
+        default: 'Pending'
     },
+    note: String, // Ghi chú đơn hàng
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
+});
+
+// Schema cho đánh giá sản phẩm (Reviews)
+const ReviewSchema = new Schema({
+    productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    rating: { type: Number, required: true, min: 1, max: 5 },
+    comment: String,
+    images: [String], // Ảnh đánh giá
+    isVerified: { type: Boolean, default: false }, // Đã xác minh mua hàng
+    createdAt: { type: Date, default: Date.now }
+});
+
+// Schema cho tin tức/bài viết (Posts)
+const PostSchema = new Schema({
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    image: String,
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    category: { type: String, enum: ['News', 'Blog', 'Design'] },
+    tags: [String],
+    isPublished: { type: Boolean, default: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+});
+
+// Schema cho liên hệ (Contacts)
+const ContactSchema = new Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    subject: String,
+    message: { type: String, required: true },
+    status: { type: String, enum: ['New', 'Processing', 'Resolved'], default: 'New' },
+    createdAt: { type: Date, default: Date.now }
 });
 
 // Tạo models
 const Category = mongoose.model('Category', CategorySchema);
 const Product = mongoose.model('Product', ProductSchema);
-const Review = mongoose.model('Review', ReviewSchema);
 const User = mongoose.model('User', UserSchema);
 const Cart = mongoose.model('Cart', CartSchema);
 const Order = mongoose.model('Order', OrderSchema);
+const Review = mongoose.model('Review', ReviewSchema);
+const Post = mongoose.model('Post', PostSchema);
+const Contact = mongoose.model('Contact', ContactSchema);
 
 // Export models
 module.exports = {
     Category,
     Product,
-    Review,
     User,
     Cart,
-    Order
+    Order,
+    Review,
+    Post,
+    Contact
 }; 
