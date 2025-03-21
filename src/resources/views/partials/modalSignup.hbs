@@ -7,36 +7,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form>
+                <form action="/signup" method="post" id="signupForm">
                     <div class="mb-3">
-                        <label for="fullName" class="form-label" style="color: #4b5563;">Họ và tên</label>
-                        <input type="text" class="form-control" id="fullName" placeholder="Nhập họ và tên"
-                            style="border-color: #e5e7eb;">
+                        <label for="username" class="form-label" style="color: #4b5563;">Tên người dùng</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên người dùng"
+                            style="border-color: #e5e7eb;" required>
                     </div>
                     <div class="mb-3">
                         <label for="signupEmail" class="form-label" style="color: #4b5563;">Email</label>
-                        <input type="email" class="form-control" id="signupEmail" placeholder="Nhập email của bạn"
-                            style="border-color: #e5e7eb;">
+                        <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Nhập email của bạn"
+                            style="border-color: #e5e7eb;" required>
                     </div>
                     <div class="mb-3">
                         <label for="signupPassword" class="form-label" style="color: #4b5563;">Mật khẩu</label>
-                        <input type="password" class="form-control" id="signupPassword" placeholder="Nhập mật khẩu"
-                            style="border-color: #e5e7eb;">
+                        <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Nhập mật khẩu"
+                            style="border-color: #e5e7eb;" required>
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label" style="color: #4b5563;">Xác nhận mật khẩu</label>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Nhập lại mật khẩu"
-                            style="border-color: #e5e7eb;">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu"
+                            style="border-color: #e5e7eb;" required>
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="agreeTerms"
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required
                             style="background-color: #C19977; border-color: #C19977;">
                         <label class="form-check-label" for="agreeTerms" style="color: #4b5563;">
                             Tôi đồng ý với <a href="#" style="color: #C19977;">điều khoản</a> và 
                             <a href="#" style="color: #C19977;">chính sách bảo mật</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mb-3"
+                    <button type="submit" class="btn btn-primary w-100 mb-3" id="signupSubmitBtn"
                         style="background-color: #C19977; border-color: #C19977;">
                         Đăng Ký
                     </button>
@@ -50,6 +50,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const agreeTerms = document.getElementById('agreeTerms');
+        const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+
+        // Disable nút submit mặc định
+        signupSubmitBtn.disabled = true;
+
+        // Xử lý khi checkbox thay đổi
+        agreeTerms.addEventListener('change', function() {
+            signupSubmitBtn.disabled = !this.checked;
+        });
+    });
+</script>
 
 <style>
     .form-control:focus {

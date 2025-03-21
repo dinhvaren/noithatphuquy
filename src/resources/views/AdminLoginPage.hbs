@@ -134,14 +134,14 @@
                 <span class="input-group-text">
                     <i class="bi bi-person"></i>
                 </span>
-                <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập" required>
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text">
                     <i class="bi bi-lock"></i>
                 </span>
-                <input type="password" class="form-control" id="password" placeholder="Mật khẩu" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
                 <span class="input-group-text password-toggle" onclick="togglePassword()">
                     <i class="bi bi-eye" id="toggleIcon"></i>
                 </span>
@@ -161,33 +161,47 @@
         </form>
     </div>
     <script>
-        function handleLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('rememberMe').checked;
             
-            // Kiểm tra thông tin đăng nhập
-            if (username === 'admin' && password === 'admin123') {
-                // Lưu trạng thái đăng nhập nếu được chọn
-                if (rememberMe) {
-                    localStorage.setItem('adminLoggedIn', 'true');
+            try {
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Lưu trạng thái đăng nhập nếu được chọn
+                    if (rememberMe) {
+                        localStorage.setItem('adminLoggedIn', 'true');
+                    }
+                    
+                    // Chuyển hướng đến trang admin
+                    window.location.href = '/admin';
+                } else {
+                    // Hiển thị thông báo lỗi
+                    const alertElement = document.getElementById('loginAlert');
+                    const alertMessage = document.getElementById('alertMessage');
+                    alertElement.classList.remove('d-none');
+                    alertMessage.textContent = result.message;
+                    
+                    // Tự động ẩn thông báo sau 3 giây
+                    setTimeout(() => {
+                        alertElement.classList.add('d-none');
+                    }, 3000);
                 }
-                
-                // Chuyển hướng đến trang admin
-                window.location.href = '/admin';
-            } else {
-                // Hiển thị thông báo lỗi
-                const alertElement = document.getElementById('loginAlert');
-                const alertMessage = document.getElementById('alertMessage');
-                alertElement.classList.remove('d-none');
-                alertMessage.textContent = 'Tên đăng nhập hoặc mật khẩu không chính xác!';
-                
-                // Tự động ẩn thông báo sau 3 giây
-                setTimeout(() => {
-                    alertElement.classList.add('d-none');
-                }, 3000);
+            } catch (error) {
+                console.error('Lỗi:', error);
+                alert('Có lỗi xảy ra, vui lòng thử lại sau');
             }
         }
 

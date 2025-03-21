@@ -1,3 +1,4 @@
+require('dotenv').config();
 // Import thư viện Express để tạo server
 const express = require('express');
 // Import thư viện Morgan để log HTTP request
@@ -11,11 +12,12 @@ const path = require('path');
 // Khởi tạo ứng dụng Express
 const app = express();
 // Định nghĩa cổng chạy server
-const port = 3000;
+const port = process.env.PORT;
 // Import file định tuyến
 const route = require('./routes');
 // Import cấu hình database
 const db = require('./config/db/database');
+
 
 // Kết nối đến cơ sở dữ liệu
 db.connect();

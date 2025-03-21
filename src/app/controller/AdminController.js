@@ -1,9 +1,77 @@
+const {User} = require('../models/index');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 class AdminController {
     index(req, res, next) {
-        res.render('Admin', { page: { title: 'Trang Quản Lý' } });
+        res.render('Admin', { page: { title: 'Quản trị | Nội Thất Phú Quý' } });
     }
-    login(req, res, next) {
-        res.render('AdminLoginPage', { page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } });
+
+    // Xử lý hiển thị trang đăng nhập và xử lý đăng nhập
+    async login(req, res, next) {
+        // Nếu là GET request, hiển thị trang đăng nhập
+        if (req.method === 'GET') {
+            res.render('AdminLoginPage', { page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } });
+            return;
+        }
+
+        // Nếu là POST request, xử lý đăng nhập
+        try {
+            const { username, password } = req.body;
+            
+            // Tìm user theo username
+            const user = await User.findOne({ username });
+            
+            if (!user) {
+                return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không chính xác' });
+            }
+
+            // Kiểm tra mật khẩu
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không chính xác' });
+            }
+
+            // Kiểm tra role admin
+            if (user.role !== 'admin') {
+                return res.status(403).json({ message: 'Bạn không có quyền truy cập trang quản trị' });
+            }
+
+            // Kiểm tra trạng thái tài khoản
+            if (!user.isActive) {
+                return res.status(403).json({ message: 'Tài khoản của bạn đã bị khóa' });
+            }
+
+            // Tạo token JWT
+            const token = jwt.sign(
+                { 
+                    userId: user._id,
+                    username: user.username,
+                    role: user.role
+                },
+                process.env.JWT_SECRET || 'your-secret-key',
+                { expiresIn: '24h' }
+            );
+
+            // Lưu token vào cookie
+            res.cookie('adminToken', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+            });
+
+            res.status(200).json({ 
+                message: 'Đăng nhập thành công',
+                user: {
+                    id: user._id,
+                    username: user.username,
+                    role: user.role
+                }
+            });
+        } catch (error) {
+            console.error('Lỗi đăng nhập:', error);
+            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
+        }
     }
 
     // Quản lý sản phẩm
@@ -38,8 +106,14 @@ class AdminController {
 
     // Đăng xuất admin
     logout(req, res, next) {
-        res.clearCookie('adminToken');
-        res.redirect('/admin/login');
+        try {
+            // Xóa token khỏi cookie
+            res.clearCookie('adminToken');
+            res.status(200).json({ message: 'Đăng xuất thành công' });
+        } catch (error) {
+            console.error('Lỗi đăng xuất:', error);
+            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
+        }
     }
 
     // Modal thêm mới sản phẩm
