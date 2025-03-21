@@ -7,33 +7,36 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="editUserForm">
+
+                <form action="/admin/users/edit:{{users._id}}?_method=PUT" method="POST" id="editUserForm">
                     <div class="mb-3">
                         <label class="form-label">Tên người dùng</label>
-                        <input type="text" class="form-control" name="username" required>
+                        <input type="text" class="form-control" name="username" value="{{users.username}}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control" name="email" value="{{users.email}}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vai trò</label>
                         <select class="form-select" name="role" required>
-                            <option value="admin">Quản trị viên</option>
-                            <option value="staff">Nhân viên</option>
-                            <option value="user">Người dùng</option>
+                            <option value="admin" {{#if (eq users.role "admin" )}}selected{{/if}}>Quản trị viên</option>
+                            <option value="staff" {{#if (eq users.role "staff" )}}selected{{/if}}>Nhân viên</option>
+                            <option value="user" {{#if (eq users.role "user" )}}selected{{/if}}>Người dùng</option>
+
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="status" required>
-                            <option value="active">Hoạt động</option>
-                            <option value="inactive">Khóa</option>
+                            <option value="active" {{#if (eq users.status "active") }}selected{{/if}}>Hoạt động</option>
+                            <option value="inactive" {{#if (eq users.status "inactive") }}selected{{/if}}>Khóa</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mật khẩu mới</label>
-                        <input type="password" class="form-control" name="password" placeholder="Để trống nếu không muốn thay đổi">
+                        <input type="password" class="form-control" name="password" value="{{users.password}}"
+                            placeholder="Để trống nếu không muốn thay đổi">
                     </div>
                 </form>
             </div>
@@ -89,4 +92,4 @@
             form.reportValidity();
         }
     });
-</script> 
+</script>

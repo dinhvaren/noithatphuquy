@@ -51,8 +51,21 @@ const UserSchema = new Schema({
         district: String,
         city: String
     },
-    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    role: { type: String, enum: ['user', 'admin', 'staff'], default: 'user' },
     isActive: { type: Boolean, default: true },
+    status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+    isEmailVerified: { type: Boolean, default: false },
+    emailVerificationToken: String,
+    emailVerificationExpires: Date,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    lastLogin: Date,
+    loginAttempts: { type: Number, default: 0 },
+    lockUntil: Date,
+    permissions: [{
+        type: String,
+        enum: ['read_products', 'write_products', 'manage_users', 'manage_orders', 'manage_categories']
+    }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });

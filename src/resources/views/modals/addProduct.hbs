@@ -100,6 +100,65 @@
                         <label class="form-label">Hình ảnh</label>
                         <input type="file" class="form-control" name="image" accept="image/*">
                     </div>
+                    <div class="card mb-3" style="border-radius: 12px; border: 1px solid #E5E7EB;">
+                        <div class="card-header bg-white" style="border-bottom: none; padding: 16px 20px;">
+                            <h6 class="mb-0" style="color: #374151; font-size: 16px;">Thông Số Kỹ Thuật</h6>
+                        </div>
+                        <div class="card-body" style="padding: 0 20px 20px;">
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chất Liệu</label>
+                                        <input type="text" class="form-control" 
+                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                               name="specifications[material]" 
+                                               placeholder="Ví dụ: Gỗ công nghiệp">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Màu Sắc</label>
+                                        <input type="text" class="form-control"
+                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                               name="specifications[color]" 
+                                               placeholder="Ví dụ: Trắng, Đen, Nâu">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Dài (cm)</label>
+                                        <input type="number" class="form-control"
+                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                               name="specifications[size][length]" 
+                                               placeholder="Nhập chiều dài">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Rộng (cm)</label>
+                                        <input type="number" class="form-control"
+                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                               name="specifications[size][width]" 
+                                               placeholder="Nhập chiều rộng">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Cao (cm)</label>
+                                        <input type="number" class="form-control"
+                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                               name="specifications[size][height]" 
+                                               placeholder="Nhập chiều cao">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label text-muted mb-2" style="font-size: 14px;">Thời Gian Bảo Hành (tháng)</label>
+                                <input type="number" class="form-control"
+                                       style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                       name="specifications[warranty]" 
+                                       placeholder="Ví dụ: 12, 24, 36...">
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

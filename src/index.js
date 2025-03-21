@@ -47,10 +47,14 @@ app.engine(
         extname: '.hbs', // Đổi phần mở rộng của template thành .hbs thay vì .handlebars
         helpers: {
             sum: (a, b) => a + b, // Định nghĩa helper "sum" để cộng hai số trong template
+            eq: function (a, b) {
+                return a === b;
+            }
         },
         partialsDir: [
             path.join(__dirname, 'resources/views/modals'),
-            path.join(__dirname, 'resources/views/partials')
+            path.join(__dirname, 'resources/views/partials'),
+            path.join(__dirname, 'resources/views/sections')
         ]
     }),
 );

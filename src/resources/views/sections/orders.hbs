@@ -1,0 +1,46 @@
+<!-- Orders Section -->
+<div id="orders" class="section d-none">
+    <h2 class="section-title">Quản lý đơn hàng</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày đặt</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <td>{{this.orderNumber}}</td>
+                    <td>{{this.userId.fullName}}</td>
+                    <td>{{formatCurrency this.totalAmount}}đ</td>
+                    <td>
+                        <select class="form-select form-select-sm order-status" data-id="{{this._id}}">
+                            <option value="pending" {{#if (eq this.orderStatus 'pending')}}selected{{/if}} 
+                                    class="status-badge pending">Chờ xử lý</option>
+                            <option value="processing" {{#if (eq this.orderStatus 'processing')}}selected{{/if}}
+                                    class="status-badge processing">Đang xử lý</option>
+                            <option value="completed" {{#if (eq this.orderStatus 'completed')}}selected{{/if}}
+                                    class="status-badge completed">Hoàn thành</option>
+                            <option value="cancelled" {{#if (eq this.orderStatus 'cancelled')}}selected{{/if}}
+                                    class="status-badge cancelled">Đã hủy</option>
+                        </select>
+                    </td>
+                    <td>{{formatDate this.createdAt}}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info view-order" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div> 

@@ -1,0 +1,52 @@
+<!-- Products Section -->
+<div id="products" class="section d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">Quản lý sản phẩm</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <i class="bi bi-plus-lg"></i> Thêm sản phẩm
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Danh mục</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td><img src="{{this.images.[0]}}" alt="{{this.name}}"></td>
+                    <td>{{this.name}}</td>
+                    <td>{{formatCurrency this.price}}đ</td>
+                    <td>{{this.categoryId.name}}</td>
+                    <td>
+                        {{#if this.isActive}}
+                            <span class="badge bg-success">Còn hàng</span>
+                        {{else}}
+                            <span class="badge bg-danger">Hết hàng</span>
+                        {{/if}}
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-primary edit-product" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#editProductModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-product" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#deleteProductModal">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div> 

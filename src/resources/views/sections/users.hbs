@@ -1,0 +1,53 @@
+<!-- Users Section -->
+<div id="users" class="section d-none">
+    <h2 class="section-title">Quản lý người dùng</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên người dùng</th>
+                    <th>Email</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.username}}</td>
+                    <td>{{this.email}}</td>
+                    <td>
+                        {{#if (eq this.role 'admin')}}
+                            <span class="badge bg-danger">Quản trị viên</span>
+                        {{else if (eq this.role 'staff')}}
+                            <span class="badge bg-info">Nhân viên</span>
+                        {{else}}
+                            <span class="badge bg-secondary">Người dùng</span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{#if (eq this.status 'active')}}
+                            <span class="badge bg-success">Hoạt động</span>
+                        {{else}}
+                            <span class="badge bg-danger">Khóa</span>
+                        {{/if}}
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-primary edit-user" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-user" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div> 

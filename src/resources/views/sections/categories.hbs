@@ -1,0 +1,42 @@
+<!-- Categories Section -->
+<div id="categories" class="section d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">Quản lý danh mục</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            <i class="bi bi-plus-lg"></i> Thêm danh mục
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên danh mục</th>
+                    <th>Mô tả</th>
+                    <th>Số sản phẩm</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each categories}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.productCount}}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-primary edit-category" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-category" data-id="{{this._id}}"
+                                data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div> 

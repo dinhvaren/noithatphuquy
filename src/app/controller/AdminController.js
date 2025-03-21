@@ -75,8 +75,8 @@ class AdminController {
     }
 
     // Quản lý sản phẩm
-    products(req, res, next) {
-        res.render('AdminProducts', { page: { title: 'Quản lý sản phẩm' } });
+    async products(req, res, next) {
+        res.render('AdminProducts', { page: { title: 'Quản lý sản phẩm' }, products });
     }
 
     // Quản lý danh mục
@@ -91,6 +91,8 @@ class AdminController {
 
     // Quản lý người dùng
     users(req, res, next) {
+
+    
         res.render('AdminUsers', { page: { title: 'Quản lý người dùng' } });
     }
 
@@ -164,8 +166,14 @@ class AdminController {
 
     // Modal chỉnh sửa thông tin người dùng
     editUserModal(req, res, next) {
-        const userId = req.params.id;
-        res.render('modals/editUser', { layout: false, userId });
+        User.findById(req.params.id).lean()
+        .then(user => {
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
+            res.render('modals/editUser', { layout: false, user });
+        })
+        .catch(next);
     }
 }
 

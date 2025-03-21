@@ -1,0 +1,29 @@
+<!-- Settings Section -->
+<div id="settings" class="section d-none">
+    <h2 class="section-title">Cài đặt website</h2>
+    <div class="card">
+        <div class="card-body">
+            <form id="settingsForm">
+                <div class="mb-3">
+                    <label class="form-label">Tên website</label>
+                    <input type="text" class="form-control" name="siteName" value="{{settings.siteName}}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email liên hệ</label>
+                    <input type="email" class="form-control" name="contactEmail" value="{{settings.contactEmail}}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại</label>
+                    <input type="tel" class="form-control" name="contactPhone" value="{{settings.contactPhone}}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <textarea class="form-control" name="address">{{settings.address}}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Lưu cài đặt
+                </button>
+            </form>
+        </div>
+    </div>
+</div> 
