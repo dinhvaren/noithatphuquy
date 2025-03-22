@@ -7,14 +7,16 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/categories" method="POST" id="addCategoryForm">
+                <form action="/admin/categories/create" method="POST" id="addCategoryForm">
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" required placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                        <input type="text" class="form-control" name="name" required
+                            placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description" placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                        <textarea class="form-control" name="description"
+                            placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
                     </div>
                 </form>
             </div>
@@ -33,12 +35,28 @@
     document.getElementById('saveCategory').addEventListener('click', () => {
         const form = document.getElementById('addCategoryForm');
         if (form.checkValidity()) {
+            // Ẩn modal thông báo đúng cách
+            const notificationModal = document.getElementById('notificationModal');
+            if (notificationModal) {
+                notificationModal.setAttribute('inert', ''); // Ngăn chặn tương tác khi bị ẩn
+                notificationModal.setAttribute('aria-hidden', 'true');
+            }
+
+            // Hiển thị thông báo thành công
             showNotification('Thành công', 'Danh mục đã được thêm thành công!');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
-            modal.hide();
-            form.reset();
+
+            // Đợi một chút rồi đóng modal
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+                modal.hide();
+                form.reset();
+
+                // Di chuyển focus ra khỏi modal để tránh lỗi
+                document.body.focus();
+            }, 200);
         } else {
             form.reportValidity();
         }
     });
-</script> 
+
+</script>

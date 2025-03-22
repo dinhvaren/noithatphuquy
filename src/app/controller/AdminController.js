@@ -1,24 +1,23 @@
-const {User, Category} = require('../models/index');
+const { User, Category, Product } = require('../models/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 class AdminController {
     index(req, res, next) {
-        User.find().lean()
-            .then(users => {
-                res.render('Admin', { 
+        Promise.all([
+            User.find().lean(),
+            Category.find().lean(),
+            Product.find().lean()
+        ])
+            .then(([users, categories, products]) => {
+                res.render('Admin', {
                     page: { title: 'Quản trị website' },
-                    users: users
+                    users: users,
+                    categories: categories,
+                    products: products
                 });
             })
             .catch(next);
-            Category.find().lean()
-            .then(categories => {
-                res.render('Admin', {
-                    page: { title: 'Quản trị website' },
-                    categories: categories
-                });
-            })
     }
 
     // Xử lý hiển thị trang đăng nhập và xử lý đăng nhập
@@ -32,10 +31,10 @@ class AdminController {
         // Nếu là POST request, xử lý đăng nhập
         try {
             const { username, password } = req.body;
-            
+
             // Tìm user theo username
             const user = await User.findOne({ username });
-            
+
             if (!user) {
                 return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không chính xác' });
             }
@@ -58,7 +57,7 @@ class AdminController {
 
             // Tạo token JWT
             const token = jwt.sign(
-                { 
+                {
                     userId: user._id,
                     username: user.username,
                     role: user.role
@@ -74,7 +73,7 @@ class AdminController {
                 maxAge: 24 * 60 * 60 * 1000 // 24 giờ
             });
 
-            res.status(200).json({ 
+            res.status(200).json({
                 message: 'Đăng nhập thành công',
                 user: {
                     id: user._id,
@@ -88,29 +87,6 @@ class AdminController {
         }
     }
 
-    // Quản lý sản phẩm
-    async products(req, res, next) {
-        res.render('AdminProducts', { page: { title: 'Quản lý sản phẩm' }, products });
-    }
-
-    // Quản lý danh mục
-    categories(req, res, next) {
-        res.render('AdminCategories', { page: { title: 'Quản lý danh mục' } });
-    }
-
-    // Quản lý đơn hàng
-    orders(req, res, next) {
-        res.render('AdminOrders', { page: { title: 'Quản lý đơn hàng' } });
-    }
-
-    // Quản lý người dùng
-    users(req, res, next) {
-        User.find().lean()
-        .then(users => {
-            res.render('AdminUsers', { page: { title: 'Quản lý người dùng' }, users });
-        })
-        .catch(next);
-    }
 
     // Thống kê
     statistics(req, res, next) {
@@ -134,16 +110,84 @@ class AdminController {
         }
     }
 
-    // Modal thêm mới sản phẩm
-    createProductModal(req, res, next) {
-        const name = req.body.name;
-        const description = req.body.description;
-        const category = new Category({name, description});
-        category.save()
-        .then(category => {
-            res.render('modals/createProduct', { layout: false, category });
-        })
-        .catch(next);
+    // Modal thêm sản phẩm mới
+    async createProductModal(req, res, next) {
+        try {
+            const {
+                name,
+                price,
+                salePrice,
+                category,
+                description,
+                isActive,
+                specifications
+            } = req.body;
+
+            console.log('Received data:', req.body);
+
+            // Kiểm tra dữ liệu bắt buộc
+            if (!name || !price || !category || !description) {
+                return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin' });
+            }
+
+            // Xử lý hình ảnh
+            let images = [];
+            if (req.files && req.files.length > 0) {
+                images = req.files.map(file => file.path);
+            }
+
+            // Tạo mã sản phẩm tự động
+            const code = 'SP' + Date.now().toString().slice(-6);
+
+            // Tạo object specifications
+            const productSpecifications = {
+                material: specifications?.material || '',
+                color: specifications?.color || '',
+                size: {
+                    length: specifications?.['size[length]'] || 0,
+                    width: specifications?.['size[width]'] || 0,
+                    height: specifications?.['size[height]'] || 0
+                },
+                warranty: specifications?.warranty || 0
+            };
+
+            console.log('Product specifications:', productSpecifications);
+
+            // Tạo sản phẩm mới
+            const product = new Product({
+                name,
+                code,
+                price: parseFloat(price),
+                salePrice: salePrice ? parseFloat(salePrice) : null,
+                categoryId: category,
+                description,
+                images,
+                isActive: isActive === 'true',
+                specifications: productSpecifications
+            });
+
+            console.log('Product to save:', product);
+
+            // Lưu sản phẩm
+            const savedProduct = await product.save();
+            console.log('Sản phẩm đã được thêm:', savedProduct);
+
+            // Chuyển hướng về trang danh sách sản phẩm
+            res.redirect('back');
+        } catch (error) {
+            console.error('Lỗi thêm sản phẩm:', error);
+            // Nếu có lỗi validation, trả về thông báo lỗi chi tiết
+            if (error.name === 'ValidationError') {
+                return res.status(400).json({
+                    message: 'Dữ liệu không hợp lệ',
+                    errors: Object.values(error.errors).map(err => err.message)
+                });
+            }
+            res.status(500).json({
+                message: 'Lỗi server, vui lòng thử lại sau',
+                error: error.message
+            });
+        }
     }
 
     // Modal chỉnh sửa sản phẩm
@@ -159,22 +203,43 @@ class AdminController {
     }
 
     // Modal thêm mới danh mục
-    createCategoryModal(req, res, next) {
-        const categories = req.ra
-        res.render('modals/createCategory', { layout: false });
+    async createCategoryModal(req, res, next) {
+        try {
+            const name = req.body.name;
+            const description = req.body.description;
+            console.log('Received data:', { name, description });
+
+            if (!name) {
+                return res.status(400).json({ message: 'Tên danh mục không được để trống' });
+            }
+
+            const category = new Category({
+                name,
+                description,
+                isActive: true
+            });
+
+            await category.save();
+            console.log('Category saved:', category);
+
+            res.render('modals/addCategory', {
+                layout: false,
+                message: 'Thêm danh mục thành công'
+            });
+        } catch (error) {
+            console.error('Error creating category:', error);
+            res.status(500).json({
+                message: 'Lỗi khi tạo danh mục',
+                error: error.message
+            });
+        }
     }
 
     // Modal chỉnh sửa danh mục
     editCategoryModal(req, res, next) {
-            Category.findById(req.params.id).lean()
-                .then(category => {
-                    if (!category) {
-                        return res.status(404).send('Category not found');
-                    }
-                    res.render('modals/editCategory', { layout: false, category });
-                })
-                .catch(next);
-        }
+        const categoryId = req.params.id;
+        res.render('modals/editCategory', { layout: false, categoryId });
+    }
 
     // Modal xem chi tiết đơn hàng
     viewOrderModal(req, res, next) {
@@ -197,13 +262,13 @@ class AdminController {
     // Modal chỉnh sửa thông tin người dùng
     editUserModal(req, res, next) {
         User.findById(req.params.id).lean()
-        .then(user => {
-            if (!user) {
-                return res.status(404).send('User not found');
-            }
-            res.render('modals/editUser', { layout: false, user });
-        })
-        .catch(next);
+            .then(user => {
+                if (!user) {
+                    return res.status(404).send('User not found');
+                }
+                res.render('modals/editUser', { layout: false, user });
+            })
+            .catch(next);
     }
 }
 
