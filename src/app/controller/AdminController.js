@@ -153,13 +153,19 @@ class AdminController {
 
             console.log('Product specifications:', productSpecifications);
 
+            // Tìm category theo name
+            const categoryDoc = await Category.findOne({ name: category });
+            if (!categoryDoc) {
+                return res.status(400).json({ message: 'Danh mục không tồn tại' });
+            }
+
             // Tạo sản phẩm mới
             const product = new Product({
                 name,
                 code,
                 price: parseFloat(price),
                 salePrice: salePrice ? parseFloat(salePrice) : null,
-                categoryId: category,
+                categoryId: categoryDoc._id, // Sử dụng ID của category tìm được
                 description,
                 images,
                 isActive: isActive === 'true',
@@ -192,7 +198,8 @@ class AdminController {
 
     // Modal chỉnh sửa sản phẩm
     editProductModal(req, res, next) {
-        const productId = req.params.id;
+        const productId = req.params._id;
+        console.log(productId);
         res.render('modals/editProduct', { layout: false, productId });
     }
 
@@ -235,10 +242,25 @@ class AdminController {
         }
     }
 
+
     // Modal chỉnh sửa danh mục
     editCategoryModal(req, res, next) {
-        const categoryId = req.params.id;
-        res.render('modals/editCategory', { layout: false, categoryId });
+        Category.findById(req.params.id).lean()
+        .then((category) => {
+            if (!category) {
+                return res.status(404).send('Category not found');
+            }
+            res.render('modals/editCategory', { layout: true, category });
+        })
+        .catch(next);
+    }
+
+    updateCategoryModal(req, res, next) {
+        Category.updateOne(req.params.id).lean()
+        .then(() => {
+            res.redirect('back');
+        })
+        .catch(next);
     }
 
     // Modal xem chi tiết đơn hàng
@@ -261,7 +283,7 @@ class AdminController {
 
     // Modal chỉnh sửa thông tin người dùng
     editUserModal(req, res, next) {
-        User.findById(req.params.id).lean()
+        User.updateOne(req.params.id).lean()
             .then(user => {
                 if (!user) {
                     return res.status(404).send('User not found');

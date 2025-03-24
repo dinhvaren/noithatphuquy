@@ -6,6 +6,8 @@ const CategorySchema = new Schema({
     name: { type: String, required: true }, // Tên danh mục
     description: String, // Mô tả danh mục
     image: String, // Ảnh danh mục
+    slug: String, // Slug danh mục
+    keywords: [String], // Từ khóa tìm kiếm
     isActive: { type: Boolean, default: true }, // Trạng thái hoạt động
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
@@ -17,6 +19,7 @@ const ProductSchema = new Schema({
     code: { type: String, required: true, unique: true }, // Mã sản phẩm
     description: String, // Mô tả sản phẩm
     price: { type: Number, required: true }, // Giá gốc
+    slug: String, // Slug sản phẩm
     salePrice: { type: Number }, // Giá khuyến mãi
     categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: true }, // ID danh mục
     images: [String], // Mảng các ảnh sản phẩm

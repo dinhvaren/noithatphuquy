@@ -4,43 +4,45 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Chỉnh Sửa Danh Mục</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm" method="POST" action="/admin/categories/{{categoryId._id}}/edit">
-                    <input type="hidden" name="categoryId" value="{{categoryId._id}}">
-                    
+                <form id="editCategoryForm" method="POST" action="/admin/categories/{{category._id}}/edit?_method=PUT">
+                    <input type="hidden" name="categoryId" value="{{category._id}}">
+
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" value="{{categoryId.name}}" required>
+                        <input type="text" class="form-control" name="name" value="{{category.name}}" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description" rows="3">{{categoryId.description}}</textarea>
+                        <textarea class="form-control" name="description" rows="3">{{category.description}}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Hình ảnh</label>
                         <input type="file" class="form-control" name="image" accept="image/*">
-                        {{#if categoryId.image}}
-                            <div class="mt-2">
-                                <img src="{{categoryId.image}}" alt="Hình ảnh danh mục" class="img-thumbnail" style="max-height: 100px;">
-                            </div>
+                        {{#if category.image}}
+                        <div class="mt-2">
+                            <img src="{{category.image}}" alt="Hình ảnh danh mục" class="img-thumbnail"
+                                style="max-height: 100px;">
+                        </div>
                         {{/if}}
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="isActive" required>
-                            <option value="true" {{#if categoryId.isActive}}selected{{/if}}>Hoạt động</option>
-                            <option value="false" {{#if (not categoryId.isActive)}}selected{{/if}}>Không hoạt động</option>
+                            <option value="true" {{#if category.isActive}}selected{{/if}}>Hoạt động</option>
+                            <option value="false" {{#if (not category.isActive)}}selected{{/if}}>Không hoạt động
+                            </option>
                         </select>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="saveEditCategory">
                             <i class="bi bi-save"></i> Lưu thay đổi
                         </button>
                     </div>
@@ -51,17 +53,54 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('editCategoryForm');
-    
-    form.addEventListener('submit', function(e) {
-        const name = form.querySelector('[name="name"]').value;
+    document.addEventListener('DOMContentLoaded', function() {
+        const editModal = document.getElementById('editCategoryModal');
         
-        if (!name) {
-            e.preventDefault();
-            showNotification('Lỗi', 'Tên danh mục không được để trống!', 'error');
-            return;
-        }
+        // Xử lý sự kiện khi modal được ẩn
+        editModal.addEventListener('hidden.bs.modal', function () {
+            // Xóa modal-backdrop
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.classList.remove('show');
+                backdrop.classList.add('hide');
+                setTimeout(() => {
+                    backdrop.remove();
+                }, 200);
+            }
+            // Xóa class modal-open khỏi body
+            document.body.classList.remove('modal-open');
+            // Xóa inline style của body
+            document.body.style.removeProperty('padding-right');
+            document.body.style.removeProperty('overflow');
+        });
+
+        document.querySelectorAll('.edit-category').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const categoryId = e.target.dataset.id;
+                const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+
+                const row = e.target.closest('tr');
+                const name = row.cells[1].textContent;
+                const description = row.cells[2].textContent;
+                // Mặc định là true nếu không tìm thấy trạng thái
+                const isActive = 'true';
+
+                const form = document.getElementById('editCategoryForm');
+                form.querySelector('[name="categoryId"]').value = categoryId;
+                form.querySelector('[name="name"]').value = name;
+                form.querySelector('[name="description"]').value = description;
+                form.querySelector('[name="isActive"]').value = isActive;
+
+                modal.show();
+            });
+        });
+
+        document.getElementById('saveEditCategory').addEventListener('click', () => {
+            const form = document.getElementById('editCategoryForm');
+            if (form.checkValidity()) {
+                const categoryId = form.querySelector('[name="categoryId"]').value;
+                showNotification('Thành công', `Đã cập nhật thông tin danh mục ${categoryId} thành công!`);
+            }
+        });
     });
-});
-</script> 
+</script>

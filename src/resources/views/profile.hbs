@@ -1,0 +1,140 @@
+{{> header_2}}
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    {{#if user.avatar}}
+                        <img src="{{user.avatar}}" alt="Avatar" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                    {{else}}
+                        <img src="/images/default-avatar.png" alt="Avatar" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                    {{/if}}
+                    <h5 class="mb-1">{{user.username}}</h5>
+                    <p class="text-muted small mb-3">Thành viên từ {{user.createdAt}}</p>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="/profile" class="list-group-item list-group-item-action active">
+                        <i class="bi bi-person me-2"></i>Thông tin cá nhân
+                    </a>
+                    <a href="/orders" class="list-group-item list-group-item-action">
+                        <i class="bi bi-bag me-2"></i>Đơn hàng của tôi
+                    </a>
+                    <a href="/wishlist" class="list-group-item list-group-item-action">
+                        <i class="bi bi-heart me-2"></i>Sản phẩm yêu thích
+                    </a>
+                    <a href="/change-password" class="list-group-item list-group-item-action">
+                        <i class="bi bi-key me-2"></i>Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">Thông tin cá nhân</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/profile/update" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control" id="fullName" name="fullName" value="{{user.fullName}}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" value="{{user.email}}" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{user.phone}}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="birthday" class="form-label">Ngày sinh</label>
+                                <input type="date" class="form-control" id="birthday" name="birthday" value="{{user.birthday}}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa chỉ</label>
+                            <textarea class="form-control" id="address" name="address" rows="2">{{user.address}}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="avatar" class="form-label">Ảnh đại diện</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
+                            {{#if user.avatar}}
+                                <div class="mt-2">
+                                    <img src="{{user.avatar}}" alt="Avatar" class="rounded" style="width: 100px; height: 100px; object-fit: cover;">
+                                </div>
+                            {{/if}}
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>Lưu thay đổi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.list-group-item {
+    border: none;
+    padding: 0.75rem 1.25rem;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    color: #C19977;
+}
+
+.list-group-item.active {
+    background-color: #C19977;
+    border-color: #C19977;
+}
+
+.list-group-item.active:hover {
+    background-color: #b38a68;
+    border-color: #b38a68;
+    color: white;
+}
+
+.list-group-item i {
+    width: 1.2rem;
+}
+
+.card {
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 1.25rem;
+}
+
+.form-control:focus {
+    border-color: #C19977;
+    box-shadow: 0 0 0 0.2rem rgba(193, 153, 119, 0.25);
+}
+
+.btn-primary {
+    background-color: #C19977;
+    border-color: #C19977;
+}
+
+.btn-primary:hover {
+    background-color: #b38a68;
+    border-color: #b38a68;
+}
+</style>
+
+{{> footer}}

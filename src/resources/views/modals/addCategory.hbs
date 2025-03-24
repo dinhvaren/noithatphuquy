@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/categories/create" method="POST" id="addCategoryForm">
+                <form action="/admin/categories/create" method="POST" id="addCategoryForm" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
                         <input type="text" class="form-control" name="name" required
@@ -58,5 +58,21 @@
             form.reportValidity();
         }
     });
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('addCategoryForm');
+        const nameInput = form.querySelector('[name="name"]');
+        const descriptionInput = form.querySelector('[name="description"]');
+
+        form.addEventListener('submit', function(e) {
+            const name = nameInput.value;
+            const description = descriptionInput.value;
+
+            if (!name || !description) {
+                e.preventDefault();
+                showNotification('Lỗi', 'Vui lòng điền đầy đủ thông tin!');
+            }
+        });
+    });
+    
 
 </script>

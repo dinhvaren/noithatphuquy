@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Chỉnh sửa thông tin người dùng</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -51,45 +51,67 @@
 </div>
 
 <script>
-    // Xử lý chỉnh sửa người dùng
-    document.querySelectorAll('.edit-user').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const userId = e.target.dataset.id;
-            const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-
-            // Lấy thông tin người dùng từ hàng trong bảng
-            const row = e.target.closest('tr');
-            const username = row.cells[1].textContent;
-            const email = row.cells[2].textContent;
-            const role = row.cells[3].textContent;
-            const status = row.cells[4].querySelector('.badge').textContent.trim() === 'Hoạt động' ? 'active' : 'inactive';
-
-            // Điền thông tin vào form
-            const form = document.getElementById('editUserForm');
-            form.querySelector('[name="username"]').value = username;
-            form.querySelector('[name="email"]').value = email;
-            form.querySelector('[name="role"]').value = role.toLowerCase();
-            form.querySelector('[name="status"]').value = status;
-
-            // Lưu userId vào form để sử dụng khi lưu
-            form.dataset.userId = userId;
-
-            // Hiển thị modal
-            modal.show();
+    document.addEventListener('DOMContentLoaded', function() {
+        const editModal = document.getElementById('editUserModal');
+        
+        // Xử lý sự kiện khi modal được ẩn
+        editModal.addEventListener('hidden.bs.modal', function () {
+            // Xóa modal-backdrop
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.classList.remove('show');
+                backdrop.classList.add('hide');
+                setTimeout(() => {
+                    backdrop.remove();
+                }, 200);
+            }
+            // Xóa class modal-open khỏi body
+            document.body.classList.remove('modal-open');
+            // Xóa inline style của body
+            document.body.style.removeProperty('padding-right');
+            document.body.style.removeProperty('overflow');
         });
-    });
 
-    // Xử lý lưu thông tin người dùng
-    document.getElementById('saveUser').addEventListener('click', () => {
-        const form = document.getElementById('editUserForm');
-        if (form.checkValidity()) {
-            const userId = form.dataset.userId;
-            showNotification('Thành công', `Đã cập nhật thông tin người dùng ${userId} thành công!`);
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
-            modal.hide();
-            form.reset();
-        } else {
-            form.reportValidity();
-        }
+        // Xử lý chỉnh sửa người dùng
+        document.querySelectorAll('.edit-user').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const userId = e.target.dataset.id;
+                const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+
+                // Lấy thông tin người dùng từ hàng trong bảng
+                const row = e.target.closest('tr');
+                const username = row.cells[1].textContent;
+                const email = row.cells[2].textContent;
+                const role = row.cells[3].textContent;
+                const status = row.cells[4].querySelector('.badge').textContent.trim() === 'Hoạt động' ? 'active' : 'inactive';
+
+                // Điền thông tin vào form
+                const form = document.getElementById('editUserForm');
+                form.querySelector('[name="username"]').value = username;
+                form.querySelector('[name="email"]').value = email;
+                form.querySelector('[name="role"]').value = role.toLowerCase();
+                form.querySelector('[name="status"]').value = status;
+
+                // Lưu userId vào form để sử dụng khi lưu
+                form.dataset.userId = userId;
+
+                // Hiển thị modal
+                modal.show();
+            });
+        });
+
+        // Xử lý lưu thông tin người dùng
+        document.getElementById('saveUser').addEventListener('click', () => {
+            const form = document.getElementById('editUserForm');
+            if (form.checkValidity()) {
+                const userId = form.dataset.userId;
+                showNotification('Thành công', `Đã cập nhật thông tin người dùng ${userId} thành công!`);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+                modal.hide();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        });
     });
 </script>
