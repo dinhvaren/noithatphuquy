@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {HomeController} = require('../app/controller/index');
+const { HomeController } = require('../app/controller/index');
 
 router.post('/signup', HomeController.signup);
+router.post('/login', HomeController.login);
+router.get('/logout', HomeController.login);
 router.get('/interior-design', HomeController.interiorDesign);
 router.get('/profile', HomeController.profile);
 router.get('/orders', HomeController.orders);

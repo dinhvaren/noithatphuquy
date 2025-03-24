@@ -6,11 +6,10 @@ router.post('/products/create', AdminController.createProductModal);
 router.get('/products/create', AdminController.createProductModal);
 router.put('/products/update/:id', AdminController.editProductModal);
 router.get('/products/update/:id', AdminController.editProductModal);
-
+router.put('/categories/:id/edit', AdminController.updateCategoryModal);
+router.get('/categories/:id', AdminController.editCategoryModal);
 router.post('/categories/create', AdminController.createCategoryModal);
-router.put('/categories/:id/edit', AdminController.editCategoryModal);
-
-
+router.post('/logout', AdminController.logout);
 router.post('/login', AdminController.login);
 router.get('/login', AdminController.login);
 router.get('/', AdminController.index);

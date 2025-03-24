@@ -2,6 +2,8 @@ const {User} = require('../models/index');
 const bcrypt = require('bcryptjs'); // Thư viện mã hóa mật khẩu
 const jwt = require('jsonwebtoken'); // JWT để tạo token đăng nhập
 const mongoose = require('mongoose'); // Thêm mongoose để tạo ObjectId
+require('dotenv').config();
+
 
 class HomeController {
     // Hiển thị trang chủ
@@ -11,7 +13,9 @@ class HomeController {
 
     // Hiển thị trang chủ sau khi đăng nhập
     home(req, res, next) {
-        res.render('HomePage', { page: { title: 'Trang chủ' } });
+        User.findById(req.user._id).then(user => {
+            res.render('HomePage', { page: { title: 'Trang chủ' }, user });
+        })
     }
 
     // Xử lý đăng nhập
@@ -43,15 +47,15 @@ class HomeController {
                     username: user.username,
                     role: user.role
                 },
-                process.env.JWT_SECRET || 'your-secret-key',
-                { expiresIn: '24h' }
+                process.env.JWT_SECRET || '5bc5c982350cf02973489f6e33d7157d9d70659d36850479140e871ad8222edb',
+                { expiresIn: '1h' }
             );
 
             // Lưu token vào cookie
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+                maxAge: 1 * 60 * 60 * 1000 // 24 giờ
             });
 
             res.status(200).json({ 
@@ -122,7 +126,7 @@ class HomeController {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+                maxAge: 24 * 60 * 60 * 1000 // 1 giờ
             });
 
             res.status(201).json({ 
@@ -142,7 +146,9 @@ class HomeController {
 
     // Hiển thị trang thông tin cá nhân
     profile(req, res, next) {
-        res.render('Profile', { page: { title: 'Thông tin cá nhân' } });
+        User.findById(req.user._id).then(user => {
+            res.render('Profile', { page: { title: 'Thông tin cá nhân' }, user });
+        });
     }
 
     // Hiển thị trang danh sách đơn hàng
@@ -201,6 +207,7 @@ class HomeController {
             // Xóa token khỏi cookie
             res.clearCookie('token');
             res.status(200).json({ message: 'Đăng xuất thành công' });
+            res.redirect('/');
         } catch (error) {
             console.error('Lỗi đăng xuất:', error);
             res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });

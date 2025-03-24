@@ -4,7 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Chỉnh sửa thông tin người dùng</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -29,8 +30,9 @@
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="status" required>
-                            <option value="active" {{#if (eq users.status "active") }}selected{{/if}}>Hoạt động</option>
-                            <option value="inactive" {{#if (eq users.status "inactive") }}selected{{/if}}>Khóa</option>
+                            <option value="active" {{#if (eq users.status "active" ) }}selected{{/if}}>Hoạt động
+                            </option>
+                            <option value="inactive" {{#if (eq users.status "inactive" ) }}selected{{/if}}>Khóa</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -51,9 +53,9 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const editModal = document.getElementById('editUserModal');
-        
+
         // Xử lý sự kiện khi modal được ẩn
         editModal.addEventListener('hidden.bs.modal', function () {
             // Xóa modal-backdrop
@@ -71,7 +73,6 @@
             document.body.style.removeProperty('padding-right');
             document.body.style.removeProperty('overflow');
         });
-
         // Xử lý chỉnh sửa người dùng
         document.querySelectorAll('.edit-user').forEach(button => {
             button.addEventListener('click', (e) => {

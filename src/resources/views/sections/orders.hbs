@@ -1,46 +1,238 @@
 <!-- Orders Section -->
 <div id="orders" class="section d-none">
-    <h2 class="section-title">Quản lý đơn hàng</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">Quản lý đơn hàng</h2>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Mã đơn hàng</th>
+                    <th>ID</th>
                     <th>Khách hàng</th>
                     <th>Tổng tiền</th>
-                    <th>Trạng thái</th>
                     <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each orders}}
                 <tr>
-                    <td>{{this.orderNumber}}</td>
-                    <td>{{this.userId.fullName}}</td>
-                    <td>{{formatCurrency this.totalAmount}}đ</td>
+                    <td>DH001</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>15.000.000đ</td>
+                    <td>20/03/2024</td>
                     <td>
-                        <select class="form-select form-select-sm order-status" data-id="{{this._id}}">
-                            <option value="pending" {{#if (eq this.orderStatus 'pending')}}selected{{/if}} 
-                                    class="status-badge pending">Chờ xử lý</option>
-                            <option value="processing" {{#if (eq this.orderStatus 'processing')}}selected{{/if}}
-                                    class="status-badge processing">Đang xử lý</option>
-                            <option value="completed" {{#if (eq this.orderStatus 'completed')}}selected{{/if}}
-                                    class="status-badge completed">Hoàn thành</option>
-                            <option value="cancelled" {{#if (eq this.orderStatus 'cancelled')}}selected{{/if}}
-                                    class="status-badge cancelled">Đã hủy</option>
-                        </select>
+                        <span class="badge bg-warning">Chờ xác nhận</span>
                     </td>
-                    <td>{{formatDate this.createdAt}}</td>
                     <td class="action-buttons">
-                        <button class="btn btn-sm btn-info view-order" data-id="{{this._id}}"
+                        <button class="btn btn-sm btn-info view-order" data-id="DH001"
                                 data-bs-toggle="modal" data-bs-target="#viewOrderModal">
                             <i class="bi bi-eye"></i>
                         </button>
+                        <button class="btn btn-sm btn-primary update-status" data-id="DH001"
+                                data-bs-toggle="modal" data-bs-target="#updateOrderStatusModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
                     </td>
                 </tr>
-                {{/each}}
+                <tr>
+                    <td>DH002</td>
+                    <td>Trần Thị B</td>
+                    <td>8.500.000đ</td>
+                    <td>19/03/2024</td>
+                    <td>
+                        <span class="badge bg-info">Đã xác nhận</span>
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info view-order" data-id="DH002"
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary update-status" data-id="DH002"
+                                data-bs-toggle="modal" data-bs-target="#updateOrderStatusModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DH003</td>
+                    <td>Lê Văn C</td>
+                    <td>25.000.000đ</td>
+                    <td>18/03/2024</td>
+                    <td>
+                        <span class="badge bg-primary">Đang giao</span>
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info view-order" data-id="DH003"
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary update-status" data-id="DH003"
+                                data-bs-toggle="modal" data-bs-target="#updateOrderStatusModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DH004</td>
+                    <td>Phạm Thị D</td>
+                    <td>12.000.000đ</td>
+                    <td>17/03/2024</td>
+                    <td>
+                        <span class="badge bg-success">Đã giao</span>
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info view-order" data-id="DH004"
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary update-status" data-id="DH004"
+                                data-bs-toggle="modal" data-bs-target="#updateOrderStatusModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DH005</td>
+                    <td>Hoàng Văn E</td>
+                    <td>5.000.000đ</td>
+                    <td>16/03/2024</td>
+                    <td>
+                        <span class="badge bg-danger">Đã hủy</span>
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-info view-order" data-id="DH005"
+                                data-bs-toggle="modal" data-bs-target="#viewOrderModal">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary update-status" data-id="DH005"
+                                data-bs-toggle="modal" data-bs-target="#updateOrderStatusModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-</div> 
+</div>
+
+<!-- Modal xem chi tiết đơn hàng -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn hàng #DH001</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>Thông tin khách hàng</h6>
+                        <p><strong>Tên:</strong> Nguyễn Văn A</p>
+                        <p><strong>Email:</strong> nguyenvana@email.com</p>
+                        <p><strong>Số điện thoại:</strong> 0123456789</p>
+                        <p><strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Thông tin đơn hàng</h6>
+                        <p><strong>Mã đơn hàng:</strong> DH001</p>
+                        <p><strong>Ngày đặt:</strong> 20/03/2024</p>
+                        <p><strong>Trạng thái:</strong> <span class="badge bg-warning">Chờ xác nhận</span></p>
+                        <p><strong>Phương thức thanh toán:</strong> Thanh toán khi nhận hàng</p>
+                    </div>
+                </div>
+                <h6>Chi tiết sản phẩm</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sofa góc chữ L</td>
+                                <td>12.000.000đ</td>
+                                <td>1</td>
+                                <td>12.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td>Bàn trà gỗ sồi</td>
+                                <td>3.000.000đ</td>
+                                <td>1</td>
+                                <td>3.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tổng tiền sản phẩm:</strong></td>
+                                <td>15.000.000đ</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Phí vận chuyển:</strong></td>
+                                <td>0đ</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Tổng thanh toán:</strong></td>
+                                <td><strong>15.000.000đ</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cập nhật trạng thái -->
+<div class="modal fade" id="updateOrderStatusModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cập nhật trạng thái đơn hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="updateOrderStatusForm" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái mới</label>
+                        <select class="form-select" name="status" required>
+                            <option value="pending">Chờ xác nhận</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="shipping">Đang giao</option>
+                            <option value="delivered">Đã giao</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ghi chú</label>
+                        <textarea class="form-control" name="note" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Xử lý cập nhật trạng thái đơn hàng
+        document.querySelectorAll('.update-status').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const orderId = this.getAttribute('data-id');
+                const form = document.getElementById('updateOrderStatusForm');
+                form.action = `/admin/orders/${orderId}/status`;
+            });
+        });
+    });
+</script> 

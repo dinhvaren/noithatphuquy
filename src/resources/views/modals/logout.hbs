@@ -14,7 +14,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary" id="confirmLogout">Đăng xuất</button>
+                <form id="logoutForm" method="POST" action="/admin/logout" style="display: inline;">
+                    <input type="hidden" name="_method" value="POST">
+                    <button type="submit" class="btn btn-primary">Đăng xuất</button>
+                </form>
             </div>
         </div>
     </div>
@@ -24,6 +27,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const logoutLink = document.querySelector('a[href="/admin/login"]');
     const logoutModalElement = document.getElementById('logoutModal');
+    const logoutForm = document.getElementById('logoutForm');
     
     if (logoutModalElement) {
         const logoutModal = new bootstrap.Modal(logoutModalElement);
@@ -35,12 +39,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        const confirmLogoutBtn = document.getElementById('confirmLogout');
-        if (confirmLogoutBtn) {
-            confirmLogoutBtn.addEventListener('click', function() {
-                window.location.href = '/admin/login';
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', function(e) {
+                // Xóa tất cả cookies
+                document.cookie.split(";").forEach(function(c) { 
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+                });
+                
+                // Xóa sessionStorage và localStorage
+                sessionStorage.clear();
+                localStorage.clear();
             });
         }
+
+        // Xử lý sự kiện khi modal đóng
+        logoutModalElement.addEventListener('hidden.bs.modal', function () {
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
     }
 });
 </script> 

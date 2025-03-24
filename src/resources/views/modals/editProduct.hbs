@@ -4,8 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Chỉnh sửa sản phẩm</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> 
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
             <div class="modal-body">
                 <form id="editProductForm" action="/admin/products/{{productId._id}}/edit?_method=PUT" method="POST">
                     <div class="mb-3">
@@ -120,9 +121,9 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const editModal = document.getElementById('editProductModal');
-        
+
         // Xử lý sự kiện khi modal được ẩn
         editModal.addEventListener('hidden.bs.modal', function () {
             // Xóa modal-backdrop
@@ -140,30 +141,29 @@
             document.body.style.removeProperty('padding-right');
             document.body.style.removeProperty('overflow');
         });
-
         // Xử lý chỉnh sửa sản phẩm
         document.querySelectorAll('.edit-product').forEach(button => {
             button.addEventListener('click', (e) => {
                 const productId = e.target.dataset.id;
                 const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-                
+
                 // Lấy thông tin sản phẩm từ hàng trong bảng
                 const row = e.target.closest('tr');
                 const name = row.cells[2].textContent;
                 const price = row.cells[3].textContent.replace(/[^\d]/g, '');
                 const category = row.cells[4].textContent;
                 const status = row.cells[5].querySelector('.badge').textContent.trim() === 'Còn hàng' ? 'in_stock' : 'out_of_stock';
-                
+
                 // Điền thông tin vào form
                 const form = document.getElementById('editProductForm');
                 form.querySelector('[name="name"]').value = name;
                 form.querySelector('[name="price"]').value = price;
                 form.querySelector('[name="category"]').value = category;
                 form.querySelector('[name="status"]').value = status;
-                
+
                 // Lưu productId vào form để sử dụng khi lưu
                 form.dataset.productId = productId;
-                
+
                 // Hiển thị modal
                 modal.show();
             });
@@ -183,4 +183,4 @@
             }
         });
     });
-</script> 
+</script>

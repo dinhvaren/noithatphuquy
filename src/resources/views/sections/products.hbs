@@ -25,7 +25,7 @@
                     <td>{{this._id}}</td>
                     <td><img src="{{this.images.[0]}}" alt="{{this.name}}" style="width: 50px; height: 50px;"></td>
                     <td>{{this.name}}</td>
-                    <td>{{formatCurrency this.price}}đ</td>
+                    <td>{{formatCurrency this.price}}</td>
                     <td>{{this.categoryId.name}}</td>
                     <td>
                         {{#if this.isActive}}
@@ -49,4 +49,61 @@
             </tbody>
         </table>
     </div>
-</div> 
+</div>
+
+<!-- Modal xóa sản phẩm -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+                <p class="text-danger">Hành động này không thể hoàn tác!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form id="deleteProductForm" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Khởi tạo tất cả các modal với cấu hình mặc định
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        new bootstrap.Modal(modal, {
+            backdrop: true,
+            keyboard: true
+        });
+
+        // Xử lý sự kiện khi modal đóng
+        modal.addEventListener('hidden.bs.modal', function () {
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
+    });
+
+    // Xử lý sự kiện click nút xóa
+    document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-id');
+            const form = document.getElementById('deleteProductForm');
+            form.action = `/admin/products/${productId}`;
+        });
+    });
+});
+</script>

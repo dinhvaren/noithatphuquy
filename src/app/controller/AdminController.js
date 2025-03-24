@@ -70,7 +70,7 @@ class AdminController {
             res.cookie('adminToken', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+                maxAge: 1 * 60 * 60 * 1000 // 1 giờ
             });
 
             res.status(200).json({
@@ -103,7 +103,7 @@ class AdminController {
         try {
             // Xóa token khỏi cookie
             res.clearCookie('adminToken');
-            res.status(200).json({ message: 'Đăng xuất thành công' });
+            res.redirect('/admin/login');
         } catch (error) {
             console.error('Lỗi đăng xuất:', error);
             res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
@@ -256,9 +256,12 @@ class AdminController {
     }
 
     updateCategoryModal(req, res, next) {
-        Category.updateOne(req.params.id).lean()
+        Category.updateOne({_id: req.params.id}, req.body).lean()
         .then(() => {
-            res.redirect('back');
+            res.redirect('back', {
+                message: 'Cập nhật danh mục thành công',
+                layout: false,
+            });
         })
         .catch(next);
     }

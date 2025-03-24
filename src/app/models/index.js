@@ -154,6 +154,31 @@ const ContactSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
+// Schema cho danh sách yêu thích (Wishlist)
+const WishlistSchema = new Schema({
+    userId: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
+    },
+    productId: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'Product', 
+        required: true 
+    },
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    },
+    updatedAt: { 
+        type: Date, 
+        default: Date.now 
+    }
+});
+
+// Thêm index cho userId và productId để tối ưu truy vấn
+WishlistSchema.index({ userId: 1, productId: 1 }, { unique: true });
+
 // Tạo models
 const Category = mongoose.model('Category', CategorySchema);
 const Product = mongoose.model('Product', ProductSchema);
@@ -163,6 +188,7 @@ const Order = mongoose.model('Order', OrderSchema);
 const Review = mongoose.model('Review', ReviewSchema);
 const Post = mongoose.model('Post', PostSchema);
 const Contact = mongoose.model('Contact', ContactSchema);
+const Wishlist = mongoose.model('Wishlist', WishlistSchema);
 
 // Export models
 module.exports = {
@@ -173,5 +199,6 @@ module.exports = {
     Order,
     Review,
     Post,
-    Contact
+    Contact,
+    Wishlist
 }; 
