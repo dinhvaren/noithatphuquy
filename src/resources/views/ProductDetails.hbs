@@ -1,3 +1,10 @@
+{{#if user}}
+{{> header_2}}
+{{else}}
+{{> header}}
+{{>modalLogin}}
+{{>modalSignup}}
+{{/if}}
 
     <style>
         .product-gallery {
@@ -236,8 +243,6 @@
     </style>
 </head>
 <body>
-    {{> header}}
-
     <div class="container py-5">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-4">

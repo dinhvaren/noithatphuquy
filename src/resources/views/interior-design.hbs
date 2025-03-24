@@ -1,13 +1,18 @@
+{{#if user}}
+{{> header_2}}
+{{else}}
 {{> header}}
 {{>modalLogin}}
 {{>modalSignup}}
+{{/if}}
+
 <style>
     .img-fluid {
         width: 100%;
         height: 300px;
         object-fit: cover;
     }
-    
+
     .card-img-top {
         width: 100%;
         height: 250px;
@@ -26,14 +31,20 @@
     <!-- Giới thiệu -->
     <div class="row mb-5">
         <div class="col-md-6">
-            <img src="/img/img_interior/thietkenoithat.jpg" alt="Thiết kế nội thất hiện đại" class="img-fluid rounded shadow">
+            <img src="/img/img_interior/thietkenoithat.jpg" alt="Thiết kế nội thất hiện đại"
+                class="img-fluid rounded shadow">
             <h2 class="mt-4">Về Chúng Tôi</h2>
-            <p>Với hơn 10 năm kinh nghiệm trong lĩnh vực thiết kế nội thất, chúng tôi tự hào mang đến những giải pháp thiết kế sáng tạo và độc đáo cho không gian sống của bạn. Đội ngũ thiết kế giàu kinh nghiệm của chúng tôi luôn nỗ lực để tạo ra những không gian sống hoàn hảo, kết hợp giữa tính thẩm mỹ và công năng.</p>
+            <p>Với hơn 10 năm kinh nghiệm trong lĩnh vực thiết kế nội thất, chúng tôi tự hào mang đến những giải pháp
+                thiết kế sáng tạo và độc đáo cho không gian sống của bạn. Đội ngũ thiết kế giàu kinh nghiệm của chúng
+                tôi luôn nỗ lực để tạo ra những không gian sống hoàn hảo, kết hợp giữa tính thẩm mỹ và công năng.</p>
         </div>
         <div class="col-md-6">
-            <img src="/img/img_interior/thietkenoithat1.jpg" alt="Thiết kế nội thất phong cách" class="img-fluid rounded shadow">
+            <img src="/img/img_interior/thietkenoithat1.jpg" alt="Thiết kế nội thất phong cách"
+                class="img-fluid rounded shadow">
             <h2 class="mt-4">Phong Cách Thiết Kế</h2>
-            <p>Chúng tôi mang đến đa dạng phong cách thiết kế, từ hiện đại đến cổ điển, từ tối giản đến sang trọng. Mỗi dự án đều được tối ưu hóa theo nhu cầu và sở thích riêng của khách hàng, đảm bảo tạo ra không gian sống độc đáo và ấn tượng.</p>
+            <p>Chúng tôi mang đến đa dạng phong cách thiết kế, từ hiện đại đến cổ điển, từ tối giản đến sang trọng. Mỗi
+                dự án đều được tối ưu hóa theo nhu cầu và sở thích riêng của khách hàng, đảm bảo tạo ra không gian sống
+                độc đáo và ấn tượng.</p>
         </div>
     </div>
 
@@ -47,7 +58,8 @@
                         <img src="/img/img_interior/thietkenoithat2.jpg" class="card-img-top" alt="Tư vấn thiết kế">
                         <div class="card-body">
                             <h5 class="card-title">1. Tư Vấn & Lên Ý Tưởng</h5>
-                            <p class="card-text">Trao đổi chi tiết về nhu cầu, sở thích và ngân sách của khách hàng để xây dựng ý tưởng thiết kế phù hợp.</p>
+                            <p class="card-text">Trao đổi chi tiết về nhu cầu, sở thích và ngân sách của khách hàng để
+                                xây dựng ý tưởng thiết kế phù hợp.</p>
                         </div>
                     </div>
                 </div>
@@ -56,7 +68,8 @@
                         <img src="/img/img_interior/thietkenoithat3.jpg" class="card-img-top" alt="Thiết kế 3D">
                         <div class="card-body">
                             <h5 class="card-title">2. Thiết Kế 3D</h5>
-                            <p class="card-text">Tạo bản vẽ 3D chi tiết để khách hàng có thể hình dung rõ ràng về không gian sống trong tương lai.</p>
+                            <p class="card-text">Tạo bản vẽ 3D chi tiết để khách hàng có thể hình dung rõ ràng về không
+                                gian sống trong tương lai.</p>
                         </div>
                     </div>
                 </div>
@@ -65,7 +78,8 @@
                         <img src="/img/img_interior/thietkenoithat4.jpg" class="card-img-top" alt="Thi công">
                         <div class="card-body">
                             <h5 class="card-title">3. Thi Công</h5>
-                            <p class="card-text">Thực hiện thi công theo đúng bản vẽ thiết kế, đảm bảo chất lượng và tiến độ công trình.</p>
+                            <p class="card-text">Thực hiện thi công theo đúng bản vẽ thiết kế, đảm bảo chất lượng và
+                                tiến độ công trình.</p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +97,8 @@
                         <img src="/img/img_interior/thietkenoithat6.jpg" class="card-img-top" alt="Dự án 1">
                         <div class="card-body">
                             <h5 class="card-title">Biệt Thự Hiện Đại</h5>
-                            <p class="card-text">Thiết kế nội thất cho biệt thự 3 tầng với phong cách hiện đại, sang trọng.</p>
+                            <p class="card-text">Thiết kế nội thất cho biệt thự 3 tầng với phong cách hiện đại, sang
+                                trọng.</p>
                         </div>
                     </div>
                 </div>
@@ -110,4 +125,4 @@
     </div>
 </div>
 
-{{> footer}} 
+{{> footer}}
