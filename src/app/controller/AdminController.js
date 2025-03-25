@@ -198,9 +198,47 @@ class AdminController {
 
     // Modal chỉnh sửa sản phẩm
     editProductModal(req, res, next) {
-        const productId = req.params._id;
-        console.log(productId);
-        res.render('modals/editProduct', { layout: false, productId });
+        Promise.all([
+            Product.findById(req.params.id).lean(),
+            Category.find().lean()
+        ])
+        .then(([product, categories]) => {
+            if (!product) {
+                return res.status(404).send('Product not found');
+            }
+            res.render('modals/editProduct', { 
+                layout: false, 
+                product,
+                categories
+            });
+        })  
+        .catch(next);
+    }
+
+    updateProductModal(req, res, next) {
+        const { name, price, salePrice, category, description, isActive, specifications } = req.body;
+        const updateData = {
+            name,
+            price,
+            salePrice: salePrice || undefined,
+            category,
+            description,
+            isActive: isActive === 'true',
+            specifications
+        };
+
+        // Xử lý hình ảnh nếu có
+        if (req.files && req.files.images) {
+            const images = Array.isArray(req.files.images) ? req.files.images : [req.files.images];
+            const imageUrls = images.map(file => '/uploads/' + file.filename);
+            updateData.images = imageUrls;
+        }
+        
+        Product.updateOne({ _id: req.params.id }, updateData)
+        .then(() => {
+            res.redirect('back');
+        })
+        .catch(next);
     }
 
     // Modal xem chi tiết sản phẩm
@@ -284,20 +322,34 @@ class AdminController {
         res.render('modals/updateOrderStatus', { layout: false, orderId });
     }
 
-    // Modal xem chi tiết người dùng
-    viewUserModal(req, res, next) {
-        const userId = req.params.id;
-        res.render('modals/viewUser', { layout: false, userId });
-    }
-
     // Modal chỉnh sửa thông tin người dùng
     editUserModal(req, res, next) {
-        User.updateOne(req.params.id).lean()
+        User.findById(req.params.id).lean()
             .then(user => {
                 if (!user) {
                     return res.status(404).send('User not found');
                 }
                 res.render('modals/editUser', { layout: false, user });
+            })
+    }
+
+    updateUserModal(req, res, next) {
+        const { username, email, role, status, password } = req.body;
+        const updateData = {
+            username: username,
+            email: email,
+            role: role,
+            isActive: status,
+        };
+        
+        // Chỉ cập nhật password nếu có nhập mới
+        if (password && password.trim() !== '') {
+            updateData.password = password;
+        }
+
+        User.updateOne({_id: req.params.id}, updateData)
+            .then(user => {
+                res.redirect('back');
             })
             .catch(next);
     }

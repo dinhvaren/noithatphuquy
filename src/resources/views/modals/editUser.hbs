@@ -8,43 +8,42 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                <form action="/admin/users/edit:{{users._id}}?_method=PUT" method="POST" id="editUserForm">
+                <form method="POST" id="editUserForm" action="/admin/users/{{users._id}}/edit">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="userId" id="userIdInput">
                     <div class="mb-3">
                         <label class="form-label">Tên người dùng</label>
-                        <input type="text" class="form-control" name="username" value="{{users.username}}" required>
+                        <input type="text" class="form-control" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" value="{{users.email}}" required>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Vai trò</label>
                         <select class="form-select" name="role" required>
-                            <option value="admin" {{#if (eq users.role "admin" )}}selected{{/if}}>Quản trị viên</option>
-                            <option value="staff" {{#if (eq users.role "staff" )}}selected{{/if}}>Nhân viên</option>
-                            <option value="user" {{#if (eq users.role "user" )}}selected{{/if}}>Người dùng</option>
-
+                            <option value="admin">Quản trị viên</option>
+                            <option value="staff">Nhân viên</option>
+                            <option value="user">Người dùng</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="status" required>
-                            <option value="active" {{#if (eq users.status "active" ) }}selected{{/if}}>Hoạt động
-                            </option>
-                            <option value="inactive" {{#if (eq users.status "inactive" ) }}selected{{/if}}>Khóa</option>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Khóa</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mật khẩu mới</label>
-                        <input type="password" class="form-control" name="password" value="{{users.password}}"
+                        <input type="password" class="form-control" name="password"
                             placeholder="Để trống nếu không muốn thay đổi">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary" id="saveUser">
+                <button type="submit" class="btn btn-primary" form="editUserForm">
                     <i class="bi bi-save"></i> Lưu thay đổi
                 </button>
             </div>
@@ -73,6 +72,7 @@
             document.body.style.removeProperty('padding-right');
             document.body.style.removeProperty('overflow');
         });
+
         // Xử lý chỉnh sửa người dùng
         document.querySelectorAll('.edit-user').forEach(button => {
             button.addEventListener('click', (e) => {
@@ -88,30 +88,33 @@
 
                 // Điền thông tin vào form
                 const form = document.getElementById('editUserForm');
+                const userIdInput = document.getElementById('userIdInput');
+                userIdInput.value = userId;
+
+                form.action = `/admin/users/${userId}/edit`;
                 form.querySelector('[name="username"]').value = username;
                 form.querySelector('[name="email"]').value = email;
                 form.querySelector('[name="role"]').value = role.toLowerCase();
                 form.querySelector('[name="status"]').value = status;
-
-                // Lưu userId vào form để sử dụng khi lưu
-                form.dataset.userId = userId;
+                form.querySelector('[name="password"]').value = '';
 
                 // Hiển thị modal
                 modal.show();
             });
         });
 
-        // Xử lý lưu thông tin người dùng
-        document.getElementById('saveUser').addEventListener('click', () => {
-            const form = document.getElementById('editUserForm');
-            if (form.checkValidity()) {
-                const userId = form.dataset.userId;
-                showNotification('Thành công', `Đã cập nhật thông tin người dùng ${userId} thành công!`);
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
-                modal.hide();
-                form.reset();
+        // Xử lý submit form
+        document.getElementById('editUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (this.checkValidity()) {
+                const formData = new FormData(this);
+                const userId = formData.get('userId');
+
+                // Submit form bình thường
+                this.submit();
             } else {
-                form.reportValidity();
+                this.reportValidity();
             }
         });
     });

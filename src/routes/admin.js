@@ -11,10 +11,14 @@ router.post('/categories/create', AdminController.createCategoryModal);
 // Routes cho sản phẩm
 router.post('/products/create', AdminController.createProductModal);
 router.get('/products/create', AdminController.createProductModal);
-router.put('/products/update/:id', AdminController.editProductModal);
-router.get('/products/update/:id', AdminController.editProductModal);
+router.get('/products/:id/edit', AdminController.editProductModal);
+router.post('/products/:id/edit', AdminController.updateProductModal);
+router.put('/products/:id/edit', AdminController.updateProductModal);
 
 // Routes cho người dùng
+router.get('/users/:id', AdminController.editUserModal);
+router.put('/users/:id/edit', AdminController.updateUserModal);
+router.post('/users/:id/edit', AdminController.updateUserModal);
 router.post('/users/:id', AdminController.deleteUser);
 router.delete('/users/:id', AdminController.deleteUser);
 
