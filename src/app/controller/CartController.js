@@ -24,6 +24,10 @@ class CartController {
     clearCart(req, res) {
         
     }
+    
+    checkout(req, res) {
+        res.render('pages/checkout', { page: { title: 'Thanh toán' } });
+    }
 }
 
 module.exports = new CartController(); 

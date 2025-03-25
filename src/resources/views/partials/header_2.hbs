@@ -1,3 +1,4 @@
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light"
     style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
@@ -26,7 +27,7 @@
                 </li>
 
                 <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle bold-text" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Nội thất phòng khách
                     </a>
@@ -71,7 +72,7 @@
                 </li>
 
                 <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle bold-text" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Nội thất phòng ngủ
                     </a>
@@ -118,7 +119,7 @@
                 </li>
 
                 <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle bold-text" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Nội thất bếp
                     </a>
@@ -164,7 +165,7 @@
                 </li>
 
                 <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle bold-text" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Nội thất văn phòng
                     </a>
@@ -244,64 +245,31 @@
                     <span class="badge rounded-pill bg-danger cart-badge">1</span>
                 </a>
             </div>
-            <!-- Cart Modal -->
-            <div class="modal fade" id="cartModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Giỏ Hàng</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="cart-items">
-                                <!-- Cart Item -->
-                                <div class="cart-item d-flex align-items-center mb-3">
-                                    <img src="/img/giuong2.jpg" alt="Product" class="rounded"
-                                        style="width: 80px; height: 80px; object-fit: cover;">
-                                    <div class="ms-3 flex-grow-1">
-                                        <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
-                                        <div class="d-flex align-items-center">
-                                            <span class="text-muted">8.500.000đ</span>
-                                            <div class="quantity-controls ms-3">
-                                                <button class="btn btn-sm btn-outline-secondary">-</button>
-                                                <span class="mx-2">1</span>
-                                                <button class="btn btn-sm btn-outline-secondary">+</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="btn text-danger ms-3">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <div>
-                                <strong>Tổng tiền:</strong>
-                                <span class="ms-2 text-primary">8.500.000đ</span>
-                            </div>
-                            <button class="btn btn-primary">Thanh Toán</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {{>modalCart}}
             <!-- Login Button - Desktop -->
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     {{#if user.avatar}}
-                        <img src="{{user.avatar}}" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                    <img src="{{user.avatar}}" alt="Avatar" class="rounded-circle me-2"
+                        style="width: 32px; height: 32px; object-fit: cover;">
                     {{else}}
-                        <img src="/images/default-avatar.png" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                    <img src="/images/default-avatar.png" alt="Avatar" class="rounded-circle me-2"
+                        style="width: 32px; height: 32px; object-fit: cover;">
                     {{/if}}
                     <span>{{user.username}}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>Thông tin cá nhân</a>
+                    </li>
                     <li><a class="dropdown-item" href="/orders"><i class="bi bi-bag me-2"></i>Đơn hàng của tôi</a></li>
-                    <li><a class="dropdown-item" href="/wishlist"><i class="bi bi-heart me-2"></i>Sản phẩm yêu thích</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="/wishlist"><i class="bi bi-heart me-2"></i>Sản phẩm yêu thích</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a>
+                    </li>
                 </ul>
             </div>
             <!-- Login Icon - Mobile -->
@@ -487,7 +455,7 @@
             }
 
             // Xử lý click vào overlay
-            overlay.addEventListener("click", function(e) {
+            overlay.addEventListener("click", function (e) {
                 if (e.target === overlay) {
                     closeMenu();
                 }
@@ -502,7 +470,7 @@
             // Thêm xử lý cho các link trong menu
             const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
             navLinks.forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function () {
                     // Chỉ đóng menu nếu đang ở chế độ mobile và link không phải là dropdown
                     if (window.innerWidth < 992 && !this.classList.contains('dropdown-toggle')) {
                         closeMenu();
@@ -531,12 +499,12 @@
         const userDropdown = document.getElementById('userDropdown');
         if (userDropdown) {
             const dropdownInstance = new bootstrap.Dropdown(userDropdown);
-            
+
             // Xử lý sự kiện khi dropdown được hiển thị
             userDropdown.addEventListener('show.bs.dropdown', function () {
                 document.body.classList.add('dropdown-open');
             });
-            
+
             // Xử lý sự kiện khi dropdown bị ẩn
             userDropdown.addEventListener('hide.bs.dropdown', function () {
                 document.body.classList.remove('dropdown-open');
@@ -592,7 +560,7 @@
     }
 
     .nav-link:hover {
-        color: #C19977;
+        color: #C19977 !important;
     }
 
     .dropdown-menu {
@@ -729,7 +697,6 @@
 
         .dropdown-item.bold-text {
             font-weight: 600;
-            color: #C19977;
             margin-top: 0.5rem;
         }
 
@@ -853,5 +820,9 @@
 
     .nav-item.dropdown .dropdown-divider {
         margin: 0.5rem 0;
+    }
+
+    .bold-text {
+        font-weight: 600 !important;
     }
 </style>

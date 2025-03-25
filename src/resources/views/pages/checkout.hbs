@@ -1,0 +1,201 @@
+{{> header_2}}
+<!-- Checkout Page -->
+<div class="container py-5">
+    <div class="row">
+        <!-- Thông tin đặt hàng -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4" style="color: #C19977;">Thông tin đặt hàng</h4>
+                    <form id="checkoutForm">
+                        <!-- Thông tin cá nhân -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Thông tin cá nhân</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Họ và tên</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Địa chỉ giao hàng -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Địa chỉ giao hàng</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tỉnh/Thành phố</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn tỉnh/thành phố</option>
+                                        <option>Hồ Chí Minh</option>
+                                        <option>Hà Nội</option>
+                                        <option>Đà Nẵng</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Quận/Huyện</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn quận/huyện</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Phường/Xã</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn phường/xã</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số nhà, tên đường</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ghi chú -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Ghi chú</h5>
+                            <textarea class="form-control" rows="3" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tổng quan đơn hàng -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4" style="color: #C19977;">Đơn hàng của bạn</h4>
+                    
+                    <!-- Danh sách sản phẩm -->
+                    <div class="order-items mb-4">
+                        <div class="order-item d-flex align-items-center mb-3">
+                            <img src="/img/giuong2.jpg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                            <div class="ms-3">
+                                <h6 class="mb-0">Giường Ngủ Hiện Đại</h6>
+                                <small class="text-muted">Số lượng: 1</small>
+                                <div class="text-primary">8.500.000đ</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tổng tiền -->
+                    <div class="order-summary">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Tạm tính</span>
+                            <span>8.500.000đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Phí vận chuyển</span>
+                            <span>Miễn phí</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Tổng cộng</strong>
+                            <strong class="text-primary">8.500.000đ</strong>
+                        </div>
+
+                        <!-- Phương thức thanh toán -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">Phương thức thanh toán</h5>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="cod" checked>
+                                <label class="form-check-label" for="cod">
+                                    Thanh toán khi nhận hàng (COD)
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="banking">
+                                <label class="form-check-label" for="banking">
+                                    Chuyển khoản ngân hàng
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment" id="momo">
+                                <label class="form-check-label" for="momo">
+                                    Ví MoMo
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Nút đặt hàng -->
+                        <button type="submit" class="btn btn-primary w-100" form="checkoutForm" style="background-color: #C19977; border-color: #C19977;">
+                            Đặt hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> footer}}
+<style>
+.form-control:focus,
+.form-select:focus {
+    border-color: #C19977;
+    box-shadow: 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #C19977;
+    border-color: #C19977;
+}
+
+.btn-primary:hover {
+    background-color: #b38a68 !important;
+    border-color: #b38a68 !important;
+}
+
+.text-primary {
+    color: #C19977 !important;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.order-item {
+    transition: transform 0.2s;
+}
+
+.order-item:hover {
+    transform: translateX(5px);
+}
+
+@media (max-width: 991.98px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Xử lý form submit
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Thêm xử lý đặt hàng ở đây
+            alert('Đặt hàng thành công!');
+        });
+    }
+
+    // Xử lý select tỉnh/thành phố
+    const provinceSelect = document.querySelector('select');
+    if (provinceSelect) {
+        provinceSelect.addEventListener('change', function() {
+            // Thêm xử lý load quận/huyện tương ứng
+        });
+    }
+});
+</script>

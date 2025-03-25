@@ -1,43 +1,61 @@
 <!-- Cart Modal -->
-<div class="modal" id="cartModal">
+<div class="modal fade" id="cartModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Giỏ Hàng</h5>
-                <button type="button" class="btn-close" id="closeCartModal">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h5 class="modal-title">Giỏ hàng của bạn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Danh sách sản phẩm trong giỏ hàng -->
                 <div class="cart-items">
-                    <!-- Cart Item -->
                     <div class="cart-item d-flex align-items-center mb-3">
-                        <img src="/img/giuong2.jpg" alt="Product" class="rounded"
-                            style="width: 80px; height: 80px; object-fit: cover;">
+                        <img src="/img/giuong2.jpg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
                         <div class="ms-3 flex-grow-1">
-                            <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                            <h6 class="mb-0">Giường Ngủ Hiện Đại</h6>
                             <div class="d-flex align-items-center">
-                                <span class="text-muted">8.500.000đ</span>
-                                <div class="quantity-controls ms-3">
-                                    <button class="btn btn-sm btn-outline-secondary">-</button>
-                                    <span class="mx-2">1</span>
-                                    <button class="btn btn-sm btn-outline-secondary">+</button>
-                                </div>
+                                <small class="text-muted me-2">Số lượng: 1</small>
+                                <span class="text-primary">8.500.000đ</span>
                             </div>
                         </div>
-                        <button class="btn text-danger ms-3">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <button class="btn btn-link text-danger"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <div>
-                    <strong>Tổng tiền:</strong>
-                    <span class="ms-2 text-primary">8.500.000đ</span>
+                <!-- Tổng tiền -->
+                <div class="d-flex justify-content-between mt-3">
+                    <strong>Tổng cộng:</strong>
+                    <strong class="text-primary">8.500.000đ</strong>
                 </div>
-                <button class="btn btn-primary">Thanh Toán</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <a href="/cart/checkout" class="btn btn-primary" style="background-color: #C19977; border-color: #C19977;">Thanh toán</a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.cart-item {
+    transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.text-primary {
+    color: #C19977 !important;
+}
+
+.btn-primary {
+    background-color: #C19977;
+    border-color: #C19977;
+}
+
+.btn-primary:hover {
+    background-color: #b38a68;
+    border-color: #b38a68;
+}
+</style> 
