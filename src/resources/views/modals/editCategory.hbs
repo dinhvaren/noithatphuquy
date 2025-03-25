@@ -7,17 +7,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm" method="POST" action="/admin/categories/{{category._id}}/edit?_method=PUT">
-                    <input type="hidden" name="categoryId" value="{{category._id}}">
+                <form id="editCategoryForm" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="categoryId" id="categoryIdInput">
 
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" value="{{category.name}}" required>
+                        <input type="text" class="form-control" name="name" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description" rows="3">{{category.description}}</textarea>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
                     </div>
 
                     <div class="mb-3">
@@ -34,9 +35,8 @@
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="isActive" required>
-                            <option value="true" {{#if category.isActive}}selected{{/if}}>Hoạt động</option>
-                            <option value="false" {{#if (not category.isActive)}}selected{{/if}}>Không hoạt động
-                            </option>
+                            <option value="true">Hoạt động</option>
+                            <option value="false">Không hoạt động</option>
                         </select>
                     </div>
 
@@ -82,11 +82,13 @@
                 const row = e.target.closest('tr');
                 const name = row.cells[1].textContent;
                 const description = row.cells[2].textContent;
-                // Mặc định là true nếu không tìm thấy trạng thái
                 const isActive = 'true';
 
                 const form = document.getElementById('editCategoryForm');
-                form.querySelector('[name="categoryId"]').value = categoryId;
+                const categoryIdInput = document.getElementById('categoryIdInput');
+                categoryIdInput.value = categoryId;
+                form.action = `/admin/categories/${categoryId}/edit`;
+                
                 form.querySelector('[name="name"]').value = name;
                 form.querySelector('[name="description"]').value = description;
                 form.querySelector('[name="isActive"]').value = isActive;

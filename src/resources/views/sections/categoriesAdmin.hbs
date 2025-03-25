@@ -70,19 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
         new bootstrap.Modal(modal, {
-            backdrop: true,
-            keyboard: true
-        });
-
-        // Xử lý sự kiện khi modal đóng
-        modal.addEventListener('hidden.bs.modal', function () {
-            const backdrop = document.querySelector('.modal-backdrop');
-            if (backdrop) {
-                backdrop.remove();
-            }
-            document.body.classList.remove('modal-open');
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
+            backdrop: 'static',
+            keyboard: false
         });
     });
 

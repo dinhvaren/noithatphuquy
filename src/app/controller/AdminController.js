@@ -10,7 +10,7 @@ class AdminController {
             Product.find().lean()
         ])
             .then(([users, categories, products]) => {
-                res.render('Admin', {
+                res.render('admin/Admin', {
                     page: { title: 'Quản trị website' },
                     users: users,
                     categories: categories,
@@ -24,7 +24,7 @@ class AdminController {
     async login(req, res, next) {
         // Nếu là GET request, hiển thị trang đăng nhập
         if (req.method === 'GET') {
-            res.render('AdminLoginPage', { page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } });
+            res.render('admin/AdminLoginPage', { page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } });
             return;
         }
 
@@ -256,12 +256,18 @@ class AdminController {
     }
 
     updateCategoryModal(req, res, next) {
-        Category.updateOne({_id: req.params.id}, req.body).lean()
+        const { name, description, isActive } = req.body;
+        
+        Category.updateOne(
+            { _id: req.params.id },
+            { 
+                name,
+                description,
+                isActive: isActive === 'true'
+            }
+        )
         .then(() => {
-            res.redirect('back', {
-                message: 'Cập nhật danh mục thành công',
-                layout: false,
-            });
+            res.redirect('back');
         })
         .catch(next);
     }
@@ -295,6 +301,32 @@ class AdminController {
             })
             .catch(next);
     }
-}
 
+    // Xử lý xóa người dùng
+    async deleteUser(req, res, next) {
+        try {
+            const userId = req.params.id;
+            
+            // Kiểm tra xem user có tồn tại không
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+            }
+
+            // Không cho phép xóa tài khoản admin
+            if (user.role === 'admin') {
+                return res.status(403).json({ message: 'Không thể xóa tài khoản admin' });
+            }
+
+            // Xóa user
+            await User.findByIdAndDelete(userId);
+
+            // Chuyển hướng về trang quản lý người dùng
+            res.redirect('back');
+        } catch (error) {
+            console.error('Lỗi xóa người dùng:', error);
+            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
+        }
+    }
+}
 module.exports = new AdminController();

@@ -13,7 +13,7 @@ const path = require('path');
 // Khởi tạo ứng dụng Express
 const app = express();
 // Định nghĩa cổng chạy server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 // Import file định tuyến
 const route = require('./routes');
 // Import cấu hình database
@@ -66,7 +66,9 @@ app.engine(
         partialsDir: [
             path.join(__dirname, 'resources/views/modals'),
             path.join(__dirname, 'resources/views/partials'),
-            path.join(__dirname, 'resources/views/sections')
+            path.join(__dirname, 'resources/views/sections'),
+            path.join(__dirname, 'resources/views/admin'),
+            path.join(__dirname, 'resources/views/pages')
         ]
     }),
 );

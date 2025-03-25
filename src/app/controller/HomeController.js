@@ -1,21 +1,19 @@
 const {User} = require('../models/index');
 const bcrypt = require('bcryptjs'); // Thư viện mã hóa mật khẩu
 const jwt = require('jsonwebtoken'); // JWT để tạo token đăng nhập
-const mongoose = require('mongoose'); // Thêm mongoose để tạo ObjectId
 require('dotenv').config();
 
 
 class HomeController {
     // Hiển thị trang chủ
     dashboard(req, res, next) {
-        res.render('DashBoard', { page: { title: 'Trang chủ' } });
+        res.render('pages/DashBoard', { page: { title: 'Trang chủ' } });
     }
 
     // Hiển thị trang chủ sau khi đăng nhập
     home(req, res, next) {
-        User.findById(req.user._id).then(user => {
-            res.render('HomePage', { page: { title: 'Trang chủ' }, user });
-        })
+
+        res.render('pages/HomePage', { page: { title: 'Trang chủ' }, user: null });
     }
 
     // Xử lý đăng nhập
@@ -146,54 +144,53 @@ class HomeController {
 
     // Hiển thị trang thông tin cá nhân
     profile(req, res, next) {
-        User.findById(req.user._id).then(user => {
-            res.render('Profile', { page: { title: 'Thông tin cá nhân' }, user });
-        });
+        res.render('pages/Profile', { page: { title: 'Thông tin cá nhân' }});
+
     }
 
     // Hiển thị trang danh sách đơn hàng
     orders(req, res, next) {
-        res.render('Orders', { page: { title: 'Danh sách đơn hàng' } });
+        res.render('pages/Orders', { page: { title: 'Danh sách đơn hàng' } });
     }
     
     
     // Hiển thị trang thiết kế nội thất
     interiorDesign(req, res, next) {
-        res.render('Interior-design', { page: { title: 'Thiết kế nội thất' } });
+        res.render('pages/Interior-design', { page: { title: 'Thiết kế nội thất' } });
     }
 
     productDetails(req, res, next) {
-        res.render('ProductDetails', { page: { title: 'Chi tiết sản phẩm - Nội Thất Phú Quý' } });
+        res.render('pages/ProductDetails', { page: { title: 'Chi tiết sản phẩm - Nội Thất Phú Quý' } });
     }
 
     // Hiển thị trang giỏ hàng
     cart(req, res, next) {
-        res.render('Cart', { page: { title: 'Giỏ hàng' } });
+        res.render('pages/Cart', { page: { title: 'Giỏ hàng' } });
     }
 
     // Hiển thị trang danh sách yêu thích
     wishlist(req, res, next) {
-        res.render('Wishlist', { page: { title: 'Danh sách yêu thích' } });
+        res.render('pages/Wishlist', { page: { title: 'Danh sách yêu thích' } });
     }
 
     // Hiển thị trang liên hệ
     contact(req, res, next) {
-        res.render('Contact', { page: { title: 'Liên hệ' } });
+        res.render('pages/Contact', { page: { title: 'Liên hệ' } });
     }
 
     // Hiển thị trang tin tức
     news(req, res, next) {
-        res.render('News', { page: { title: 'Tin tức' } });
+        res.render('pages/News', { page: { title: 'Tin tức' } });
     }
 
     // Hiển thị trang giới thiệu
     about(req, res, next) {
-        res.render('About', { page: { title: 'Giới thiệu' } });
+        res.render('pages/About', { page: { title: 'Giới thiệu' } });
     }
 
     // Hiển thị trang sản phẩm
     products(req, res, next) {
-        res.render('Products', { page: { title: 'Sản phẩm' } });
+        res.render('pages/Products', { page: { title: 'Sản phẩm' } });
     }
 
     // Hiển thị trang đổi mật khẩu
