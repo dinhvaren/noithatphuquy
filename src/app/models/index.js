@@ -190,8 +190,16 @@ const Post = mongoose.model('Post', PostSchema);
 const Contact = mongoose.model('Contact', ContactSchema);
 const Wishlist = mongoose.model('Wishlist', WishlistSchema);
 
+// Hàm tính phần trăm giảm giá
+const calculateDiscountPercentage = (originalPrice, salePrice) => {
+    if (!originalPrice || !salePrice || originalPrice <= 0) return 0;
+    const discount = ((originalPrice - salePrice) / originalPrice) * 100;
+    return Math.round(discount); // Làm tròn số phần trăm
+};
+
 // Export models
 module.exports = {
+    calculateDiscountPercentage,
     Category,
     Product,
     User,
