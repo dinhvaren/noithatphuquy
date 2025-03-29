@@ -194,7 +194,69 @@ class HomeController {
 
     // Hiển thị trang đổi mật khẩu
     changePassword(req, res, next) {
-        res.render('ChangePassword', { page: { title: 'Đổi mật khẩu' } });
+        res.render('pages/ChangePassword', { 
+            page: { title: 'Đổi mật khẩu' },
+            user: req.user 
+        });
+    }
+
+    // Xử lý đổi mật khẩu
+    async handleChangePassword(req, res) {
+        try {
+            const { currentPassword, newPassword, confirmNewPassword } = req.body;
+            const userId = req.user.id;
+
+            // Kiểm tra mật khẩu mới và xác nhận mật khẩu
+            if (newPassword !== confirmNewPassword) {
+                return res.render('pages/ChangePassword', {
+                    page: { title: 'Đổi mật khẩu' },
+                    user: req.user,
+                    error: 'Mật khẩu mới không khớp'
+                });
+            }
+
+            // Tìm user trong database
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.render('pages/ChangePassword', {
+                    page: { title: 'Đổi mật khẩu' },
+                    user: req.user,
+                    error: 'Không tìm thấy người dùng'
+                });
+            }
+
+            // Kiểm tra mật khẩu hiện tại
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.render('pages/ChangePassword', {
+                    page: { title: 'Đổi mật khẩu' },
+                    user: req.user,
+                    error: 'Mật khẩu hiện tại không đúng'
+                });
+            }
+
+            // Mã hóa mật khẩu mới
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+            // Cập nhật mật khẩu mới
+            user.password = hashedPassword;
+            await user.save();
+
+            // Render trang với thông báo thành công
+            res.render('pages/ChangePassword', {
+                page: { title: 'Đổi mật khẩu' },
+                user: req.user,
+                successMessage: 'Đổi mật khẩu thành công'
+            });
+        } catch (error) {
+            console.error('Lỗi đổi mật khẩu:', error);
+            res.render('pages/ChangePassword', {
+                page: { title: 'Đổi mật khẩu' },
+                user: req.user,
+                error: 'Có lỗi xảy ra, vui lòng thử lại sau'
+            });
+        }
     }
 
     // Xử lý đăng xuất

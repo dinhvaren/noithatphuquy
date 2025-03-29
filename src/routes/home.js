@@ -23,6 +23,7 @@ router.get('/orders', HomeController.orders);
 router.get('/wishlist', HomeController.wishlist);
 router.get('/cart', HomeController.cart);
 router.get('/change-password', HomeController.changePassword);
+router.post('/change-password', HomeController.handleChangePassword);
 
 // Route kiểm tra username và email
 router.get('/check-username', HomeController.checkUsername);
