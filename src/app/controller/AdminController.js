@@ -255,7 +255,8 @@ class AdminController {
             console.log('Received data:', { name, description });
 
             if (!name) {
-                return res.status(400).json({ message: 'Tên danh mục không được để trống' });
+                console.log('Name is required');
+                return res.redirect('back');
             }
 
             const category = new Category({
@@ -264,19 +265,14 @@ class AdminController {
                 isActive: true
             });
 
-            await category.save();
-            console.log('Category saved:', category);
+            console.log('Category object before save:', category);
+            const savedCategory = await category.save();
+            console.log('Category saved successfully:', savedCategory);
 
-            res.render('modals/addCategory', {
-                layout: false,
-                message: 'Thêm danh mục thành công'
-            });
+            res.redirect('back');
         } catch (error) {
             console.error('Error creating category:', error);
-            res.status(500).json({
-                message: 'Lỗi khi tạo danh mục',
-                error: error.message
-            });
+            res.redirect('back');
         }
     }
 

@@ -28,7 +28,7 @@ db.connect();
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware để log HTTP request ra console
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 const upload = multer(); // Bộ xử lý `multipart/form-data`
 // Ghi đè phương thức HTTP (hỗ trợ PUT, DELETE trong form)
 app.use(methodOverride('_method'));
