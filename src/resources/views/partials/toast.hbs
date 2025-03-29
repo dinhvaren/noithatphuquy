@@ -1,0 +1,122 @@
+{{#if successMessage}}
+<div class="toast-container position-fixed top-0 end-0 p-4">
+    <div class="toast show animate-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-content d-flex align-items-center p-3">
+            <div class="toast-icon me-3">
+                <i class="bi bi-check-circle-fill" style="color: #28a745; font-size: 24px;"></i>
+            </div>
+            <div class="toast-message flex-grow-1">
+                <div class="toast-title fw-semibold mb-1" style="color: #2d3748;">
+                    Thành công
+                </div>
+                <div class="toast-text" style="color: #4a5568;">
+                    {{successMessage}}
+                </div>
+            </div>
+            <button type="button" class="btn-close ms-3" style="font-size: 12px;" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-progress"></div>
+    </div>
+</div>
+
+<style>
+    .toast {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+    .toast-content {
+        position: relative;
+    }
+
+    .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right, #C19977, #b38a68);
+        animation: progress 1.5s linear forwards;
+    }
+
+    @keyframes progress {
+        from {
+            width: 100%;
+        }
+        to {
+            width: 0%;
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    .animate-toast {
+        animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .animate-toast.hide {
+        animation: slideOutRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .btn-close {
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toast = document.querySelector('.toast');
+        if (toast) {
+            // Hiển thị toast với animation
+            toast.classList.add('animate-toast');
+
+            // Thêm animation khi ẩn toast
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 1500);
+
+            // Xử lý nút đóng
+            const closeBtn = toast.querySelector('.btn-close');
+            closeBtn.addEventListener('click', () => {
+                toast.classList.add('hide');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            });
+        }
+    });
+</script>
+{{/if}} 

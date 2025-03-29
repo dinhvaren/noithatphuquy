@@ -53,17 +53,19 @@ class HomeController {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 1 * 60 * 60 * 1000 // 24 giờ
+                maxAge: 1 * 60 * 60 * 1000 // 1 giờ
             });
 
-            res.status(200).json({ 
-                message: 'Đăng nhập thành công',
+            // Chuyển hướng về trang chủ với thông báo thành công
+            res.render('pages/HomePage', { 
+                page: { title: 'Trang chủ' },
                 user: {
                     id: user._id,
                     username: user.username,
                     email: user.email,
                     role: user.role
-                }
+                },
+                successMessage: 'Đăng nhập thành công!'
             });
         } catch (error) {
             console.error('Lỗi đăng nhập:', error);
@@ -74,12 +76,7 @@ class HomeController {
     // Xử lý đăng ký
     async signup(req, res, next) {
         try {
-            const { username, signupEmail, signupPassword, confirmPassword } = req.body;
-
-            // Kiểm tra mật khẩu xác nhận
-            if (signupPassword !== confirmPassword) {
-                return res.status(400).json({ message: 'Mật khẩu xác nhận không khớp' });
-            }
+            const { username, signupEmail, signupPassword } = req.body;
 
             // Kiểm tra email đã tồn tại chưa
             const existingEmail = await User.findOne({ email: signupEmail });
@@ -127,14 +124,16 @@ class HomeController {
                 maxAge: 24 * 60 * 60 * 1000 // 1 giờ
             });
 
-            res.status(201).json({ 
-                message: 'Đăng ký thành công',
+            // Chuyển hướng về trang chủ với thông báo thành công
+            res.render('pages/HomePage', { 
+                page: { title: 'Trang chủ' },
                 user: {
                     id: newUser._id,
                     username: newUser.username,
                     email: newUser.email,
                     role: newUser.role
-                }
+                },
+                successMessage: 'Đăng ký tài khoản thành công!'
             });
         } catch (error) {
             console.error('Lỗi đăng ký:', error);
@@ -203,7 +202,6 @@ class HomeController {
         try {
             // Xóa token khỏi cookie
             res.clearCookie('token');
-            res.status(200).json({ message: 'Đăng xuất thành công' });
             res.redirect('/');
         } catch (error) {
             console.error('Lỗi đăng xuất:', error);
@@ -230,6 +228,30 @@ class HomeController {
             });
         } catch (error) {
             res.status(401).json({ message: 'Token không hợp lệ' });
+        }
+    }
+
+    // Kiểm tra username đã tồn tại
+    async checkUsername(req, res) {
+        try {
+            const { username } = req.query;
+            const existingUser = await User.findOne({ username });
+            res.json({ exists: !!existingUser });
+        } catch (error) {
+            console.error('Lỗi kiểm tra username:', error);
+            res.status(500).json({ error: 'Lỗi server' });
+        }
+    }
+
+    // Kiểm tra email đã tồn tại
+    async checkEmail(req, res) {
+        try {
+            const { email } = req.query;
+            const existingUser = await User.findOne({ email });
+            res.json({ exists: !!existingUser });
+        } catch (error) {
+            console.error('Lỗi kiểm tra email:', error);
+            res.status(500).json({ error: 'Lỗi server' });
         }
     }
 }

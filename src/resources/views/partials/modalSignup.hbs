@@ -12,23 +12,32 @@
                         <label for="username" class="form-label" style="color: #4b5563;">Tên người dùng</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên người dùng"
                             style="border-color: #e5e7eb;" required>
+                        <div id="usernameError" style="display: none; color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                            Tên người dùng đã được sử dụng
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="signupEmail" class="form-label" style="color: #4b5563;">Email</label>
                         <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Nhập email của bạn"
                             style="border-color: #e5e7eb;" required>
+                        <div id="emailError" style="display: none; color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                            Email đã được sử dụng
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="signupPassword" class="form-label" style="color: #4b5563;">Mật khẩu</label>
                         <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Nhập mật khẩu"
                             style="border-color: #e5e7eb;" required>
                     </div>
-                    <div class="mb-3">
+                    <div style="margin-bottom: 0;">
                         <label for="confirmPassword" class="form-label" style="color: #4b5563;">Xác nhận mật khẩu</label>
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu"
                             style="border-color: #e5e7eb;" required>
+                        <div id="passwordMismatchError" style="display: none; color: #dc3545; font-size: 0.875rem; margin-bottom: 1rem;">
+                            Mật khẩu không khớp
+                        </div>
                     </div>
-                    <div class="mb-3 form-check">
+                    <div class="mb-3 form-check" style="margin-top: 1rem;">
                         <input type="checkbox" class="form-check-input" id="agreeTerms" required
                             style="background-color: #C19977; border-color: #C19977;">
                         <label class="form-check-label" for="agreeTerms" style="color: #4b5563;">
@@ -55,6 +64,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         const agreeTerms = document.getElementById('agreeTerms');
         const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+        const signupForm = document.getElementById('signupForm');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('signupEmail');
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordMismatchError = document.getElementById('passwordMismatchError');
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
 
         // Disable nút submit mặc định
         signupSubmitBtn.disabled = true;
@@ -63,6 +80,77 @@
         agreeTerms.addEventListener('change', function() {
             signupSubmitBtn.disabled = !this.checked;
         });
+
+        // Xử lý kiểm tra mật khẩu khớp nhau
+        function checkPasswordMatch() {
+            if (confirmPasswordInput.value && passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordInput.style.borderColor = '#dc3545';
+                passwordMismatchError.style.display = 'block';
+            } else {
+                confirmPasswordInput.style.borderColor = '#e5e7eb';
+                passwordMismatchError.style.display = 'none';
+            }
+        }
+
+        // Kiểm tra username đã tồn tại
+        async function checkUsername() {
+            if (!usernameInput.value) return;
+            try {
+                const response = await fetch('/check-username?username=' + encodeURIComponent(usernameInput.value));
+                const data = await response.json();
+                if (data.exists) {
+                    usernameInput.style.borderColor = '#dc3545';
+                    usernameError.style.display = 'block';
+                } else {
+                    usernameInput.style.borderColor = '#e5e7eb';
+                    usernameError.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Lỗi kiểm tra username:', error);
+            }
+        }
+
+        // Kiểm tra email đã tồn tại
+        async function checkEmail() {
+            if (!emailInput.value) return;
+            try {
+                const response = await fetch('/check-email?email=' + encodeURIComponent(emailInput.value));
+                const data = await response.json();
+                if (data.exists) {
+                    emailInput.style.borderColor = '#dc3545';
+                    emailError.style.display = 'block';
+                } else {
+                    emailInput.style.borderColor = '#e5e7eb';
+                    emailError.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Lỗi kiểm tra email:', error);
+            }
+        }
+
+        // Thêm sự kiện lắng nghe cho các trường input
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+        usernameInput.addEventListener('blur', checkUsername);
+        emailInput.addEventListener('blur', checkEmail);
+
+        // Xử lý submit form
+        signupForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Kiểm tra lại tất cả các điều kiện
+            await Promise.all([checkUsername(), checkEmail()]);
+            checkPasswordMatch();
+
+            // Nếu có bất kỳ lỗi nào, không submit form
+            if (usernameError.style.display === 'block' || 
+                emailError.style.display === 'block' || 
+                passwordMismatchError.style.display === 'block') {
+                return;
+            }
+
+            // Nếu không có lỗi, submit form
+            this.submit();
+        });
     });
 </script>
 
@@ -70,6 +158,23 @@
     .form-control:focus {
         border-color: #C19977;
         box-shadow: 0 0 0 0.25rem rgba(193, 153, 119, 0.25);
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        background-color: #fff;
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: none;
+    }
+
+    #passwordMismatchError {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .is-invalid ~ #passwordMismatchError {
+        display: block !important;
     }
 
     .btn-primary:hover {

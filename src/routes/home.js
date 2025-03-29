@@ -24,4 +24,8 @@ router.get('/wishlist', HomeController.wishlist);
 router.get('/cart', HomeController.cart);
 router.get('/change-password', HomeController.changePassword);
 
+// Route kiểm tra username và email
+router.get('/check-username', HomeController.checkUsername);
+router.get('/check-email', HomeController.checkEmail);
+
 module.exports = router;

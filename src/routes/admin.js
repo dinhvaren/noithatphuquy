@@ -11,9 +11,10 @@ router.post('/categories/create', AdminController.createCategoryModal);
 // Routes cho sản phẩm
 router.post('/products/create', AdminController.createProductModal);
 router.get('/products/create', AdminController.createProductModal);
-router.get('/products/:id/edit', AdminController.editProductModal);
 router.post('/products/:id/edit', AdminController.updateProductModal);
 router.put('/products/:id/edit', AdminController.updateProductModal);
+router.get('/products/:id/edit', AdminController.editProductModal);
+
 
 // Routes cho người dùng
 router.get('/users/:id', AdminController.editUserModal);
