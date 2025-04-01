@@ -206,6 +206,7 @@ class AdminController {
             if (!product) {
                 return res.status(404).send('Product not found');
             }
+            console.log('Product:', product._id);
             res.render('modals/editProduct', { 
                 layout: false, 
                 product,
@@ -224,7 +225,7 @@ class AdminController {
             category,
             description,
             isActive: isActive === 'true',
-            specifications
+            specifications,
         };
 
         // Xử lý hình ảnh nếu có

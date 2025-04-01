@@ -148,7 +148,6 @@
                 const specifications = JSON.parse(row.cells[6].textContent);
                 const description = row.cells[7].textContent;
                 const images = JSON.parse(row.cells[8].textContent);
-
                 // Lấy danh mục từ bảng categories
                 const categories = JSON.parse(row.cells[9].textContent);
 
@@ -166,6 +165,8 @@
                 form.querySelector('[name="specifications[size][height]"]').value = specifications.size.height;
                 form.querySelector('[name="specifications[warranty]"]').value = specifications.warranty;
                 form.querySelector('[name="description"]').value = description;
+                form.querySelector('[name="images"]').value = images;
+                form.querySelector('[name="productId"]').value = productId;
                 // Set action cho form
                 const form = document.getElementById('editProductForm');
                 form.action = `/admin/products/${productId}/edit`;
