@@ -336,7 +336,7 @@ class AdminController {
             username: username,
             email: email,
             role: role,
-            isActive: status,
+            isActive: status === 'active',
         };
         
         // Chỉ cập nhật password nếu có nhập mới

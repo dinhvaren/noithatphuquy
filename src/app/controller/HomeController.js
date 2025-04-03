@@ -19,21 +19,21 @@ class HomeController {
     // Xử lý đăng nhập
     async login(req, res, next) {
         try {
-            const { email, password } = req.body;
-            
+            const { email, password, rememberMe } = req.body;
+
             // Tìm user theo email
             const user = await User.findOne({ email });
             if (!user) {
-                return res.status(400).json({ message: 'Email không tồn tại' });
+                return res.status(401).json({ error: 'email', message: 'Email không tồn tại' });
             }
 
             // Kiểm tra mật khẩu
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(400).json({ message: 'Mật khẩu không chính xác' });
+                return res.status(401).json({ error: 'password', message: 'Mật khẩu không chính xác' });
             }
 
-            // Kiểm tra tài khoản có bị khóa không
+            // Kiểm tra trạng thái tài khoản
             if (!user.isActive) {
                 return res.status(403).json({ message: 'Tài khoản của bạn đã bị khóa' });
             }
@@ -45,27 +45,25 @@ class HomeController {
                     username: user.username,
                     role: user.role
                 },
-                process.env.JWT_SECRET || '5bc5c982350cf02973489f6e33d7157d9d70659d36850479140e871ad8222edb',
-                { expiresIn: '1h' }
+                process.env.JWT_SECRET || 'your-secret-key',
+                { expiresIn: rememberMe ? '30d' : '24h' } // Token hết hạn sau 30 ngày nếu ghi nhớ đăng nhập
             );
 
             // Lưu token vào cookie
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 1 * 60 * 60 * 1000 // 1 giờ
+                maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000 // 30 ngày hoặc 24 giờ
             });
 
-            // Chuyển hướng về trang chủ với thông báo thành công
-            res.render('pages/HomePage', { 
-                page: { title: 'Trang chủ' },
+            res.status(200).json({
+                message: 'Đăng nhập thành công',
                 user: {
                     id: user._id,
                     username: user.username,
                     email: user.email,
                     role: user.role
-                },
-                successMessage: 'Đăng nhập thành công!'
+                }
             });
         } catch (error) {
             console.error('Lỗi đăng nhập:', error);

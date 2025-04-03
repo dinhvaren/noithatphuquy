@@ -8,7 +8,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="editUserForm" action="/admin/users/{{users._id}}/edit">
+                <form method="POST" id="editUserForm" action="/admin/users/{{user._id}}/edit">
                     <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="userId" id="userIdInput">
                     <div class="mb-3">
@@ -30,8 +30,8 @@
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select" name="status" required>
-                            <option value="active">Hoạt động</option>
-                            <option value="inactive">Khóa</option>
+                            <option value="true">Hoạt động</option>
+                            <option value="false">Khóa</option>
                         </select>
                     </div>
                     <div class="mb-3">

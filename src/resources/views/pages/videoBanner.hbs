@@ -189,23 +189,4 @@
         gap: 2rem;
     }
 }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const video = document.querySelector('video');
-    
-    // Đảm bảo video autoplay
-    video.play().catch(function(error) {
-        console.log("Video autoplay failed:", error);
-    });
-
-    // Thêm hiệu ứng parallax cho video-frame-right
-    document.addEventListener('mousemove', function(e) {
-        const rightFrame = document.querySelector('.video-frame-right');
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-        rightFrame.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-    });
-});
-</script> 
+</style> 
