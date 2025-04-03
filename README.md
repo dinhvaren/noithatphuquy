@@ -1,92 +1,126 @@
 # Website Nội Thất Phú Quý
 
-![Logo Nội Thất Phú Quý](./src/public/img/logo2.jpg)
-
-## Giới Thiệu
-
-Website Nội Thất Phú Quý là nền tảng thương mại điện tử chuyên cung cấp các sản phẩm nội thất cao cấp và dịch vụ thiết kế nội thất chuyên nghiệp. Với hơn 10 năm kinh nghiệm trong lĩnh vực, chúng tôi tự hào mang đến những giải pháp nội thất tối ưu cho không gian sống của bạn.
+Website bán nội thất cao cấp được xây dựng bằng Node.js, Express và MongoDB.
 
 ## Tính Năng Chính
 
-### 1. Danh Mục Sản Phẩm
-- Nội thất phòng khách
-- Nội thất phòng ngủ
-- Nội thất phòng bếp
-- Nội thất phòng làm việc
-- Nội thất phòng trẻ em
-- Nội thất tiện ích
+### 1. Phần Người Dùng
+- **Trang Chủ**
+  - Slider banner giới thiệu
+  - Video giới thiệu về công ty
+  - Danh sách sản phẩm nổi bật
+  - Danh mục sản phẩm
+  - Thông tin liên hệ
 
-### 2. Dịch Vụ
-- Tư vấn thiết kế nội thất
-- Thi công nội thất trọn gói
-- Bảo hành sản phẩm
-- Hỗ trợ khách hàng 24/7
+- **Sản Phẩm**
+  - Hiển thị sản phẩm theo danh mục
+  - Tìm kiếm và lọc sản phẩm
+  - Chi tiết sản phẩm (hình ảnh, giá, mô tả, thông số kỹ thuật)
+  - Thêm vào giỏ hàng
+  - Yêu thích sản phẩm
 
-### 3. Tính Năng Website
-- Giao diện responsive, tương thích đa thiết bị
-- Tìm kiếm sản phẩm nâng cao
-- Giỏ hàng và thanh toán trực tuyến
-- Form liên hệ tư vấn
-- Quản lý đơn hàng
-- Quản lý sản phẩm
-- Thống kê và báo cáo
+- **Tài Khoản**
+  - Đăng ký/Đăng nhập
+  - Quản lý thông tin cá nhân
+  - Xem lịch sử đơn hàng
+  - Danh sách sản phẩm yêu thích
+
+### 2. Phần Quản Trị
+- **Quản Lý Người Dùng**
+  - Thêm/sửa/xóa người dùng
+  - Phân quyền (Admin, Nhân viên, Khách hàng)
+  - Khóa/mở khóa tài khoản
+
+- **Quản Lý Sản Phẩm**
+  - Thêm/sửa/xóa sản phẩm
+  - Upload nhiều hình ảnh
+  - Quản lý thông tin chi tiết và giá
+  - Sắp xếp và phân loại sản phẩm
+
+- **Quản Lý Danh Mục**
+  - Thêm/sửa/xóa danh mục
+  - Sắp xếp thứ tự hiển thị
 
 ## Công Nghệ Sử Dụng
 
-- **Frontend:**
-  - HTML5, CSS3, JavaScript
-  - Bootstrap 5
-  - Handlebars template engine
-  - Font Awesome icons
+### Frontend
+- HTML5, CSS3, JavaScript
+- Bootstrap 5
+- Handlebars (HBS)
+- jQuery
+- Swiper.js (slider)
 
-- **Backend:**
-  - Node.js
-  - Express.js
-  - MongoDB
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Multer (upload file)
+- Bcrypt (mã hóa mật khẩu)
 
-## Cài Đặt và Chạy Dự Án
+## Cài Đặt và Chạy
 
-1. Clone repository:
-```bash
-git clone https://github.com/dinhvaren/nothatphuquy.git
-```
+1. **Yêu Cầu Hệ Thống**
+   - Node.js (v14 trở lên)
+   - MongoDB
+   - npm hoặc yarn
 
-2. Cài đặt dependencies:
-```bash
-npm install
-```
+2. **Cài Đặt**
+   ```bash
+   # Clone repository
+   git clone [repository-url]
 
-3. Chạy dự án:
-```bash
-npm start
-```
+   # Di chuyển vào thư mục dự án
+   cd NoiThatPhuQuy
+
+   # Cài đặt dependencies
+   npm install
+   ```
+
+3. **Cấu Hình**
+   - Tạo file `.env` với các thông tin:
+   ```env
+   PORT=3000
+   MONGODB_URI=mongodb://localhost:27017/noithatphuquy
+   JWT_SECRET=your_jwt_secret
+   ```
+
+4. **Chạy Ứng Dụng**
+   ```bash
+   # Chế độ development
+   npm run dev
+
+   # Chế độ production
+   npm start
+   ```
 
 ## Cấu Trúc Thư Mục
 
 ```
-src/
-├── resources/
-│   ├── views/
-│   │   ├── partials/
-│   │   ├── layouts/
-│   │   └── *.hbs
-│   └── public/
-│       ├── css/
-│       ├── js/
-│       └── img/
-├── routes/
-├── controllers/
-├── models/
-└── config/
+NoiThatPhuQuy/
+├── src/
+│   ├── app/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   └── utils/
+│   ├── config/
+│   ├── public/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── img/
+│   ├── resources/
+│   │   └── views/
+│   └── routes/
+├── .env
+├── package.json
+└── README.md
 ```
 
-## Liên Hệ
-
-- **Địa chỉ:** 405-407 Ngô Gia Tự, P2, Q10, TPHCM
-- **Hotline:** 093.889.9576 - 093.579.8694
-- **Email:** noithatphuquy@gmail.com
-- **Website:** www.noithatphuquy.vn
+## Tác Giả
+- Tên: [Tên tác giả]
+- Email: [Email liên hệ]
+- Website: [Website công ty]
 
 ## Giấy Phép
-
-© 2025 Nội Thất Phú Quý. All rights reserved. 
+[Loại giấy phép] - Xem file [LICENSE.md](LICENSE.md) để biết thêm chi tiết. 
