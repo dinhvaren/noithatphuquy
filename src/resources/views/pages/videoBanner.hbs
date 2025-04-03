@@ -1,0 +1,211 @@
+<!-- Video Banner Section -->
+<section class="video-section">
+    <div class="video-container">
+        <div class="section-title">
+            <h2>Video Giới Thiệu</h2>
+            <div class="title-line"></div>
+        </div>
+
+        <div class="video-frame">
+            <div class="video-frame-left">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/p84DZdiRvfk?si=yPG3KfvtdBqGi_8V&autoplay=0&mute=0"
+                    title="Nội Thất Phú Quý" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="video-frame-right">
+                <div class="content-overlay">
+                    <h3>Nội Thất Phú Quý</h3>
+                    <p>Chúng tôi tự hào mang đến những sản phẩm nội thất cao cấp, với thiết kế độc đáo và chất lượng vượt trội. Hãy để chúng tôi giúp bạn kiến tạo không gian sống hoàn hảo.</p>
+                    <div class="features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Thiết kế hiện đại</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Chất liệu cao cấp</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Bảo hành dài hạn</span>
+                        </div>
+                    </div>
+                    <a href="/collections" class="explore-btn">Xem Sản Phẩm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.video-section {
+    width: 100%;
+    margin: 5rem 0;
+    background: #f8f9fa;
+    padding: 4rem 0;
+}
+
+.video-container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.title-line {
+    width: 80px;
+    height: 3px;
+    background: #C19977;
+    margin: 0 auto;
+}
+
+.video-frame {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.video-frame-left {
+    grid-column: 1 / 8;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    aspect-ratio: 16 / 9;
+}
+
+.video-frame-left iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.video-frame-right {
+    grid-column: 8 / -1;
+    background: #fff;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.content-overlay {
+    color: #333;
+}
+
+.content-overlay h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #C19977;
+    font-weight: 600;
+}
+
+.content-overlay p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.features {
+    margin: 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.feature-item i {
+    color: #C19977;
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.feature-item span {
+    color: #555;
+    font-size: 1rem;
+}
+
+.explore-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #C19977;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+@media (max-width: 1200px) {
+    .video-container {
+        width: 90%;
+    }
+
+    .video-frame {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .video-frame-left,
+    .video-frame-right {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-section {
+        margin: 3rem 0;
+        padding: 2rem 0;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .content-overlay h3 {
+        font-size: 1.8rem;
+    }
+
+    .video-frame {
+        gap: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.querySelector('video');
+    
+    // Đảm bảo video autoplay
+    video.play().catch(function(error) {
+        console.log("Video autoplay failed:", error);
+    });
+
+    // Thêm hiệu ứng parallax cho video-frame-right
+    document.addEventListener('mousemove', function(e) {
+        const rightFrame = document.querySelector('.video-frame-right');
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        rightFrame.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+});
+</script> 
