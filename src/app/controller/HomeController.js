@@ -199,19 +199,22 @@ class HomeController {
     
     // Hiển thị trang thiết kế nội thất
     interiorDesign(req, res, next) {
-        // Nếu đã đăng nhập, chuyển hướng sang phiên bản homepage
-        if (req.user) {
-            return res.render('pages/InteriorDesign', { 
-                page: { title: 'Thiết kế nội thất' },
-                user: req.user,
-                layout: 'HomePage'  // Sử dụng layout của homepage
+        try {
+            // Nếu đã đăng nhập, hiển thị trang với thông tin user
+            if (req.user) {
+                return res.render('pages/Interior-design', { 
+                    page: { title: 'Thiết kế nội thất' },
+                    user: req.user
+                });
+            }
+            // Nếu chưa đăng nhập, hiển thị trang không có thông tin user
+            res.render('pages/Interior-design', { 
+                page: { title: 'Thiết kế nội thất' }
             });
+        } catch (error) {
+            console.error('Lỗi hiển thị trang thiết kế:', error);
+            next(error);
         }
-        // Nếu chưa đăng nhập, hiển thị phiên bản dashboard
-        res.render('pages/InteriorDesign', { 
-            page: { title: 'Thiết kế nội thất' },
-            layout: 'DashBoard'  // Sử dụng layout của dashboard
-        });
     }
 
     productDetails(req, res, next) {
