@@ -48,12 +48,9 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     fullName: { type: String, required: true },
     phone: String,
-    address: {
-        street: String,
-        ward: String,
-        district: String,
-        city: String
-    },
+    address: String,
+    avatar: String,
+    birthday: Date,
     role: { type: String, enum: ['user', 'admin', 'staff'], default: 'user' },
     isActive: { type: Boolean, default: true },
     status: { type: String, enum: ['active', 'inactive'], default: 'active' },
@@ -109,8 +106,8 @@ const OrderSchema = new Schema({
     },
     paymentMethod: { type: String, required: true, enum: ['COD', 'Banking'] },
     paymentStatus: { type: String, enum: ['Pending', 'Paid', 'Failed'], default: 'Pending' },
-    orderStatus: { 
-        type: String, 
+    orderStatus: {
+        type: String,
         enum: ['Pending', 'Confirmed', 'Shipping', 'Delivered', 'Cancelled'],
         default: 'Pending'
     },
@@ -156,23 +153,23 @@ const ContactSchema = new Schema({
 
 // Schema cho danh sách yêu thích (Wishlist)
 const WishlistSchema = new Schema({
-    userId: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true 
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    productId: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Product', 
-        required: true 
+    productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
     },
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-    updatedAt: { 
-        type: Date, 
-        default: Date.now 
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

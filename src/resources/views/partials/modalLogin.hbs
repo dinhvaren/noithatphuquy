@@ -142,10 +142,38 @@
             emailInput.style.borderColor = '#e5e7eb';
             passwordInput.style.borderColor = '#e5e7eb';
 
-            // Submit form
-            this.submit();
+            // Lấy dữ liệu form
+            const formData = new FormData(this);
+            
+            // Gửi request đăng nhập
+            fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Đóng modal
+                    loginModal.hide();
+                    // Chuyển hướng
+                    window.location.href = data.redirect;
+                } else {
+                    // Hiển thị lỗi
+                    if (data.message === 'Email không tồn tại') {
+                        emailError.style.display = 'block';
+                        emailInput.style.borderColor = '#dc3545';
+                    } else if (data.message === 'Mật khẩu không chính xác') {
+                        passwordError.style.display = 'block';
+                        passwordInput.style.borderColor = '#dc3545';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            })
+            .catch(error => {
+                alert('Lỗi server, vui lòng thử lại sau');
+            });
         });
-
 
         // Xử lý chuyển đổi giữa modal đăng nhập và đăng ký
         document.getElementById('openSignup').addEventListener('click', function (e) {
@@ -160,5 +188,4 @@
             signupModal.show();
         });
     });
-
 </script>

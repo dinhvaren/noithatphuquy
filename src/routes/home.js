@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { HomeController } = require('../app/controller/index');
+const { HomeController, UserController } = require('../app/controller/index');
 const CheckPermission = require('../app/middlewares/CheckPermission');
 const jwt = require('jsonwebtoken');
-const {User }= require('../app/models/index');
+const { User }= require('../app/models/index');
 
 // Middleware kiểm tra user cho các route công khai
 const attachUser = async (req, res, next) => {
@@ -42,19 +42,20 @@ router.post('/login', CheckPermission.checkNotAuthenticated, HomeController.logi
 router.get('/signup', CheckPermission.checkNotAuthenticated, HomeController.signup);
 router.post('/signup', CheckPermission.checkNotAuthenticated, HomeController.signup);
 
-// Routes yêu cầu đăng nhập
+// Routes yêu cầu đăng nhập - User Controller
 router.use('/profile', CheckPermission.verifyToken, CheckPermission.checkUser);
 router.use('/orders', CheckPermission.verifyToken, CheckPermission.checkUser);
 router.use('/wishlist', CheckPermission.verifyToken, CheckPermission.checkUser);
 router.use('/cart', CheckPermission.verifyToken, CheckPermission.checkUser);
 router.use('/change-password', CheckPermission.verifyToken, CheckPermission.checkUser);
 
-router.get('/profile', HomeController.profile);
-router.get('/orders', HomeController.orders);
-router.get('/wishlist', HomeController.wishlist);
+router.get('/profile', UserController.profile);
+router.post('/profile/update', UserController.updateProfile);
+router.get('/orders', UserController.orders);
+router.get('/wishlist', UserController.wishlist);
 router.get('/cart', HomeController.cart);
-router.get('/change-password', HomeController.changePassword);
-router.post('/change-password', HomeController.handleChangePassword);
+router.get('/change-password', UserController.changePassword);
+router.post('/change-password', UserController.handleChangePassword);
 
 // Route đăng xuất
 router.get('/logout', CheckPermission.verifyToken, HomeController.logout);
