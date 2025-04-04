@@ -1,5 +1,21 @@
 const { User } = require('../models/index');
 const bcrypt = require('bcryptjs');
+const cloudinaryService = require('../services/cloudinaryService');
+const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
+// Cấu hình Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+console.log("Cloudinary được cấu hình với:", {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY ? process.env.CLOUDINARY_API_KEY.substring(0, 4) + "..." : undefined,
+    api_secret: process.env.CLOUDINARY_API_SECRET ? process.env.CLOUDINARY_API_SECRET.substring(0, 4) + "..." : undefined
+});
 
 class UserController {
 
@@ -100,30 +116,69 @@ class UserController {
     }
 
     // Xử lý cập nhật thông tin cá nhân
-    updateProfile(req, res) {
+    async updateProfile(req, res) {
         try {
+            console.log('Đang xử lý cập nhật profile với body:', req.body);
+            console.log('File upload:', req.file);
+            
             const { fullName, phone, address, birthday } = req.body;
-            const avatar = req.file ? '/uploads/' + req.file.filename : null;
+            let avatarUrl = null;
+
+            // Nếu có file được upload
+            if (req.file) {
+                try {
+                    console.log('Phát hiện file upload, đường dẫn tạm:', req.file.path);
+                    
+                    // Đọc file thành buffer
+                    const fileBuffer = fs.readFileSync(req.file.path);
+                    console.log('Đã đọc file thành buffer, kích thước:', fileBuffer.length, 'bytes');
+                    
+                    // Encode file thành base64
+                    const base64Image = `data:${req.file.mimetype};base64,${fileBuffer.toString('base64')}`;
+                    console.log('Đã encode file thành base64, độ dài chuỗi:', base64Image.length);
+                    
+                    // Upload ảnh lên Cloudinary
+                    const result = await cloudinary.uploader.upload(
+                        base64Image,
+                        {
+                            folder: "avatars",
+                            use_filename: true,
+                            unique_filename: true
+                        }
+                    );
+                    
+                    avatarUrl = result.secure_url;
+                    console.log('URL ảnh từ Cloudinary:', avatarUrl);
+                    
+                    // Xóa file tạm sau khi đã upload lên Cloudinary
+                    fs.unlinkSync(req.file.path);
+                    console.log('Đã xóa file tạm sau khi upload');
+                } catch (error) {
+                    console.error('Lỗi chi tiết khi upload ảnh:', error);
+                }
+            } else {
+                console.log('Không có file được upload');
+            }
 
             // Cập nhật thông tin user
             const updateData = { fullName, phone, address, birthday };
-            if (avatar) {
-                updateData.avatar = avatar;
+            if (avatarUrl) {
+                updateData.avatar = avatarUrl;
+                console.log('Cập nhật avatar mới:', avatarUrl);
             }
 
-            User.findByIdAndUpdate(req.user._id, updateData, { new: true })
-                .then(user => {
-                    if (!user) {
-                        return res.status(404).json({ error: 'Không tìm thấy user' });
-                    }
-                    res.redirect('/profile');
-                })
-                .catch(error => {
-                    console.error('Lỗi khi cập nhật thông tin:', error);
-                    return res.status(500).json({ error: 'Lỗi server' });
-                });
+            console.log('Dữ liệu cập nhật:', updateData);
+            const user = await User.findByIdAndUpdate(req.user._id, updateData, { new: true });
+            
+            if (!user) {
+                console.log('Không tìm thấy user với ID:', req.user._id);
+                return res.status(404).json({ error: 'Không tìm thấy user' });
+            }
+            
+            console.log('Cập nhật thành công, user mới:', user);
+            res.redirect('/profile');
         } catch (error) {
-            console.error('Lỗi khi xử lý yêu cầu:', error);
+            console.error('Lỗi chi tiết khi xử lý yêu cầu:', error);
             return res.status(500).json({ error: 'Lỗi server' });
         }
     }

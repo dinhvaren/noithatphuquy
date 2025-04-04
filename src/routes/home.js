@@ -14,13 +14,14 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Cấu hình multer
+// Cấu hình multer - lưu tạm file trước khi upload lên Cloudinary
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
     }
 });
 
