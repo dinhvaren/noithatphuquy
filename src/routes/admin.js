@@ -66,6 +66,8 @@ router.get('/products/:id', AdminController.editProductModal);
 router.post('/products/:id/edit', upload.array('images', 5), AdminController.updateProductModal);
 router.put('/products/:id/edit', upload.array('images', 5), AdminController.updateProductModal);
 router.get('/products/:id/edit', AdminController.editProductModal);
+router.delete('/products/:id', AdminController.deleteProductModal);
+router.post('/products/:id', AdminController.deleteProductModal);
 
 // Routes cho người dùng
 router.get('/users/:id', AdminController.editUserModal);

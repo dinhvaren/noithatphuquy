@@ -2,8 +2,11 @@
 <div class="modal fade" id="editProductModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Chỉnh sửa thông tin sản phẩm</h5>
+            <div class="modal-header bg-brown text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Chỉnh sửa thông tin sản phẩm
+                </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -11,108 +14,276 @@
                     <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="productId" id="productIdInput">
                     
-                    <div class="row">
+                    <div class="row g-4">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tên sản phẩm</label>
-                                <input type="text" class="form-control" name="name" required>
-                            </div>
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        Thông tin cơ bản
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Tên sản phẩm</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Giá gốc</label>
-                                <input type="number" class="form-control" name="price" required>
-                            </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Giá gốc</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="price" required>
+                                            <span class="input-group-text">VNĐ</span>
+                                        </div>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Giá khuyến mãi</label>
-                                <input type="number" class="form-control" name="salePrice">
-                            </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Giá khuyến mãi</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="salePrice">
+                                            <span class="input-group-text">VNĐ</span>
+                                        </div>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Danh mục</label>
-                                <select class="form-select" name="category" required>
-                                    {{#each categories}}
-                                    <option value="{{this.name}}" {{#if (eq this.name ../product.category)}}selected{{/if}}>
-                                        {{this.name}}
-                                    </option>
-                                    {{/each}}
-                                </select>
-                            </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Danh mục</label>
+                                        <select class="form-select" name="category" required>
+                                            {{#each categories}}
+                                            <option value="{{this.name}}" {{#if (eq this.name ../product.category)}}selected{{/if}}>
+                                                {{this.name}}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Trạng thái</label>
-                                <select class="form-select" name="isActive" required>
-                                    <option value="true">Đang bán</option>
-                                    <option value="false">Ngừng bán</option>
-                                </select>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Trạng thái</label>
+                                        <select class="form-select" name="isActive" required>
+                                            <option value="true">Đang bán</option>
+                                            <option value="false">Ngừng bán</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Thông số kỹ thuật</label>
-                                <div class="specs-container">
-                                    <div class="mb-2">
-                                        <label class="form-label">Chất liệu</label>
-                                        <input type="text" class="form-control" name="specifications[material]" >
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label">Màu sắc</label>
-                                        <input type="text" class="form-control" name="specifications[color]" >
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label">Kích thước (cm)</label>
-                                        <div class="row g-2">
-                                            <div class="col-4">
-                                                <input type="number" class="form-control" name="specifications[size][length]" 
-                                                    placeholder="Dài">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="bi bi-gear me-2"></i>
+                                        Thông số kỹ thuật
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="specs-container">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Chất liệu</label>
+                                            <input type="text" class="form-control" name="specifications[material]">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Màu sắc</label>
+                                            <input type="text" class="form-control" name="specifications[color]">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Kích thước (cm)</label>
+                                            <div class="row g-2">
+                                                <div class="col-4">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" name="specifications[size][length]" placeholder="Dài">
+                                                        <span class="input-group-text">cm</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" name="specifications[size][width]" placeholder="Rộng">
+                                                        <span class="input-group-text">cm</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" name="specifications[size][height]" placeholder="Cao">
+                                                        <span class="input-group-text">cm</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-4">
-                                                <input type="number" class="form-control" name="specifications[size][width]" 
-                                                    placeholder="Rộng">
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="number" class="form-control" name="specifications[size][height]" 
-                                                    placeholder="Cao">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Bảo hành</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" name="specifications[warranty]">
+                                                <span class="input-group-text">tháng</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-2">
-                                        <label class="form-label">Bảo hành (tháng)</label>
-                                        <input type="number" class="form-control" name="specifications[warranty]" >
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Hình ảnh sản phẩm</label>
-                                <input type="file" class="form-control" name="images" multiple accept="image/*">
-                                <div class="mt-2">
-                                    {{#each product.images}}
-                                    <img src="{{this}}" class="img-thumbnail me-2" style="height: 100px;">
-                                    {{/each}}
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-12">
-                            <div class="mb-3">
-                                <label class="form-label">Mô tả sản phẩm</label>
-                                <textarea class="form-control" name="description" rows="4" required></textarea>
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="bi bi-images me-2"></i>
+                                        Hình ảnh sản phẩm
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <label class="form-label fw-bold mb-0 me-2">Thêm ảnh mới</label>
+                                            <small class="text-muted">(Tối đa 5 ảnh, mỗi ảnh không quá 5MB)</small>
+                                        </div>
+                                        <input type="file" class="form-control" name="images" multiple accept="image/*" onchange="previewImages(event)">
+                                    </div>
+                                    
+                                    <!-- Container cho ảnh hiện tại -->
+                                    <div id="currentImages" class="mt-3">
+                                        <label class="form-label fw-bold mb-2">Ảnh hiện tại</label>
+                                        <div class="image-grid">
+                                            <!-- Ảnh hiện tại sẽ được thêm vào đây bằng JavaScript -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Container cho preview ảnh mới -->
+                                    <div id="imagePreviewContainer" class="mt-3">
+                                        <label class="form-label fw-bold mb-2">Ảnh đã chọn</label>
+                                        <div class="image-grid">
+                                            <!-- Preview ảnh mới sẽ được thêm vào đây -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="bi bi-file-text me-2"></i>
+                                        Mô tả sản phẩm
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <textarea class="form-control" name="description" rows="4" required></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="submit" class="btn btn-primary" form="editProductForm">
-                    <i class="bi bi-save"></i> Lưu thay đổi
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg me-2"></i>Hủy
+                </button>
+                <button type="submit" class="btn btn-brown" form="editProductForm">
+                    <i class="bi bi-save me-2"></i>Lưu thay đổi
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.modal-lg {
+    max-width: 1000px;
+}
+
+.card {
+    border: 1px solid rgba(0,0,0,.125);
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.form-label {
+    color: #495057;
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.btn-close-white {
+    filter: brightness(0) invert(1);
+}
+
+/* Theme colors */
+.bg-brown {
+    background-color: #8B4513 !important;
+}
+
+.btn-brown {
+    background-color: #8B4513;
+    border-color: #8B4513;
+    color: #fff;
+}
+
+.btn-brown:hover {
+    background-color: #723A10;
+    border-color: #723A10;
+    color: #fff;
+}
+
+.btn-brown:focus {
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+}
+
+.form-control:focus {
+    border-color: rgba(139, 69, 19, 0.4);
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+}
+
+.form-select:focus {
+    border-color: rgba(139, 69, 19, 0.4);
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+}
+
+/* Card hover effect */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.1);
+}
+
+/* Custom scrollbar */
+.modal-body {
+    scrollbar-width: thin;
+    scrollbar-color: #8B4513 #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: #8B4513;
+    border-radius: 4px;
+}
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -154,17 +325,20 @@
                         throw new Error('Không thể tải thông tin sản phẩm');
                     }
                     
-                    const product = await response.json();
-                    if (!product) {
-                        throw new Error('Không tìm thấy thông tin sản phẩm');
+                    const result = await response.json();
+                    if (!result.success || !result.data) {
+                        throw new Error(result.message || 'Không tìm thấy thông tin sản phẩm');
                     }
+
+                    const product = result.data;
+                    console.log('Dữ liệu sản phẩm:', product);
 
                     // Điền thông tin vào form
                     editProductForm.querySelector('[name="name"]').value = product.name || '';
                     editProductForm.querySelector('[name="price"]').value = product.price || '';
                     editProductForm.querySelector('[name="salePrice"]').value = product.salePrice || '';
                     editProductForm.querySelector('[name="category"]').value = product.category || '';
-                    editProductForm.querySelector('[name="isActive"]').value = product.isActive?.toString() || 'true';
+                    editProductForm.querySelector('[name="isActive"]').value = String(product.isActive === undefined ? true : product.isActive);
                     
                     // Xử lý specifications an toàn
                     const specs = product.specifications || {};
@@ -183,6 +357,11 @@
 
                     // Set action cho form
                     editProductForm.action = `/admin/products/${productId}/edit`;
+
+                    // Hiển thị ảnh hiện tại
+                    if (product.images && Array.isArray(product.images)) {
+                        displayCurrentImages(product.images);
+                    }
 
                     // Hiển thị modal
                     modal.show();
@@ -210,15 +389,98 @@
                         throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
                     }
 
+                    // Thêm các ảnh hiện tại vào formData
+                    const existingImages = document.getElementsByName('existingImages[]');
+                    existingImages.forEach(input => {
+                        formData.append('existingImages', input.value);
+                    });
+
                     // Submit form
-                    this.submit();
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Lỗi khi cập nhật sản phẩm');
+                    }
+
+                    // Reload trang sau khi cập nhật thành công
+                    window.location.reload();
                 } else {
                     this.reportValidity();
                 }
             } catch (error) {
                 console.error('Lỗi khi submit form:', error);
-                alert(error.message || 'Có lỗi xảy ra khi lưu thông tin. Vui lòng thử lại.');
+                alert(error.message || 'Có lỗi xảy ra khi cập nhật sản phẩm. Vui lòng thử lại.');
             }
         });
+
+        // Hàm xử lý preview ảnh
+        function previewImages(event) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const maxFiles = 5;
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            // Xóa preview cũ
+            previewContainer.innerHTML = '';
+
+            // Kiểm tra số lượng file
+            if (files.length > maxFiles) {
+                alert(`Vui lòng chọn tối đa ${maxFiles} ảnh`);
+                event.target.value = '';
+                return;
+            }
+
+            // Kiểm tra và hiển thị preview cho từng ảnh
+            Array.from(files).forEach(file => {
+                if (file.size > maxSize) {
+                    alert(`Ảnh ${file.name} vượt quá 5MB`);
+                    event.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'position-relative d-inline-block me-2 mb-2';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="img-thumbnail" style="height: 100px;">
+                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
+                                onclick="this.parentElement.remove()">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    `;
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Hàm hiển thị ảnh hiện tại
+        function displayCurrentImages(images) {
+            const container = document.getElementById('currentImages');
+            container.innerHTML = '';
+
+            images.forEach((imageUrl, index) => {
+                const div = document.createElement('div');
+                div.className = 'position-relative d-inline-block me-2 mb-2';
+                div.innerHTML = `
+                    <img src="${imageUrl}" class="img-thumbnail" style="height: 100px;">
+                    <input type="hidden" name="existingImages[]" value="${imageUrl}">
+                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
+                            onclick="removeCurrentImage(this)">
+                        <i class="bi bi-x"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Hàm xóa ảnh hiện tại
+        function removeCurrentImage(button) {
+            button.closest('.position-relative').remove();
+        }
     });
 </script>

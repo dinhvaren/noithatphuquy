@@ -534,5 +534,40 @@ class AdminController {
         }
     }
 
+    // Modal xóa sản phẩm
+    async deleteProductModal(req, res, next) {
+        try {
+            const productId = req.params.id;
+            
+            // Tìm sản phẩm để lấy thông tin ảnh
+            const product = await Product.findById(productId);
+            if (!product) {
+                return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+            }
+
+            // Xóa ảnh trên Cloudinary
+            if (product.images && product.images.length > 0) {
+                for (const imageUrl of product.images) {
+                    try {
+                        // Lấy public_id từ URL
+                        const publicId = imageUrl.split('/').slice(-1)[0].split('.')[0];
+                        await cloudinaryService.deleteImage(publicId);
+                    } catch (error) {
+                        console.error('Lỗi khi xóa ảnh:', error);
+                    }
+                }
+            }
+
+            // Xóa sản phẩm khỏi database
+            await Product.findByIdAndDelete(productId);
+
+            // Redirect về trang admin
+            res.redirect('/admin');
+        } catch (error) {
+            console.error('Lỗi khi xóa sản phẩm:', error);
+            next(error);
+        }
+    }
+
 }
 module.exports = new AdminController();
