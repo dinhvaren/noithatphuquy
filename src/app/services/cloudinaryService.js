@@ -13,7 +13,7 @@ console.log('Cloudinary được cấu hình với cloud_name:', process.env.CLO
 
 class CloudinaryService {
     // Upload ảnh lên Cloudinary
-    async uploadImage(filePath) {
+    async uploadImage(filePath, options = {}) {
         try {
             console.log('Bắt đầu upload ảnh lên Cloudinary từ đường dẫn:', filePath);
             
@@ -29,17 +29,30 @@ class CloudinaryService {
             if (fileStats.size === 0) {
                 throw new Error('File trống, không thể upload');
             }
+
+            const defaultOptions = {
+                folder: 'products',
+                use_filename: true,
+                unique_filename: true,
+                transformation: [
+                    { width: 800, height: 800, crop: 'limit' }
+                ]
+            };
+            
+            // Merge options với defaultOptions
+            const uploadOptions = { ...defaultOptions, ...options };
             
             // Sử dụng promise để theo dõi kết quả upload
             return new Promise((resolve, reject) => {
                 cloudinary.uploader.upload(
                     filePath, 
-                    {
-                        folder: 'avatars',
-                        use_filename: true,
-                        unique_filename: true
-                    },
+                    uploadOptions,
                     (error, result) => {
+                        // Xóa file tạm sau khi upload
+                        fs.unlink(filePath, err => {
+                            if (err) console.error('Lỗi xóa file tạm:', err);
+                        });
+
                         if (error) {
                             console.error('Lỗi chi tiết từ Cloudinary:', error);
                             reject(error);
