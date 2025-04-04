@@ -3,62 +3,79 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 class AdminController {
-    index(req, res, next) {
-        Promise.all([
-            User.find().lean(),
-            Category.find().lean(),
-            Product.find().lean()
-        ])
-            .then(([users, categories, products]) => {
-                res.render('admin/Admin', {
-                    page: { title: 'Quản trị website' },
-                    users: users,
-                    categories: categories,
-                    products: products
-                });
-            })
-            .catch(next);
+    // Trang chủ admin
+    async index(req, res, next) {
+        try {
+            const [users, categories, products] = await Promise.all([
+                User.find().lean(),
+                Category.find().lean(),
+                Product.find().lean()
+            ]);
+
+            res.render('admin/Admin', {
+                page: { title: 'Quản trị website' },
+                users,
+                categories,
+                products,
+                user: req.user // Thêm thông tin user đang đăng nhập
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 
     // Xử lý hiển thị trang đăng nhập và xử lý đăng nhập
     async login(req, res, next) {
-        // Nếu là GET request, hiển thị trang đăng nhập
-        if (req.method === 'GET') {
-            res.render('admin/AdminLoginPage', { page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } });
-            return;
-        }
-
-        // Nếu là POST request, xử lý đăng nhập
         try {
+            // Nếu là GET request, hiển thị trang đăng nhập
+            if (req.method === 'GET') {
+                return res.render('admin/AdminLoginPage', { 
+                    page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' } 
+                });
+            }
+
+            // Nếu là POST request, xử lý đăng nhập
             const { username, password } = req.body;
 
             // Tìm user theo username
             const user = await User.findOne({ username });
 
             if (!user) {
-                return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không chính xác' });
+                return res.render('admin/AdminLoginPage', {
+                    page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' },
+                    error: 'Tên đăng nhập hoặc mật khẩu không chính xác'
+                });
             }
 
             // Kiểm tra mật khẩu
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không chính xác' });
+                return res.render('admin/AdminLoginPage', {
+                    page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' },
+                    error: 'Tên đăng nhập hoặc mật khẩu không chính xác'
+                });
             }
 
             // Kiểm tra role admin
             if (user.role !== 'admin') {
-                return res.status(403).json({ message: 'Bạn không có quyền truy cập trang quản trị' });
+                return res.render('admin/AdminLoginPage', {
+                    page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' },
+                    error: 'Bạn không có quyền truy cập trang quản trị'
+                });
             }
 
             // Kiểm tra trạng thái tài khoản
             if (!user.isActive) {
-                return res.status(403).json({ message: 'Tài khoản của bạn đã bị khóa' });
+                return res.render('admin/AdminLoginPage', {
+                    page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' },
+                    error: 'Tài khoản của bạn đã bị khóa'
+                });
             }
 
             // Tạo token JWT
             const token = jwt.sign(
                 {
-                    userId: user._id,
+                    id: user._id,
                     username: user.username,
                     role: user.role
                 },
@@ -67,26 +84,23 @@ class AdminController {
             );
 
             // Lưu token vào cookie
-            res.cookie('adminToken', token, {
+            res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 1 * 60 * 60 * 1000 // 1 giờ
+                maxAge: 24 * 60 * 60 * 1000 // 24 giờ
             });
 
-            res.status(200).json({
-                message: 'Đăng nhập thành công',
-                user: {
-                    id: user._id,
-                    username: user.username,
-                    role: user.role
-                }
-            });
+            // Chuyển hướng đến trang admin
+            return res.redirect('/admin');
+
         } catch (error) {
             console.error('Lỗi đăng nhập:', error);
-            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
+            return res.render('admin/AdminLoginPage', {
+                page: { title: 'Đăng nhập quản trị | Nội Thất Phú Quý' },
+                error: 'Lỗi server, vui lòng thử lại sau'
+            });
         }
     }
-
 
     // Thống kê
     statistics(req, res, next) {
@@ -99,15 +113,10 @@ class AdminController {
     }
 
     // Đăng xuất admin
-    logout(req, res, next) {
-        try {
-            // Xóa token khỏi cookie
-            res.clearCookie('adminToken');
-            res.redirect('/admin/login');
-        } catch (error) {
-            console.error('Lỗi đăng xuất:', error);
-            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
-        }
+    logout(req, res) {
+        res.clearCookie('token');
+        req.session.destroy();
+        res.redirect('/admin/login');
     }
 
     // Modal thêm sản phẩm mới
@@ -197,23 +206,35 @@ class AdminController {
     }
 
     // Modal chỉnh sửa sản phẩm
-    editProductModal(req, res, next) {
-        Promise.all([
-            Product.findById(req.params.id).lean(),
-            Category.find().lean()
-        ])
-        .then(([product, categories]) => {
+   async editProductModal(req, res, next) {
+        try {
+            const productId = req.params.id;
+            const product = await Product.findById(productId)
+                .populate('categoryId')
+                .lean();
+
             if (!product) {
-                return res.status(404).send('Product not found');
+                return res.status(404).json({ 
+                    success: false, 
+                    message: 'Không tìm thấy sản phẩm' 
+                });
             }
-            console.log('Product:', product._id);
-            res.render('modals/editProduct', { 
-                layout: false, 
-                product,
-                categories
+
+            // Chuyển đổi categoryId thành tên category
+            product.category = product.categoryId.name;
+            delete product.categoryId;
+
+            res.json({
+                success: true,
+                data: product
             });
-        })  
-        .catch(next);
+        } catch (error) {
+            console.error('Lỗi khi lấy thông tin sản phẩm:', error);
+            res.status(500).json({ 
+                success: false, 
+                message: 'Lỗi server, vui lòng thử lại sau' 
+            });
+        }
     }
 
     updateProductModal(req, res, next) {
@@ -377,5 +398,6 @@ class AdminController {
             res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
         }
     }
+
 }
 module.exports = new AdminController();

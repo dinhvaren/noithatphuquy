@@ -117,6 +117,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const editModal = document.getElementById('editProductModal');
+        const editProductForm = document.getElementById('editProductForm');
 
         // Xử lý sự kiện khi modal được ẩn
         editModal.addEventListener('hidden.bs.modal', function () {
@@ -135,56 +136,88 @@
 
         // Xử lý chỉnh sửa sản phẩm
         document.querySelectorAll('.edit-product').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const productId = e.target.dataset.id;
-                const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-                // lấy thông tin sản phẩm từ hàng trong bảng
-                const row = e.target.closest('tr');
-                const name = row.cells[1].textContent;
-                const price = row.cells[2].textContent;
-                const salePrice = row.cells[3].textContent;
-                const category = row.cells[4].textContent;
-                const isActive = row.cells[5].textContent;
-                const specifications = JSON.parse(row.cells[6].textContent);
-                const description = row.cells[7].textContent;
-                const images = JSON.parse(row.cells[8].textContent);
-                // Lấy danh mục từ bảng categories
-                const categories = JSON.parse(row.cells[9].textContent);
+            button.addEventListener('click', async (e) => {
+                try {
+                    const target = e.target.closest('.edit-product');
+                    if (!target) return;
 
-                // Điền thông tin vào form
-                const form = document.getElementById('editProductForm');
-                form.querySelector('[name="name"]').value = name;
-                form.querySelector('[name="price"]').value = price;
-                form.querySelector('[name="salePrice"]').value = salePrice;
-                form.querySelector('[name="category"]').value = category;
-                form.querySelector('[name="isActive"]').value = isActive;
-                form.querySelector('[name="specifications[material]"]').value = specifications.material;
-                form.querySelector('[name="specifications[color]"]').value = specifications.color;
-                form.querySelector('[name="specifications[size][length]"]').value = specifications.size.length;
-                form.querySelector('[name="specifications[size][width]"]').value = specifications.size.width;
-                form.querySelector('[name="specifications[size][height]"]').value = specifications.size.height;
-                form.querySelector('[name="specifications[warranty]"]').value = specifications.warranty;
-                form.querySelector('[name="description"]').value = description;
-                form.querySelector('[name="images"]').value = images;
-                form.querySelector('[name="productId"]').value = productId;
-                // Set action cho form
-                const form = document.getElementById('editProductForm');
-                form.action = `/admin/products/${productId}/edit`;
+                    const productId = target.dataset.id;
+                    if (!productId) {
+                        throw new Error('Không tìm thấy ID sản phẩm');
+                    }
 
-                // Hiển thị modal
-                modal.show();
+                    const modal = new bootstrap.Modal(editModal);
+
+                    // Lấy thông tin sản phẩm từ server
+                    const response = await fetch(`/admin/products/${productId}`);
+                    if (!response.ok) {
+                        throw new Error('Không thể tải thông tin sản phẩm');
+                    }
+                    
+                    const product = await response.json();
+                    if (!product) {
+                        throw new Error('Không tìm thấy thông tin sản phẩm');
+                    }
+
+                    // Điền thông tin vào form
+                    editProductForm.querySelector('[name="name"]').value = product.name || '';
+                    editProductForm.querySelector('[name="price"]').value = product.price || '';
+                    editProductForm.querySelector('[name="salePrice"]').value = product.salePrice || '';
+                    editProductForm.querySelector('[name="category"]').value = product.category || '';
+                    editProductForm.querySelector('[name="isActive"]').value = product.isActive?.toString() || 'true';
+                    
+                    // Xử lý specifications an toàn
+                    const specs = product.specifications || {};
+                    editProductForm.querySelector('[name="specifications[material]"]').value = specs.material || '';
+                    editProductForm.querySelector('[name="specifications[color]"]').value = specs.color || '';
+                    
+                    // Xử lý kích thước an toàn
+                    const size = specs.size || {};
+                    editProductForm.querySelector('[name="specifications[size][length]"]').value = size.length || '';
+                    editProductForm.querySelector('[name="specifications[size][width]"]').value = size.width || '';
+                    editProductForm.querySelector('[name="specifications[size][height]"]').value = size.height || '';
+                    editProductForm.querySelector('[name="specifications[warranty]"]').value = specs.warranty || '';
+                    
+                    editProductForm.querySelector('[name="description"]').value = product.description || '';
+                    editProductForm.querySelector('[name="productId"]').value = productId;
+
+                    // Set action cho form
+                    editProductForm.action = `/admin/products/${productId}/edit`;
+
+                    // Hiển thị modal
+                    modal.show();
+                } catch (error) {
+                    console.error('Lỗi khi xử lý dữ liệu sản phẩm:', error);
+                    alert(error.message || 'Có lỗi xảy ra khi tải thông tin sản phẩm. Vui lòng thử lại.');
+                }
             });
         });
 
-        // Xử lý submit form
-        document.getElementById('editProductForm').addEventListener('submit', function(e) {
+        // Xử lý submit form với validation
+        editProductForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            if (this.checkValidity()) {
-                // Submit form bình thường
-                this.submit();
-            } else {
-                this.reportValidity();
+            try {
+                if (this.checkValidity()) {
+                    const formData = new FormData(this);
+                    
+                    // Kiểm tra các trường bắt buộc
+                    const name = formData.get('name');
+                    const price = formData.get('price');
+                    const category = formData.get('category');
+                    
+                    if (!name || !price || !category) {
+                        throw new Error('Vui lòng điền đầy đủ thông tin bắt buộc');
+                    }
+
+                    // Submit form
+                    this.submit();
+                } else {
+                    this.reportValidity();
+                }
+            } catch (error) {
+                console.error('Lỗi khi submit form:', error);
+                alert(error.message || 'Có lỗi xảy ra khi lưu thông tin. Vui lòng thử lại.');
             }
         });
     });

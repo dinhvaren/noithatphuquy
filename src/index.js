@@ -10,6 +10,10 @@ const handlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 // Import module Path để làm việc với đường dẫn
 const path = require('path');
+// Import cookie-parser để đọc cookies
+const cookieParser = require('cookie-parser');
+// Import express-session
+const session = require('express-session');
 // Khởi tạo ứng dụng Express
 const app = express();
 // Định nghĩa cổng chạy server
@@ -19,10 +23,22 @@ const route = require('./routes');
 // Import cấu hình database
 const db = require('./config/db/database');
 
-
 // Kết nối đến cơ sở dữ liệu
 db.connect();
 
+// Cấu hình cookie-parser
+app.use(cookieParser());
+
+// Cấu hình session
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+    }
+}));
 
 // Cấu hình thư mục tĩnh (chứa CSS, JS, Images)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -62,7 +78,9 @@ app.engine(
                 }).format(value);
             },
         },
-
+        runtimeOptions: {
+            allowProtoPropertiesByDefault: true
+        },
         partialsDir: [
             path.join(__dirname, 'resources/views/modals'),
             path.join(__dirname, 'resources/views/partials'),

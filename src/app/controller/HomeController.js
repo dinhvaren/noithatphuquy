@@ -6,68 +6,117 @@ require('dotenv').config();
 
 class HomeController {
     // Hiển thị trang chủ
-    dashboard(req, res, next) {
-        res.render('pages/DashBoard', { page: { title: 'Trang chủ' } });
+    async dashboard(req, res, next) {
+        try {
+            // Kiểm tra token từ cookie
+            const token = req.cookies?.token;
+            if (token) {
+                // Verify token
+                const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+                const user = await User.findById(decoded.id);
+                
+                if (user && user.isActive) {
+                    // Nếu là admin, chuyển về trang admin
+                    if (user.role === 'admin') {
+                        return res.redirect('/admin');
+                    }
+                    // Nếu là user thường, chuyển về homepage
+                    return res.redirect('/homepage');
+                }
+            }
+            // Nếu chưa đăng nhập, hiển thị trang dashboard
+            res.render('pages/DashBoard', { page: { title: 'Trang chủ' } });
+        } catch (error) {
+            // Nếu có lỗi xác thực token, hiển thị trang dashboard
+            res.render('pages/DashBoard', { page: { title: 'Trang chủ' } });
+        }
     }
 
     // Hiển thị trang chủ sau khi đăng nhập
     home(req, res, next) {
-
-        res.render('pages/HomePage', { page: { title: 'Trang chủ' }, user: null });
+        // Nếu chưa đăng nhập, chuyển hướng về dashboard
+        if (!req.user) {
+            return res.redirect('/');
+        }
+        // Nếu đã đăng nhập, hiển thị trang homepage với thông tin user
+        res.render('pages/HomePage', { 
+            page: { title: 'Trang chủ' }, 
+            user: req.user 
+        });
     }
 
     // Xử lý đăng nhập
     async login(req, res, next) {
         try {
+            // Nếu là GET request, hiển thị form đăng nhập
+            if (req.method === 'GET') {
+                return res.render('pages/Login', {
+                    layout: false,
+                    page: { title: 'Đăng nhập' }
+                });
+            }
+
             const { email, password, rememberMe } = req.body;
 
             // Tìm user theo email
             const user = await User.findOne({ email });
             if (!user) {
-                return res.status(401).json({ error: 'email', message: 'Email không tồn tại' });
+                return res.render('pages/Login', {
+                    layout: false,
+                    page: { title: 'Đăng nhập' },
+                    error: 'Email không tồn tại'
+                });
             }
 
             // Kiểm tra mật khẩu
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(401).json({ error: 'password', message: 'Mật khẩu không chính xác' });
+                return res.render('pages/Login', {
+                    layout: false,
+                    page: { title: 'Đăng nhập' },
+                    error: 'Mật khẩu không chính xác'
+                });
             }
 
             // Kiểm tra trạng thái tài khoản
             if (!user.isActive) {
-                return res.status(403).json({ message: 'Tài khoản của bạn đã bị khóa' });
+                return res.render('pages/Login', {
+                    layout: false,
+                    page: { title: 'Đăng nhập' },
+                    error: 'Tài khoản của bạn đã bị khóa'
+                });
             }
 
             // Tạo token JWT
             const token = jwt.sign(
                 { 
-                    userId: user._id,
+                    id: user._id,
                     username: user.username,
                     role: user.role
                 },
                 process.env.JWT_SECRET || 'your-secret-key',
-                { expiresIn: rememberMe ? '30d' : '24h' } // Token hết hạn sau 30 ngày nếu ghi nhớ đăng nhập
+                { expiresIn: rememberMe ? '30d' : '24h' }
             );
 
             // Lưu token vào cookie
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000 // 30 ngày hoặc 24 giờ
+                maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000
             });
 
-            res.status(200).json({
-                message: 'Đăng nhập thành công',
-                user: {
-                    id: user._id,
-                    username: user.username,
-                    email: user.email,
-                    role: user.role
-                }
-            });
+            // Chuyển hướng đến trang được lưu trước đó hoặc trang chủ
+            const redirectUrl = req.session?.returnTo || '/homepage';
+            delete req.session?.returnTo;
+            return res.redirect(redirectUrl);
+
         } catch (error) {
             console.error('Lỗi đăng nhập:', error);
-            res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
+            return res.render('pages/Login', {
+                layout: false,
+                page: { title: 'Đăng nhập' },
+                error: 'Lỗi server, vui lòng thử lại sau'
+            });
         }
     }
 
@@ -97,7 +146,7 @@ class HomeController {
                 username,
                 email: signupEmail,
                 password: hashedPassword,
-                fullName: username, // Mặc định fullName bằng username
+                fullName: username,
                 role: 'user',
                 isActive: true
             });
@@ -107,7 +156,7 @@ class HomeController {
             // Tạo token JWT
             const token = jwt.sign(
                 { 
-                    userId: newUser._id,
+                    id: newUser._id,
                     username: newUser.username,
                     role: newUser.role
                 },
@@ -119,20 +168,12 @@ class HomeController {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000 // 1 giờ
+                maxAge: 24 * 60 * 60 * 1000
             });
 
-            // Chuyển hướng về trang chủ với thông báo thành công
-            res.render('pages/HomePage', { 
-                page: { title: 'Trang chủ' },
-                user: {
-                    id: newUser._id,
-                    username: newUser.username,
-                    email: newUser.email,
-                    role: newUser.role
-                },
-                successMessage: 'Đăng ký tài khoản thành công!'
-            });
+            // Chuyển hướng về trang homepage
+            return res.redirect('/homepage');
+            
         } catch (error) {
             console.error('Lỗi đăng ký:', error);
             res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau' });
@@ -141,19 +182,36 @@ class HomeController {
 
     // Hiển thị trang thông tin cá nhân
     profile(req, res, next) {
-        res.render('pages/Profile', { page: { title: 'Thông tin cá nhân' }});
-
+        res.render('pages/Profile', { 
+            page: { title: 'Thông tin cá nhân' },
+            user: req.user
+        });
     }
 
     // Hiển thị trang danh sách đơn hàng
     orders(req, res, next) {
-        res.render('pages/Orders', { page: { title: 'Danh sách đơn hàng' } });
+        res.render('pages/Orders', { 
+            page: { title: 'Danh sách đơn hàng' },
+            user: req.user
+        });
     }
     
     
     // Hiển thị trang thiết kế nội thất
     interiorDesign(req, res, next) {
-        res.render('pages/Interior-design', { page: { title: 'Thiết kế nội thất' } });
+        // Nếu đã đăng nhập, chuyển hướng sang phiên bản homepage
+        if (req.user) {
+            return res.render('pages/InteriorDesign', { 
+                page: { title: 'Thiết kế nội thất' },
+                user: req.user,
+                layout: 'HomePage'  // Sử dụng layout của homepage
+            });
+        }
+        // Nếu chưa đăng nhập, hiển thị phiên bản dashboard
+        res.render('pages/InteriorDesign', { 
+            page: { title: 'Thiết kế nội thất' },
+            layout: 'DashBoard'  // Sử dụng layout của dashboard
+        });
     }
 
     productDetails(req, res, next) {
@@ -167,7 +225,10 @@ class HomeController {
 
     // Hiển thị trang danh sách yêu thích
     wishlist(req, res, next) {
-        res.render('pages/Wishlist', { page: { title: 'Danh sách yêu thích' } });
+        res.render('pages/Wishlist', { 
+            page: { title: 'Danh sách yêu thích' },
+            user: req.user
+        });
     }
 
     // Hiển thị trang liên hệ
@@ -194,7 +255,7 @@ class HomeController {
     changePassword(req, res, next) {
         res.render('pages/ChangePassword', { 
             page: { title: 'Đổi mật khẩu' },
-            user: req.user 
+            user: req.user
         });
     }
 
