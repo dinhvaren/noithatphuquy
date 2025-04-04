@@ -4,6 +4,39 @@ const { HomeController, UserController } = require('../app/controller/index');
 const CheckPermission = require('../app/middlewares/CheckPermission');
 const jwt = require('jsonwebtoken');
 const { User }= require('../app/models/index');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Đảm bảo thư mục uploads tồn tại
+const uploadDir = path.join(__dirname, '../../uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Cấu hình multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5 // 5MB
+    },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Chỉ chấp nhận file ảnh!'));
+        }
+    }
+});
 
 // Middleware kiểm tra user cho các route công khai
 const attachUser = async (req, res, next) => {
@@ -50,7 +83,7 @@ router.use('/cart', CheckPermission.verifyToken, CheckPermission.checkUser);
 router.use('/change-password', CheckPermission.verifyToken, CheckPermission.checkUser);
 
 router.get('/profile', UserController.profile);
-router.post('/profile/update', UserController.updateProfile);
+router.post('/profile/update', upload.single('avatar'), UserController.updateProfile);
 router.get('/orders', UserController.orders);
 router.get('/wishlist', UserController.wishlist);
 router.get('/cart', HomeController.cart);

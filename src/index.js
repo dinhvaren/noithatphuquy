@@ -42,10 +42,11 @@ app.use(session({
 
 // Cấu hình thư mục tĩnh (chứa CSS, JS, Images)
 app.use(express.static(path.join(__dirname, 'public')));
+// Cấu hình thư mục uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Middleware để log HTTP request ra console
 // app.use(morgan('combined'));
-const upload = multer(); // Bộ xử lý `multipart/form-data`
 // Ghi đè phương thức HTTP (hỗ trợ PUT, DELETE trong form)
 app.use(methodOverride('_method'));
 // Middleware để xử lý dữ liệu JSON từ request
@@ -56,7 +57,6 @@ app.use(
         extended: true,
     }),
 );
-app.use(upload.none());  // Xử lý form-data (không có file)
 
 // Cấu hình Template Engine Handlebars
 app.engine(

@@ -100,43 +100,34 @@ class UserController {
     }
 
     // Xử lý cập nhật thông tin cá nhân
-    async updateProfile(req, res) {
+    updateProfile(req, res) {
         try {
             const { fullName, phone, address, birthday } = req.body;
-            const userId = req.user._id;
+            const avatar = req.file ? '/uploads/' + req.file.filename : null;
 
-            // Cập nhật thông tin người dùng
-            const updatedUser = await User.findByIdAndUpdate(
-                userId,
-                { 
-                    fullName,
-                    phone,
-                    address,
-                    birthday
-                },
-                { new: true }
-            );
-
-            if (!updatedUser) {
-                return res.status(404).json({ 
-                    success: false,
-                    message: 'Không tìm thấy người dùng'
-                });
+            // Cập nhật thông tin user
+            const updateData = { fullName, phone, address, birthday };
+            if (avatar) {
+                updateData.avatar = avatar;
             }
 
-            return res.status(200).json({
-                success: true,
-                message: 'Cập nhật thông tin thành công',
-                user: updatedUser
-            });
+            User.findByIdAndUpdate(req.user._id, updateData, { new: true })
+                .then(user => {
+                    if (!user) {
+                        return res.status(404).json({ error: 'Không tìm thấy user' });
+                    }
+                    res.redirect('/profile');
+                })
+                .catch(error => {
+                    console.error('Lỗi khi cập nhật thông tin:', error);
+                    return res.status(500).json({ error: 'Lỗi server' });
+                });
         } catch (error) {
-            console.error('Lỗi cập nhật profile:', error);
-            return res.status(500).json({
-                success: false,
-                message: 'Có lỗi xảy ra, vui lòng thử lại sau'
-            });
+            console.error('Lỗi khi xử lý yêu cầu:', error);
+            return res.status(500).json({ error: 'Lỗi server' });
         }
     }
+    
 }
 
 module.exports = new UserController(); 
