@@ -56,14 +56,40 @@ class HomeController {
                 });
             }
 
-            const { email, password, rememberMe } = req.body;
+            console.log('Request headers:', req.headers);
+            console.log('Request body:', req.body);
 
-            // Tìm user theo email
-            const user = await User.findOne({ email });
+            const { email, password, rememberMe } = req.body;
+            
+            // Kiểm tra dữ liệu đầu vào
+            if (!email || !password) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'Vui lòng nhập đầy đủ thông tin đăng nhập và mật khẩu' 
+                });
+            }
+            
+            // Log để debug
+            console.log('Dữ liệu nhận được:', { 
+                email,
+                hasPassword: !!password,
+                body: req.body 
+            });
+
+            // Tìm user theo email hoặc username
+            const user = await User.findOne({
+                $or: [
+                    { email: email.toLowerCase() },
+                    { username: email }
+                ]
+            });
+
+            console.log('Tìm thấy user:', user);
+            
             if (!user) {
                 return res.status(400).json({ 
                     success: false, 
-                    message: 'Email không tồn tại' 
+                    message: 'Email hoặc tên đăng nhập không tồn tại' 
                 });
             }
 
@@ -82,6 +108,12 @@ class HomeController {
                     success: false, 
                     message: 'Tài khoản của bạn đã bị khóa' 
                 });
+            }
+
+            // Kiểm tra và cập nhật avatar mặc định nếu chưa có
+            if (!user.avatar) {
+                user.avatar = '/img/user/avatar.jpg';
+                await user.save();
             }
 
             // Tạo token JWT
@@ -146,7 +178,8 @@ class HomeController {
                 password: hashedPassword,
                 fullName: username,
                 role: 'user',
-                isActive: true
+                isActive: true,
+                avatar: '/img/user/avatar.jpg'
             });
 
             await newUser.save();

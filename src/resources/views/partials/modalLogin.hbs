@@ -9,12 +9,12 @@
             <div class="modal-body p-4">
                 <form action="/login" method="POST" id="loginForm">
                     <div class="mb-3">
-                        <label for="email" class="form-label" style="color: #4b5563;">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Nhập email của bạn" style="border-color: #e5e7eb;" required>
+                        <label for="email" class="form-label" style="color: #4b5563;">Email hoặc Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="email" name="email"
+                            placeholder="Nhập email hoặc tên đăng nhập" style="border-color: #e5e7eb;" required>
                         <div id="emailError"
                             style="display: none; color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
-                            Email không tồn tại
+                            Email hoặc tên đăng nhập không tồn tại
                         </div>
                     </div>
                     <div class="mb-3">
@@ -144,11 +144,19 @@
 
             // Lấy dữ liệu form
             const formData = new FormData(this);
+            const data = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                rememberMe: formData.get('rememberMe') === 'on'
+            };
             
             // Gửi request đăng nhập
             fetch('/login', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
