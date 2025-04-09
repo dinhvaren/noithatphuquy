@@ -1,126 +1,141 @@
 # Website Nội Thất Phú Quý
 
-Website bán nội thất cao cấp được xây dựng bằng Node.js, Express và MongoDB.
+Website bán hàng nội thất cao cấp với đầy đủ tính năng cho cả người dùng và quản trị viên.
 
-## Tính Năng Chính
+## Giao diện người dùng
 
-### 1. Phần Người Dùng
-- **Trang Chủ**
-  - Slider banner giới thiệu
-  - Video giới thiệu về công ty
-  - Danh sách sản phẩm nổi bật
-  - Danh mục sản phẩm
-  - Thông tin liên hệ
+### Trang chủ
+![Trang chủ](/screenshots/home.png)
+- Banner slider giới thiệu
+- Danh mục sản phẩm nổi bật
+- Sản phẩm mới
+- Sản phẩm khuyến mãi
+- Video giới thiệu công ty
 
-- **Sản Phẩm**
-  - Hiển thị sản phẩm theo danh mục
-  - Tìm kiếm và lọc sản phẩm
-  - Chi tiết sản phẩm (hình ảnh, giá, mô tả, thông số kỹ thuật)
-  - Thêm vào giỏ hàng
-  - Yêu thích sản phẩm
+### Đăng nhập & Đăng ký
+![Đăng nhập](/screenshots/login.png)
+- Đăng nhập bằng email hoặc username
+- Đăng ký tài khoản mới
+- Quên mật khẩu
+- Ghi nhớ đăng nhập
 
-- **Tài Khoản**
-  - Đăng ký/Đăng nhập
-  - Quản lý thông tin cá nhân
-  - Xem lịch sử đơn hàng
-  - Danh sách sản phẩm yêu thích
+### Danh mục sản phẩm
+![Danh mục](/screenshots/categories.png)
+- Hiển thị theo danh mục
+- Lọc theo giá, màu sắc, kích thước
+- Sắp xếp sản phẩm
+- Phân trang
 
-### 2. Phần Quản Trị
-- **Quản Lý Người Dùng**
-  - Thêm/sửa/xóa người dùng
-  - Phân quyền (Admin, Nhân viên, Khách hàng)
-  - Khóa/mở khóa tài khoản
+### Chi tiết sản phẩm
+![Chi tiết sản phẩm](/screenshots/product-detail.png)
+- Hình ảnh sản phẩm (zoom, slider)
+- Thông tin chi tiết
+- Thông số kỹ thuật
+- Sản phẩm liên quan
+- Đánh giá & bình luận
 
-- **Quản Lý Sản Phẩm**
-  - Thêm/sửa/xóa sản phẩm
-  - Upload nhiều hình ảnh
-  - Quản lý thông tin chi tiết và giá
-  - Sắp xếp và phân loại sản phẩm
+### Giỏ hàng & Thanh toán
+![Giỏ hàng](/screenshots/cart.png)
+- Thêm/xóa sản phẩm
+- Cập nhật số lượng
+- Mã giảm giá
+- Chọn phương thức thanh toán
+- Thông tin giao hàng
 
-- **Quản Lý Danh Mục**
-  - Thêm/sửa/xóa danh mục
-  - Sắp xếp thứ tự hiển thị
+### Trang cá nhân
+![Trang cá nhân](/screenshots/profile.png)
+- Thông tin tài khoản
+- Lịch sử đơn hàng
+- Sản phẩm yêu thích
+- Đổi mật khẩu
 
-## Công Nghệ Sử Dụng
+## Giao diện quản trị
 
-### Frontend
-- HTML5, CSS3, JavaScript
-- Bootstrap 5
-- Handlebars (HBS)
-- jQuery
-- Swiper.js (slider)
+### Dashboard
+![Dashboard](/screenshots/admin-dashboard.png)
+- Thống kê doanh thu
+- Đơn hàng mới
+- Sản phẩm bán chạy
+- Khách hàng mới
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- JWT Authentication
-- Multer (upload file)
-- Bcrypt (mã hóa mật khẩu)
+### Quản lý sản phẩm
+![Quản lý sản phẩm](/screenshots/admin-products.png)
+- Danh sách sản phẩm
+- Thêm/sửa/xóa sản phẩm
+- Upload nhiều hình ảnh
+- SEO sản phẩm
 
-## Cài Đặt và Chạy
+### Quản lý đơn hàng
+![Quản lý đơn hàng](/screenshots/admin-orders.png)
+- Danh sách đơn hàng
+- Chi tiết đơn hàng
+- Cập nhật trạng thái
+- In hóa đơn
 
-1. **Yêu Cầu Hệ Thống**
-   - Node.js (v14 trở lên)
-   - MongoDB
-   - npm hoặc yarn
+### Quản lý người dùng
+![Quản lý người dùng](/screenshots/admin-users.png)
+- Danh sách người dùng
+- Thêm/sửa/xóa tài khoản
+- Phân quyền
+- Khóa/mở khóa tài khoản
 
-2. **Cài Đặt**
-   ```bash
-   # Clone repository
-   git clone [repository-url]
+### Quản lý bài viết
+![Quản lý bài viết](/screenshots/admin-posts.png)
+- Danh sách bài viết
+- Thêm/sửa/xóa bài viết
+- Upload hình ảnh
+- SEO bài viết
 
-   # Di chuyển vào thư mục dự án
-   cd NoiThatPhuQuy
+## Công nghệ sử dụng
 
-   # Cài đặt dependencies
-   npm install
-   ```
+- **Frontend:**
+  - HTML5, CSS3, JavaScript
+  - Bootstrap 5
+  - jQuery
+  - Handlebars template engine
+  
+- **Backend:**
+  - Node.js
+  - Express.js
+  - MongoDB
+  - JWT Authentication
+  
+- **Cloud Services:**
+  - Cloudinary (lưu trữ hình ảnh)
 
-3. **Cấu Hình**
-   - Tạo file `.env` với các thông tin:
-   ```env
-   PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/noithatphuquy
-   JWT_SECRET=your_jwt_secret
-   ```
+## Cài đặt
 
-4. **Chạy Ứng Dụng**
-   ```bash
-   # Chế độ development
-   npm run dev
-
-   # Chế độ production
-   npm start
-   ```
-
-## Cấu Trúc Thư Mục
-
-```
-NoiThatPhuQuy/
-├── src/
-│   ├── app/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   └── utils/
-│   ├── config/
-│   ├── public/
-│   │   ├── css/
-│   │   ├── js/
-│   │   └── img/
-│   ├── resources/
-│   │   └── views/
-│   └── routes/
-├── .env
-├── package.json
-└── README.md
+1. Clone repository:
+```bash
+git clone https://github.com/dinhvaren/nothatphuquy.git
 ```
 
-## Tác Giả
-- Tên: [Tên tác giả]
-- Email: [Email liên hệ]
-- Website: [Website công ty]
+2. Cài đặt dependencies:
+```bash
+npm install
+```
 
-## Giấy Phép
-[Loại giấy phép] - Xem file [LICENSE.md](LICENSE.md) để biết thêm chi tiết. 
+3. Tạo file .env và cấu hình các biến môi trường:
+```env
+PORT=3000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+4. Chạy ứng dụng:
+```bash
+npm start
+```
+
+## Tác giả
+
+- Tên: Lương Nguyễn Ngọc Đình
+- Email: dinhvaren@gmail.com
+- GitHub: https://github.com/dinhvaren
+
+## Giấy phép
+
+MIT License - Xem file [LICENSE.md](LICENSE.md) để biết thêm chi tiết. 
