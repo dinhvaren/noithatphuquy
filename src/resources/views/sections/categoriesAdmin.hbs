@@ -6,6 +6,32 @@
             <i class="bi bi-plus-lg"></i> Thêm danh mục
         </button>
     </div>
+
+    <!-- Danh sách danh mục cha -->
+    <h4 class="mb-3">Danh mục cha</h4>
+    <div class="table-responsive mb-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên danh mục</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each parentCategories}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Danh mục con -->
+    <h4 class="mb-3">Danh mục con</h4>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -13,7 +39,7 @@
                     <th>ID</th>
                     <th>Tên danh mục</th>
                     <th>Mô tả</th>
-                    <th>Số sản phẩm</th>
+                    <th>Danh mục cha</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -23,13 +49,17 @@
                     <td>{{this._id}}</td>
                     <td>{{this.name}}</td>
                     <td>{{this.description}}</td>
-                    <td>{{this.productCount}}</td>
-                    <td class="action-buttons">
-                        <button class="btn btn-sm btn-primary edit-category" data-id="{{this._id}}"
+                    <td>
+                        {{#with (lookup ../parentCategories this.parent_id)}}
+                            {{this.name}}
+                        {{/with}}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm edit-category" data-id="{{this._id}}" 
                                 data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-sm btn-danger delete-category" data-id="{{this._id}}"
+                        <button type="button" class="btn btn-danger btn-sm delete-category" data-id="{{this._id}}"
                                 data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
                             <i class="bi bi-trash"></i>
                         </button>
@@ -39,50 +69,50 @@
             </tbody>
         </table>
     </div>
-</div>
 
-<!-- Modal xóa danh mục -->
-<div class="modal fade" id="deleteCategoryModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Xác nhận xóa danh mục</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa danh mục này?</p>
-                <p class="text-danger">Hành động này không thể hoàn tác!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <form id="deleteCategoryForm" method="POST" style="display: inline;">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger">Xóa</button>
-                </form>
+    <!-- Modal xóa danh mục -->
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa danh mục này?</p>
+                    <p class="text-danger">Hành động này không thể hoàn tác!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <form id="deleteCategoryForm" method="POST" action="/admin/categories/" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Khởi tạo tất cả các modal với cấu hình mặc định
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            new bootstrap.Modal(modal, {
+                backdrop: 'static',
+                keyboard: false
+            });
+        });
+
+        // Xử lý sự kiện click nút xóa
+        document.querySelectorAll('.delete-category').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const categoryId = this.getAttribute('data-id');
+                const form = document.getElementById('deleteCategoryForm');
+                form.action = `/admin/categories/${categoryId}`;
+            });
+        });
+    });
+    </script>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Khởi tạo tất cả các modal với cấu hình mặc định
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        new bootstrap.Modal(modal, {
-            backdrop: 'static',
-            keyboard: false
-        });
-    });
-
-    // Xử lý sự kiện click nút xóa
-    document.querySelectorAll('.delete-category').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const categoryId = this.getAttribute('data-id');
-            const form = document.getElementById('deleteCategoryForm');
-            form.action = `/admin/categories/${categoryId}`;
-        });
-    });
-});
-</script> 

@@ -3,25 +3,43 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Thêm danh mục mới</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">Thêm Danh Mục Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/categories/create" method="POST" id="addCategoryForm">
+                <form id="addCategoryForm" method="POST" action="/admin/categories/create">
                     <div class="mb-3">
                         <label class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" name="name" required
-                            placeholder="Nhập tên danh mục (VD: Bàn ăn, Ghế sofa,...)">
+                        <input type="text" class="form-control" name="name" required>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục cha</label>
+                        <select class="form-select" name="parent_id">
+                            <option value="">-- Chọn danh mục cha --</option>
+                            {{#each parentCategories}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description"
-                            placeholder="Nhập mô tả chi tiết về danh mục"></textarea>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="isActive" required>
+                            <option value="true">Hoạt động</option>
+                            <option value="false">Không hoạt động</option>
+                        </select>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save"></i> Lưu
+                            <i class="bi bi-plus-circle"></i> Thêm mới
                         </button>
                     </div>
                 </form>
@@ -31,49 +49,58 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addCategoryForm = document.getElementById('addCategoryForm');
-        const nameInput = addCategoryForm.querySelector('[name="name"]');
-        const descriptionInput = addCategoryForm.querySelector('[name="description"]');
-        const submitButton = addCategoryForm.querySelector('button[type="submit"]');
+    document.addEventListener('DOMContentLoaded', function () {
+        const addModal = document.getElementById('addCategoryModal');
+
+        // Xử lý sự kiện khi modal được ẩn
+        addModal.addEventListener('hidden.bs.modal', function () {
+            // Xóa modal-backdrop
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.classList.remove('show');
+                backdrop.classList.add('hide');
+                setTimeout(() => {
+                    backdrop.remove();
+                }, 200);
+            }
+            // Xóa class modal-open khỏi body
+            document.body.classList.remove('modal-open');
+            // Xóa inline style của body
+            document.body.style.removeProperty('padding-right');
+            document.body.style.removeProperty('overflow');
+        });
 
         // Xử lý submit form
-        addCategoryForm.addEventListener('submit', function(e) {
+        document.getElementById('addCategoryForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const name = nameInput.value.trim();
-            const description = descriptionInput.value.trim();
+            
+            // Lấy dữ liệu từ form
+            const formData = {
+                name: this.querySelector('[name="name"]').value,
+                description: this.querySelector('[name="description"]').value,
+                parent_id: this.querySelector('[name="parent_id"]').value,
+                isActive: this.querySelector('[name="isActive"]').value
+            };
 
-            if (!name) {
-                showNotification('Lỗi', 'Vui lòng nhập tên danh mục!');
-                return;
-            }
-
-            // Submit form nếu dữ liệu hợp lệ
-            this.submit();
-
-            // Ẩn modal và reset form sau khi submit thành công
-            setTimeout(() => {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
-                if (modal) {
-                    modal.hide();
-                    this.reset();
+            // Gửi request
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    throw new Error('Network response was not ok');
                 }
-            }, 200);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi thêm danh mục');
+            });
         });
     });
-
-    // Hàm hiển thị thông báo
-    function showNotification(title, message) {
-        // Kiểm tra xem SweetAlert2 có được định nghĩa không
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: title,
-                text: message,
-                icon: title.toLowerCase() === 'lỗi' ? 'error' : 'success',
-                confirmButtonText: 'Đóng'
-            });
-        } else {
-            alert(message);
-        }
-    }
 </script>

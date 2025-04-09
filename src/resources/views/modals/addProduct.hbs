@@ -1,218 +1,240 @@
 <!-- Add Product Modal -->
-<div class="modal fade" id="addProductModal" tabindex="-1">
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Thêm sản phẩm mới</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="addProductForm" method="POST" action="/admin/products/create" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Giá gốc</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="price" min="0" step="1000" required>
-                            <span class="input-group-text">đ</span>
+            <form id="addProductForm" action="/admin/products/create" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Tên sản phẩm -->
+                        <div class="col-12 mb-3">
+                            <label for="name" class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" required>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Giá khuyến mãi</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="salePrice" min="0" step="1000">
-                            <span class="input-group-text">đ</span>
+
+                        <!-- Giá gốc -->
+                        <div class="col-md-6 mb-3">
+                            <label for="price" class="form-label">Giá gốc <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="price" name="price" min="0" placeholder="Nhập giá gốc" required>
+                                <span class="input-group-text">đ</span>
+                            </div>
                         </div>
-                        <div class="form-text">Để trống nếu không có khuyến mãi</div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Danh mục</label>
-                        <select class="form-select" name="category" required>
-                            <option value="" disabled selected>Chọn danh mục sản phẩm</option>
-                            {{#each categories}}
-                                <option value="{{this._id}}">{{this.name}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mô tả</label>
-                        <textarea class="form-control" name="description" required></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Hình ảnh sản phẩm</label>
-                        <input type="file" class="form-control" id="productImages" name="images" accept="image/*" multiple onchange="previewImages(event)">
-                        <div class="form-text">Bạn có thể chọn nhiều ảnh (tối đa 5 ảnh)</div>
-                        
-                        <!-- Hiển thị preview ảnh -->
-                        <div class="mt-3 row" id="imagePreviewContainer"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Trạng thái</label>
-                        <select class="form-select" name="isActive" required>
-                            <option value="true">Hoạt động</option>
-                            <option value="false">Không hoạt động</option>
-                        </select>
-                    </div>
-                    <div class="card mb-3" style="border-radius: 12px; border: 1px solid #E5E7EB;">
-                        <div class="card-header bg-white" style="border-bottom: none; padding: 16px 20px;">
-                            <h6 class="mb-0" style="color: #374151; font-size: 16px;">Thông Số Kỹ Thuật</h6>
+
+                        <!-- Giá khuyến mãi -->
+                        <div class="col-md-6 mb-3">
+                            <label for="salePrice" class="form-label">Giá khuyến mãi</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="salePrice" name="salePrice" min="0" placeholder="Nhập giá khuyến mãi">
+                                <span class="input-group-text">đ</span>
+                            </div>
+                            <div class="form-text">Để trống nếu không có khuyến mãi</div>
                         </div>
-                        <div class="card-body" style="padding: 0 20px 20px;">
-                            <div class="mb-4">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chất Liệu</label>
-                                        <input type="text" class="form-control" 
-                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                               name="material" 
-                                               placeholder="Ví dụ: Gỗ công nghiệp">
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Màu Sắc</label>
-                                        <input type="text" class="form-control"
-                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                               name="color" 
-                                               placeholder="Ví dụ: Trắng, Đen, Nâu">
+
+                        <!-- Danh mục -->
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Danh mục <span class="text-danger">*</span></label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="" disabled selected>Chọn danh mục</option>
+                                {{#each parentCategories}}
+                                <optgroup label="{{this.name}}">
+                                    {{#each ../categories}}
+                                    {{#if (isEqual this.parent_id ../this._id)}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                    {{/if}}
+                                    {{/each}}
+                                </optgroup>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <!-- Trạng thái -->
+                        <div class="col-md-6 mb-3">
+                            <label for="isActive" class="form-label">Trạng thái</label>
+                            <select class="form-select" id="isActive" name="isActive">
+                                <option value="true" selected>Hiển thị</option>
+                                <option value="false">Ẩn</option>
+                            </select>
+                        </div>
+
+                        <!-- Mô tả -->
+                        <div class="col-12 mb-3">
+                            <label for="description" class="form-label">Mô tả <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Nhập mô tả sản phẩm" required></textarea>
+                        </div>
+
+                        <!-- Thông số kỹ thuật -->
+                        <div class="col-12 mb-3">
+                            <div class="card" style="border-radius: 12px; border: 1px solid #E5E7EB;">
+                                <div class="card-header bg-white" style="border-bottom: none; padding: 16px 20px;">
+                                    <h6 class="mb-0" style="color: #374151; font-size: 16px;">Thông Số Kỹ Thuật</h6>
+                                </div>
+                                <div class="card-body" style="padding: 0 20px 20px;">
+                                    <div class="row">
+                                        <!-- Chất liệu -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Chất Liệu</label>
+                                            <input type="text" class="form-control" 
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="material" name="material" 
+                                                   placeholder="Ví dụ: Gỗ công nghiệp">
+                                        </div>
+
+                                        <!-- Màu sắc -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Màu Sắc</label>
+                                            <input type="text" class="form-control"
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="color" name="color" 
+                                                   placeholder="Ví dụ: Trắng, Đen, Nâu">
+                                        </div>
+
+                                        <!-- Kích thước -->
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Dài (cm)</label>
+                                            <input type="number" class="form-control"
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="length" name="specifications[size][length]" 
+                                                   placeholder="Nhập chiều dài">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Rộng (cm)</label>
+                                            <input type="number" class="form-control"
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="width" name="specifications[size][width]" 
+                                                   placeholder="Nhập chiều rộng">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Cao (cm)</label>
+                                            <input type="number" class="form-control"
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="height" name="specifications[size][height]" 
+                                                   placeholder="Nhập chiều cao">
+                                        </div>
+
+                                        <!-- Bảo hành -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted mb-2" style="font-size: 14px;">Thời Gian Bảo Hành (tháng)</label>
+                                            <input type="number" class="form-control"
+                                                   style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
+                                                   id="warranty" name="specifications[warranty]" 
+                                                   placeholder="Ví dụ: 12, 24, 36...">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="mb-4">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Dài (cm)</label>
-                                        <input type="number" class="form-control"
-                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                               name="specifications[size][length]" 
-                                               placeholder="Nhập chiều dài">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Rộng (cm)</label>
-                                        <input type="number" class="form-control"
-                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                               name="specifications[size][width]" 
-                                               placeholder="Nhập chiều rộng">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="form-label text-muted mb-2" style="font-size: 14px;">Chiều Cao (cm)</label>
-                                        <input type="number" class="form-control"
-                                               style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                               name="specifications[size][height]" 
-                                               placeholder="Nhập chiều cao">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="form-label text-muted mb-2" style="font-size: 14px;">Thời Gian Bảo Hành (tháng)</label>
-                                <input type="number" class="form-control"
-                                       style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 8px 12px; background-color: #F9FAFB;"
-                                       name="specifications[warranty]" 
-                                       placeholder="Ví dụ: 12, 24, 36...">
-                            </div>
+                        <!-- Hình ảnh -->
+                        <div class="col-12 mb-3">
+                            <label for="images" class="form-label">Hình ảnh sản phẩm</label>
+                            <input type="file" class="form-control" id="images" name="images" multiple accept="image/*" onchange="previewImages(event)">
+                            <div class="form-text">Có thể chọn nhiều ảnh cùng lúc (tối đa 5 ảnh)</div>
+                            <!-- Hiển thị preview ảnh -->
+                            <div class="mt-3 row" id="imagePreviewContainer"></div>
                         </div>
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-plus-circle"></i> Thêm sản phẩm
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('addProductForm');
-    const priceInput = form.querySelector('[name="price"]');
-    const salePriceInput = form.querySelector('[name="salePrice"]');
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('addProductForm');
+        const priceInput = form.querySelector('[name="price"]');
+        const salePriceInput = form.querySelector('[name="salePrice"]');
 
-    // Kiểm tra giá khuyến mãi không được lớn hơn giá gốc
-    salePriceInput.addEventListener('input', function() {
-        const price = parseFloat(priceInput.value) || 0;
-        const salePrice = parseFloat(this.value) || 0;
-        
-        if (salePrice > price) {
-            this.value = price;
-            showNotification('Cảnh báo', 'Giá khuyến mãi không được lớn hơn giá gốc!', 'warning');
-        }
+        // Kiểm tra giá khuyến mãi không được lớn hơn giá gốc
+        salePriceInput.addEventListener('input', function() {
+            const price = parseFloat(priceInput.value) || 0;
+            const salePrice = parseFloat(this.value) || 0;
+            
+            if (salePrice > price) {
+                this.value = price;
+                showNotification('Cảnh báo', 'Giá khuyến mãi không được lớn hơn giá gốc!', 'warning');
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            const name = form.querySelector('[name="name"]').value;
+            const price = form.querySelector('[name="price"]').value;
+            const category = form.querySelector('[name="category"]').value;
+            const description = form.querySelector('[name="description"]').value;
+            
+            if (!name || !price || !category || !description) {
+                e.preventDefault();
+                showNotification('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
+                return;
+            }
+        });
     });
 
-    form.addEventListener('submit', function(e) {
-        const name = form.querySelector('[name="name"]').value;
-        const price = form.querySelector('[name="price"]').value;
-        const category = form.querySelector('[name="category"]').value;
-        const description = form.querySelector('[name="description"]').value;
+    // Hiển thị preview ảnh khi upload
+    function previewImages(event) {
+        const container = document.getElementById('imagePreviewContainer');
+        container.innerHTML = '';
         
-        if (!name || !price || !category || !description) {
-            e.preventDefault();
-            showNotification('Lỗi', 'Vui lòng điền đầy đủ thông tin!', 'error');
+        const files = event.target.files;
+        if (files.length > 5) {
+            showNotification('Lỗi', 'Chỉ được chọn tối đa 5 ảnh!', 'error');
+            event.target.value = '';
             return;
         }
-    });
-});
-
-// Hiển thị preview ảnh khi upload
-function previewImages(event) {
-    const container = document.getElementById('imagePreviewContainer');
-    container.innerHTML = '';
-    
-    const files = event.target.files;
-    if (files.length > 5) {
-        showNotification('Lỗi', 'Chỉ được chọn tối đa 5 ảnh!', 'error');
-        event.target.value = '';
-        return;
-    }
-    
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!file.type.startsWith('image/')) continue;
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const col = document.createElement('div');
-            col.className = 'col-md-4 col-sm-6 mb-3';
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (!file.type.startsWith('image/')) continue;
             
-            const card = document.createElement('div');
-            card.className = 'card h-100';
-            
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'card-img-top';
-            img.style.height = '150px';
-            img.style.objectFit = 'cover';
-            
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body p-2';
-            
-            const fileName = document.createElement('p');
-            fileName.className = 'card-text small text-truncate mb-0';
-            fileName.textContent = file.name;
-            
-            const fileSize = document.createElement('small');
-            fileSize.className = 'text-muted';
-            fileSize.textContent = formatFileSize(file.size);
-            
-            cardBody.appendChild(fileName);
-            cardBody.appendChild(fileSize);
-            card.appendChild(img);
-            card.appendChild(cardBody);
-            col.appendChild(card);
-            container.appendChild(col);
-        };
-        reader.readAsDataURL(file);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 col-sm-6 mb-3';
+                
+                const card = document.createElement('div');
+                card.className = 'card h-100';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'card-img-top';
+                img.style.height = '150px';
+                img.style.objectFit = 'cover';
+                
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body p-2';
+                
+                const fileName = document.createElement('p');
+                fileName.className = 'card-text small text-truncate mb-0';
+                fileName.textContent = file.name;
+                
+                const fileSize = document.createElement('small');
+                fileSize.className = 'text-muted';
+                fileSize.textContent = formatFileSize(file.size);
+                
+                cardBody.appendChild(fileName);
+                cardBody.appendChild(fileSize);
+                card.appendChild(img);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                container.appendChild(col);
+            };
+            reader.readAsDataURL(file);
+        }
     }
-}
 
-function formatFileSize(bytes) {
-    if (bytes < 1024) return bytes + ' bytes';
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    else return (bytes / 1048576).toFixed(1) + ' MB';
-}
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' bytes';
+        else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        else return (bytes / 1048576).toFixed(1) + ' MB';
+    }
 </script> 

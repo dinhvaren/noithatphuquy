@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {AdminController} = require('../app/controller/index');
+const {AdminController, CategoryController, ProductController} = require('../app/controller/index');
 const CheckPermission = require('../app/middlewares/CheckPermission');
 const multer = require('multer');
 const path = require('path');
@@ -54,20 +54,22 @@ router.use(CheckPermission.verifyToken);
 router.use(CheckPermission.checkAdmin);
 
 // Routes cho danh mục
-router.get('/categories/:id', AdminController.editCategoryModal);
-router.put('/categories/:id/edit', AdminController.updateCategoryModal);
-router.post('/categories/:id/edit', AdminController.updateCategoryModal);
-router.post('/categories/create', AdminController.createCategoryModal);
+router.get('/categories/:id', CategoryController.editCategoryModal);
+router.put('/categories/:id/edit', CategoryController.updateCategoryModal);
+router.post('/categories/:id/edit', CategoryController.updateCategoryModal);
+router.post('/categories/create', CategoryController.createCategoryModal);
+router.delete('/categories/:id', CategoryController.deleteCategoryModal);
+router.post('/categories/:id', CategoryController.deleteCategoryModal);
 
 // Routes cho sản phẩm
-router.post('/products/create', upload.array('images', 5), AdminController.createProductModal);
-router.get('/products/create', AdminController.createProductModal);
-router.get('/products/:id', AdminController.editProductModal);
-router.post('/products/:id/edit', upload.array('images', 5), AdminController.updateProductModal);
-router.put('/products/:id/edit', upload.array('images', 5), AdminController.updateProductModal);
-router.get('/products/:id/edit', AdminController.editProductModal);
-router.delete('/products/:id', AdminController.deleteProductModal);
-router.post('/products/:id', AdminController.deleteProductModal);
+router.post('/products/create', upload.array('images', 5), ProductController.createProductModal);
+router.get('/products/create', ProductController.createProductModal);
+router.get('/products/:id', ProductController.editProductModal);
+router.post('/products/:id/edit', upload.array('images', 5), ProductController.updateProductModal);
+router.put('/products/:id/edit', upload.array('images', 5), ProductController.updateProductModal);
+router.get('/products/:id/edit', ProductController.editProductModal);
+router.delete('/products/:id', ProductController.deleteProductModal);
+router.post('/products/:id', ProductController.deleteProductModal);
 
 // Routes cho người dùng
 router.get('/users/:id', AdminController.editUserModal);

@@ -65,6 +65,7 @@ app.engine(
         extname: '.hbs', // Đổi phần mở rộng của template thành .hbs thay vì .handlebars
         helpers: {
             sum: (a, b) => a + b, // Định nghĩa helper "sum" để cộng hai số trong template
+            isEqual: (a, b) => a.toString() === b.toString(),
             eq: function (a, b) {
                 return a === b;
             },
@@ -76,6 +77,9 @@ app.engine(
                     style: "currency",
                     currency: "VND"
                 }).format(value);
+            },
+            lookup: function(obj, field) {
+                return obj[field];
             },
             section: function(name, options) {
                 if (!this._sections) this._sections = {};

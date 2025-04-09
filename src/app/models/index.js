@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const CategoryParentSchema= new Schema({
+    name: { type: String, required: true }, // Tên danh mục
+    description: String, // Mô tả danh mục
+    slug: String, // Slug danh mục
+    keywords: [String], // Từ khóa tìm kiếm
+}, { timestamps: true });
+
 // Schema cho danh mục sản phẩm (Categories)
 const CategorySchema = new Schema({
     name: { type: String, required: true }, // Tên danh mục
@@ -8,10 +15,9 @@ const CategorySchema = new Schema({
     image: String, // Ảnh danh mục
     slug: String, // Slug danh mục
     keywords: [String], // Từ khóa tìm kiếm
+    parent_id: { type: Schema.Types.ObjectId, ref: 'CategoryParent' }, // ID danh mục cha
     isActive: { type: Boolean, default: true }, // Trạng thái hoạt động
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 // Schema cho sản phẩm (Products)
 const ProductSchema = new Schema({
@@ -186,7 +192,7 @@ const Review = mongoose.model('Review', ReviewSchema);
 const Post = mongoose.model('Post', PostSchema);
 const Contact = mongoose.model('Contact', ContactSchema);
 const Wishlist = mongoose.model('Wishlist', WishlistSchema);
-
+const CategoryParent = mongoose.model('CategoryParent', CategoryParentSchema);
 // Hàm tính phần trăm giảm giá
 const calculateDiscountPercentage = (originalPrice, salePrice) => {
     if (!originalPrice || !salePrice || originalPrice <= 0) return 0;
@@ -205,5 +211,6 @@ module.exports = {
     Review,
     Post,
     Contact,
-    Wishlist
+    Wishlist,
+    CategoryParent
 }; 
