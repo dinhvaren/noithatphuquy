@@ -14,9 +14,7 @@ console.log('Cloudinary được cấu hình với cloud_name:', process.env.CLO
 class CloudinaryService {
     // Upload ảnh lên Cloudinary
     async uploadImage(filePath, options = {}) {
-        try {
-            console.log('Bắt đầu upload ảnh lên Cloudinary từ đường dẫn:', filePath);
-            
+        try {            
             // Kiểm tra xem file có tồn tại không
             if (!fs.existsSync(filePath)) {
                 throw new Error(`File không tồn tại: ${filePath}`);
@@ -64,7 +62,6 @@ class CloudinaryService {
                 );
             });
         } catch (error) {
-            console.error('Lỗi khi upload ảnh lên Cloudinary:', error);
             throw error;
         }
     }

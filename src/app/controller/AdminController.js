@@ -22,11 +22,6 @@ class AdminController {
             parentCategoriesArray.forEach(category => {
                 parentCategories[category._id] = category;
             });
-
-            // Log để kiểm tra
-            console.log('Parent Categories:', parentCategories);
-            console.log('Categories:', categories);
-
             res.render('admin/Admin', {
                 page: { title: 'Quản trị website' },
                 users,
