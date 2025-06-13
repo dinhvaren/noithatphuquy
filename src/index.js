@@ -31,15 +31,28 @@ db.connect();
 app.use(cookieParser());
 
 // Cấu hình session
+// app.use(session({
+//     secret: process.env.SESSION_SECRET || 'your-secret-key',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { 
+//         secure: process.env.NODE_ENV === 'production',
+//         maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+//     }
+// }));
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
-    saveUninitialized: true,
-    cookie: { 
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000 // 24 giờ
+    saveUninitialized: false,
+    cookie: {
+      secure: isProduction,                     // Gửi cookie qua HTTPS nếu production
+      httpOnly: true,                           // Không cho JS truy cập cookie (bảo mật)
+      sameSite: isProduction ? 'none' : 'lax',  // Phù hợp với proxy và cross-origin
+      maxAge: 24 * 60 * 60 * 1000               // 24 giờ
     }
-}));
+  }));
 
 // Cấu hình thư mục tĩnh (chứa CSS, JS, Images)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -105,6 +118,8 @@ app.engine(
 app.set('view engine', 'hbs');
 // Cấu hình thư mục chứa views
 app.set('views', path.join(__dirname, 'resources', 'views'));
+// rất quan trọng khi deploy
+app.set('trust proxy', 1);
 
 // Khởi tạo routes cho ứng dụng
 route(app);
