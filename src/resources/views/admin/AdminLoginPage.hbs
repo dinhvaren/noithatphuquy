@@ -241,7 +241,9 @@
 
         // Kiểm tra trạng thái đăng nhập khi tải trang
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('adminLoggedIn') === 'true') {
+            // Chỉ chuyển hướng nếu có token trong cookie
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+            if (token) {
                 window.location.href = '/admin';
             }
         });

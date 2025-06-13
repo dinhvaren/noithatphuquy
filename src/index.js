@@ -18,6 +18,7 @@ const session = require('express-session');
 const app = express();
 // Định nghĩa cổng chạy server
 const port = process.env.PORT;
+const host = process.env.HOST
 // Import file định tuyến
 const route = require('./routes');
 // Import cấu hình database

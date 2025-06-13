@@ -81,6 +81,7 @@ class CheckPermission {
             const user = await User.findById(decoded.id);
             
             if (user && user.isActive) {
+                // Chỉ chuyển hướng nếu user có role phù hợp
                 if (req.originalUrl === '/admin/login' && user.role === 'admin') {
                     return res.redirect('/admin');
                 }
@@ -89,11 +90,11 @@ class CheckPermission {
                 }
             }
 
-            // Token không hợp lệ hoặc user không phù hợp
+            // Nếu token không hợp lệ hoặc user không phù hợp, xóa token và tiếp tục
             res.clearCookie('token');
             return next();
         } catch (error) {
-            // Token không hợp lệ
+            // Nếu có lỗi xác thực token, xóa token và tiếp tục
             res.clearCookie('token');
             return next();
         }
