@@ -47,10 +47,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: isProduction,                     // Gửi cookie qua HTTPS nếu production
-      httpOnly: true,                           // Không cho JS truy cập cookie (bảo mật)
-      sameSite: isProduction ? 'none' : 'lax',  // Phù hợp với proxy và cross-origin
-      maxAge: 24 * 60 * 60 * 1000               // 24 giờ
+      secure: isProduction,
+      httpOnly: true,                           
+      sameSite: isProduction ? 'none' : 'lax',  
+      maxAge: 24 * 60 * 60 * 1000               
     }
   }));
 

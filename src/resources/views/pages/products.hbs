@@ -212,7 +212,13 @@
         color: inherit;
     }
 </style>
-{{>header_2}}
+{{#if user}}
+{{> header_2}}
+{{else}}
+{{> header}}
+{{>modalLogin}}
+{{>modalSignup}}
+{{/if}}
 <div class="container py-5">
     <!-- Top Bar -->
     <div class="d-flex justify-content-between align-items-center mb-4">

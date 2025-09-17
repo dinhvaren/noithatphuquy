@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: nothatphuquy
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - ntpq_net
+
+  mongo:
+    image: mongo:6
+    container_name: ntpq_mongo
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - ntpq_net
+
+volumes:
+  mongo_data:
+
+networks:
+  ntpq_net:

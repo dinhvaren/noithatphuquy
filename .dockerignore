@@ -1,0 +1,22 @@
+# Thư mục build hoặc cache
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Thư mục chứa file upload / media tạm
+uploads
+tmp
+logs
+
+# File cấu hình chỉ dùng local
+.env.local
+.env.development
+.env.test
+
+# Git và các file IDE
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
