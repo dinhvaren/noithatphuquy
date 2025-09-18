@@ -132,7 +132,7 @@ npm start
 ## Tác giả
 
 - Tên: Lương Nguyễn Ngọc Đình
-- Email: dinhvaren@gmail.com
+- Email: dinhlnng2003n@gmail.com
 - GitHub: https://github.com/dinhvaren
 
 ## Giấy phép
