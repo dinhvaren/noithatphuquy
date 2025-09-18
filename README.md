@@ -13,7 +13,7 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 - Video giới thiệu công ty
 
 ### Đăng nhập & Đăng ký
-![Đăng nhập](/screenshots/login.png)
+![Đăng nhập](/images/login.jpg)
 - Đăng nhập bằng email hoặc username
 - Đăng ký tài khoản mới
 - Quên mật khẩu
@@ -79,12 +79,11 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 - Phân quyền
 - Khóa/mở khóa tài khoản
 
-### Quản lý bài viết
-![Quản lý bài viết](/screenshots/admin-posts.png)
-- Danh sách bài viết
-- Thêm/sửa/xóa bài viết
-- Upload hình ảnh
-- SEO bài viết
+### Quản lý danh mục
+![Quản lý danh mục](/images/admin-catergories.jpg)
+- Danh sách danh mục
+- Thêm/sửa/xóa danh mục
+- Cấu hình SEO (tiêu đề, mô tả, slug) cho từng danh mục
 
 ## Công nghệ sử dụng
 
