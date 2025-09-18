@@ -5,7 +5,7 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 ## Giao diện người dùng
 
 ### Trang chủ
-![Trang chủ](/screenshots/home.png)
+![Trang chủ](/images/dashbroad.jpg)
 - Banner slider giới thiệu
 - Danh mục sản phẩm nổi bật
 - Sản phẩm mới
@@ -20,14 +20,14 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 - Ghi nhớ đăng nhập
 
 ### Danh mục sản phẩm
-![Danh mục](/screenshots/categories.png)
+![Danh mục](/images/products.jpg)
 - Hiển thị theo danh mục
 - Lọc theo giá, màu sắc, kích thước
 - Sắp xếp sản phẩm
 - Phân trang
 
 ### Chi tiết sản phẩm
-![Chi tiết sản phẩm](/screenshots/product-detail.png)
+![Chi tiết sản phẩm](/images/products-detail.jpg)
 - Hình ảnh sản phẩm (zoom, slider)
 - Thông tin chi tiết
 - Thông số kỹ thuật
@@ -35,7 +35,7 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 - Đánh giá & bình luận
 
 ### Giỏ hàng & Thanh toán
-![Giỏ hàng](/screenshots/cart.png)
+![Giỏ hàng](/images/cart.jpg)
 - Thêm/xóa sản phẩm
 - Cập nhật số lượng
 - Mã giảm giá
@@ -43,7 +43,7 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 - Thông tin giao hàng
 
 ### Trang cá nhân
-![Trang cá nhân](/screenshots/profile.png)
+![Trang cá nhân](/images/profile.jpg)
 - Thông tin tài khoản
 - Lịch sử đơn hàng
 - Sản phẩm yêu thích
@@ -52,28 +52,28 @@ Website bán hàng nội thất cao cấp với đầy đủ tính năng cho c�
 ## Giao diện quản trị
 
 ### Dashboard
-![Dashboard](/screenshots/admin-dashboard.png)
+![Dashboard](/images/admin-dashbroad.jpg)
 - Thống kê doanh thu
 - Đơn hàng mới
 - Sản phẩm bán chạy
 - Khách hàng mới
 
 ### Quản lý sản phẩm
-![Quản lý sản phẩm](/screenshots/admin-products.png)
+![Quản lý sản phẩm](/images/products-admin.jpg)
 - Danh sách sản phẩm
 - Thêm/sửa/xóa sản phẩm
 - Upload nhiều hình ảnh
 - SEO sản phẩm
 
 ### Quản lý đơn hàng
-![Quản lý đơn hàng](/screenshots/admin-orders.png)
+![Quản lý đơn hàng](/images/order-admin.jpg)
 - Danh sách đơn hàng
 - Chi tiết đơn hàng
 - Cập nhật trạng thái
 - In hóa đơn
 
 ### Quản lý người dùng
-![Quản lý người dùng](/screenshots/admin-users.png)
+![Quản lý người dùng](/images/users-admin.jpg)
 - Danh sách người dùng
 - Thêm/sửa/xóa tài khoản
 - Phân quyền
