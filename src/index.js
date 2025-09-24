@@ -80,49 +80,55 @@ app.engine(
   handlebars.engine({
     extname: ".hbs", // Đổi phần mở rộng của template thành .hbs thay vì .handlebars
     helpers: {
-      sum: (a, b) => a + b, // Định nghĩa helper "sum" để cộng hai số trong template
-      isEqual: (a, b) => {
-        try {
-          return String(a) === String(b);
-        } catch {
-          return false;
-        }
-      },
-      eq: function (a, b) {
-        return a === b;
-      },
-      calculateDiscountPercentage: function (originalPrice, salePrice) {
+      sum: (a, b) => a + b,
+      isEqual: (a, b) => String(a) === String(b),
+      eq: (a, b) => a === b,
+      calculateDiscountPercentage: (originalPrice, salePrice) => {
         if (!originalPrice || !salePrice || originalPrice <= 0) return 0;
         const discount = ((originalPrice - salePrice) / originalPrice) * 100;
         return Math.round(discount);
       },
-      not: function (value) {
-        return !value;
-      },
-      formatCurrency: function (value) {
-        return new Intl.NumberFormat("vi-VN", {
+      not: (value) => !value,
+      formatCurrency: (value) =>
+        new Intl.NumberFormat("vi-VN", {
           style: "currency",
           currency: "VND",
-        }).format(value);
-      },
-      lookup: function (obj, field) {
-        return obj[field];
-      },
+        }).format(value),
+      lookup: (obj, field) => obj[field],
       section: function (name, options) {
         if (!this._sections) this._sections = {};
         this._sections[name] = options.fn(this);
         return null;
       },
-      isChecked: function (selected, id) {
+      isChecked: (selected, id) => {
         if (!selected) return false;
-
-        // Nếu chọn nhiều category (req.query.category = array)
         if (Array.isArray(selected)) {
           return selected.map(String).includes(String(id));
         }
-
-        // Nếu chỉ chọn 1 category (string)
         return String(selected) === String(id);
+      },
+
+      // === Thêm mới ===
+      range: (from, to, options) => {
+        let out = "";
+        for (let i = from; i <= to; i++) {
+          out += options.fn(i);
+        }
+        return out;
+      },
+      ifCond: (v1, operator, v2, options) => {
+        switch (operator) {
+          case "<=":
+            return v1 <= v2 ? options.fn(this) : options.inverse(this);
+          case ">=":
+            return v1 >= v2 ? options.fn(this) : options.inverse(this);
+          case "==":
+            return v1 == v2 ? options.fn(this) : options.inverse(this);
+          case "===":
+            return v1 === v2 ? options.fn(this) : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
       },
     },
     runtimeOptions: {

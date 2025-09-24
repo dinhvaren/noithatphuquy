@@ -379,7 +379,13 @@
                         </div>
                         <a href="/product-details/{{this.slug}}" class="product-link">
                             <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">{{this.categoryId.name}}</span>
+                                <span class="category-badge mb-2 d-inline-block">
+                                {{#if this.categoryId}}
+                                    {{this.categoryId.name}}
+                                {{else}}
+                                    Không có danh mục
+                                {{/if}}
+                                </span>
                                 <h6 class="mb-1">{{this.name}}</h6>
                                 <div class="rating-stars mb-2">
                                 {{#if this.rating}}
