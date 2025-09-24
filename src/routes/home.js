@@ -64,7 +64,7 @@ router.get('/homepage', CheckPermission.verifyToken, HomeController.home);
 
 // Routes công khai với kiểm tra user
 router.get('/products', attachUser, HomeController.products);
-router.get('/product-details', attachUser, HomeController.productDetails);
+router.get('/products/:slug', attachUser, HomeController.productDetails);
 router.get('/interior-design', attachUser, HomeController.interiorDesign);
 router.get('/contact', attachUser, HomeController.contact);
 router.get('/about', attachUser, HomeController.about);

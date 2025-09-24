@@ -3,41 +3,6 @@ const cloudinaryService = require('../services/cloudinaryService');
 const slugify = require('slugify');
 
 class ProductController {
-    // [GET] /products
-    index(req, res) {
-        
-    }
-
-    // [GET] /products/:id
-    show(req, res) {
-        
-    }
-
-    // [POST] /products/create
-    create(req, res) {
-        
-    }
-
-    // [PUT] /products/:id
-    update(req, res) {
-        
-    }
-
-    // [DELETE] /products/:id
-    delete(req, res) {
-        
-    }
-
-    // [GET] /products/category/:categoryId
-    getByCategory(req, res) {
-        
-    }
-
-    // [GET] /products/search
-    search(req, res) {
-        
-    }
-
     // Modal thêm sản phẩm mới
     async createProductModal(req, res, next) {
         try {
@@ -104,23 +69,23 @@ class ProductController {
             
             // Tạo object specifications
             const productSpecifications = {
-                material: specs.material || '',
-                color: specs.color || '',
+                material: specs.material,
+                color: specs.color,
                 size: {
-                    length: specs['specifications[size][length]'] || 0,
-                    width: specs['specifications[size][width]'] || 0,
-                    height: specs['specifications[size][height]'] || 0
+                    length: specs['specifications[size][length]'],
+                    width: specs['specifications[size][width]'],
+                    height: specs['specifications[size][height]']
                 },
-                warranty: specs['specifications[warranty]'] || 0
+                warranty: specs['specifications[warranty]']
             };
 
             console.log('Thông số sản phẩm:', productSpecifications);
 
             // Tạo slug từ tên sản phẩm
             const slug = slugify(name, {
-                lower: true,      // Chuyển thành chữ thường
-                strict: true,     // Chỉ giữ lại ký tự và số
-                locale: 'vi'      // Hỗ trợ tiếng Việt
+                lower: true,
+                strict: true,
+                locale: 'vi'
             });
 
             // Tạo sản phẩm mới
@@ -267,11 +232,11 @@ class ProductController {
                 material: specs.material || '',
                 color: specs.color || '',
                 size: {
-                    length: specs['specifications[size][length]'] || 0,
-                    width: specs['specifications[size][width]'] || 0,
-                    height: specs['specifications[size][height]'] || 0
+                    length: specs['specifications[size][length]'],
+                    width: specs['specifications[size][width]'],
+                    height: specs['specifications[size][height]']
                 },
-                warranty: specs['specifications[warranty]'] || 0
+                warranty: specs['specifications[warranty]']
             };
 
             console.log('Thông số sản phẩm:', productSpecifications);

@@ -219,60 +219,99 @@
 {{>modalLogin}}
 {{>modalSignup}}
 {{/if}}
+
 <div class="container py-5">
     <!-- Top Bar -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="section-title mb-0">Sản Phẩm</h2>
         <div class="d-flex gap-2 align-items-center">
             <span class="text-muted">Sắp xếp theo:</span>
-            <button class="sort-btn">
-                Mới nhất <i class="bi bi-chevron-down ms-2"></i>
-            </button>
+            <form method="GET" action="/products" class="mb-0">
+            <select class="form-select" name="sort" onchange="this.form.submit()">
+                <option value="">Mới nhất</option>
+                <option value="price_asc" {{#if (eq ../query.sort "price_asc")}}selected{{/if}}>Giá tăng dần</option>
+                <option value="price_desc" {{#if (eq ../query.sort "price_desc")}}selected{{/if}}>Giá giảm dần</option>
+            </select>
+            </form>
         </div>
-    </div>
+        </div>
+
 
     <div class="row g-4">
         <!-- Filters Sidebar -->
         <div class="col-lg-3">
             <div class="filter-sidebar p-4 shadow-sm">
+            <form method="GET" action="/products">
                 <div class="filter-group">
                     <h6 class="mb-3">Danh Mục</h6>
+                    {{#each categories}}
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="phongkhach">
-                        <label class="form-check-label" for="phongkhach">
-                            Nội Thất Phòng Khách
+                        <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="cat-{{this._id}}" 
+                        name="category[]" 
+                        value="{{this._id}}"
+                        {{#if (isChecked ../query.category this._id)}}checked{{/if}}>
+                        <label class="form-check-label fw-bold" for="cat-{{this._id}}">
+                        {{this.name}}
                         </label>
                     </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="phongngu">
-                        <label class="form-check-label" for="phongngu">
-                            Nội Thất Phòng Ngủ
-                        </label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="phongbep">
-                        <label class="form-check-label" for="phongbep">
-                            Nội Thất Phòng Bếp
-                        </label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="vanphong">
-                        <label class="form-check-label" for="vanphong">
-                            Nội Thất Văn Phòng
-                        </label>
-                    </div>
+
+                    {{#if this.children}}
+                        {{#each this.children}}
+                        <div class="form-check mb-2 ms-3">
+                            <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            id="cat-{{this._id}}" 
+                            name="category[]" 
+                            value="{{this._id}}"
+                            {{#if (isChecked ../../query.category this._id)}}checked{{/if}}>
+                            <label class="form-check-label" for="cat-{{this._id}}">
+                            {{this.name}}
+                            </label>
+                        </div>
+                        {{/each}}
+                    {{/if}}
+                    {{/each}}
                 </div>
 
 
                 <div class="filter-group">
-                    <h6 class="mb-3">Khoảng Giá</h6>
-                    <input type="range" class="form-range" id="priceRange" min="0" max="50000000" value="0"
-                        step="1000000">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-muted" id="currentPrice">0đ</span>
-                        <span class="text-muted">50.000.000đ</span>
-                    </div>
+                <h6 class="mb-3">Khoảng Giá</h6>
+                <input 
+                    type="range" 
+                    class="form-range" 
+                    id="priceRange" 
+                    min="0" 
+                    max="50000000" 
+                    step="100000"
+                    value="{{query.maxPrice}}"
+                >
+                <input type="hidden" name="maxPrice" id="maxPriceInput" value="{{query.maxPrice}}">
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted" id="currentPrice">
+                    {{#if query.maxPrice}}
+                        {{formatCurrency query.maxPrice}}
+                    {{else}}
+                        0đ
+                    {{/if}}
+                    </span>
+                    <span class="text-muted">50.000.000đ</span>
                 </div>
+                </div>
+
+                <script>
+                const priceRange = document.getElementById("priceRange");
+                const currentPrice = document.getElementById("currentPrice");
+                const maxPriceInput = document.getElementById("maxPriceInput");
+
+                priceRange.addEventListener("input", () => {
+                    currentPrice.textContent = new Intl.NumberFormat("vi-VN").format(priceRange.value) + "đ";
+                    maxPriceInput.value = priceRange.value;
+                });
+                </script>
 
                 <div class="filter-group">
                     <h6 class="mb-3">Màu Sắc</h6>
@@ -285,22 +324,38 @@
                 </div>
 
                 <div class="filter-group">
-                    <h6 class="mb-3">Đánh Giá</h6>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" name="rating" id="rating4">
-                        <label class="form-check-label" for="rating4">
-                            <i class="bi bi-star-fill text-warning"></i> 4 sao trở lên
-                        </label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" name="rating" id="rating3">
-                        <label class="form-check-label" for="rating3">
-                            <i class="bi bi-star-fill text-warning"></i> 3 sao trở lên
-                        </label>
-                    </div>
+                <h6 class="mb-3">Đánh Giá</h6>
+
+                <div class="form-check mb-2">
+                    <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="rating" 
+                    id="rating4" 
+                    value="4"
+                    {{#if (isEqual query.rating "4")}}checked{{/if}}>
+                    <label class="form-check-label" for="rating4">
+                    <i class="bi bi-star-fill text-warning"></i> 4 sao trở lên
+                    </label>
                 </div>
 
-                <button class="btn btn-outline-primary w-100">Lọc</button>
+                <div class="form-check mb-2">
+                    <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="rating" 
+                    id="rating3" 
+                    value="3"
+                    {{#if (isEqual query.rating "3")}}checked{{/if}}>
+                    <label class="form-check-label" for="rating3">
+                    <i class="bi bi-star-fill text-warning"></i> 3 sao trở lên
+                    </label>
+                </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-outline-primary w-100">Lọc</button>
+                </form>
             </div>
         </div>
 
@@ -308,33 +363,46 @@
         <div class="col-lg-9">
             <div class="row g-4">
                 <!-- Product Card 1 -->
+{{#each products}}
                 <div class="col-md-4">
                     <div class="product-card shadow-sm">
                         <div class="position-relative">
-                            <a href="/product-details" class="product-link">
-                                <img src="/img/giuong1.jpg" class="product-image w-100" alt="Giường Ngủ">
-                                <span class="discount-badge">-15%</span>
+                            <a href="/products/{{this.slug}}" class="product-link">
+                                <img src="{{this.images.[0]}}" class="product-image w-100" alt="{{this.name}}">
+                                {{#if this.salePrice}}
+                                <span class="discount-badge">-{{calculateDiscountPercentage this.price this.salePrice}}%</span>
+                                {{/if}}
                             </a>
                             <button class="wishlist-btn" onclick="event.preventDefault(); event.stopPropagation();">
                                 <i class="bi bi-heart"></i>
                             </button>
                         </div>
-                        <a href="/product-details" class="product-link">
+                        <a href="/product-details/{{this.slug}}" class="product-link">
                             <div class="p-3">
-                                <span class="category-badge mb-2 d-inline-block">Nội Thất Phòng Ngủ</span>
-                                <h6 class="mb-1">Giường Ngủ Hiện Đại</h6>
+                                <span class="category-badge mb-2 d-inline-block">{{this.categoryId.name}}</span>
+                                <h6 class="mb-1">{{this.name}}</h6>
                                 <div class="rating-stars mb-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                    <span class="text-muted ms-2">(4.5)</span>
+                                {{#if this.rating}}
+                                    {{#each (range 1 5)}}
+                                        {{#ifCond this '<=' ../rating}}
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    {{else}}
+                                        <i class="bi bi-star text-warning"></i>
+                                        {{/ifCond}}
+                                    {{/each}}
+                                    <span class="text-muted ms-2">({{../rating}})</span>
+                               {{/if}}
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-column">
-                                        <span class="text-decoration-line-through text-muted small">10.000.000đ</span>
-                                        <span class="price">8.500.000đ</span>
+                                    {{#if this.salePrice}}
+                                        <span class="text-decoration-line-through text-muted small">
+                                        {{this.price}}đ
+                                        </span>
+                                        <span class="price">{{formatCurrency this.salePrice}}</span>
+                                    {{else}}
+                                        <span class="price">{{formatCurrency this.price}}</span>
+                                    {{/if}}
                                     </div>
                                     <button class="btn cart-btn">
                                         <i class="bi bi-cart-plus"></i>
@@ -344,7 +412,7 @@
                         </a>
                     </div>
                 </div>
-
+{{/each}}
                 <!-- Product Card 2 -->
                 <div class="col-md-4">
                     <div class="product-card shadow-sm">
