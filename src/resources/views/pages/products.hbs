@@ -397,7 +397,7 @@
                                     <div class="d-flex flex-column">
                                     {{#if this.salePrice}}
                                         <span class="text-decoration-line-through text-muted small">
-                                        {{this.price}}đ
+                                        {{formatCurrency this.price}}đ
                                         </span>
                                         <span class="price">{{formatCurrency this.salePrice}}</span>
                                     {{else}}
