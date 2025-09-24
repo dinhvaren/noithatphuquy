@@ -346,7 +346,7 @@ class HomeController {
       });
     } catch (err) {
       console.error("Lỗi khi load sản phẩm:", err);
-      res.status(500).send("Lỗi server");
+      res.status(500).send("Server error while loading products");
     }
   }
 
