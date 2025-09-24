@@ -77,31 +77,41 @@
                     
                     <!-- Danh sách sản phẩm -->
                     <div class="order-items mb-4">
+                    {{#if cart.items.length}}
+                        {{#each cart.items}}
                         <div class="order-item d-flex align-items-center mb-3">
-                            <img src="/img/giuong2.jpg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                            <img src="{{this.image}}" alt="{{this.name}}" class="rounded"
+                                style="width: 60px; height: 60px; object-fit: cover;">
                             <div class="ms-3">
-                                <h6 class="mb-0">Giường Ngủ Hiện Đại</h6>
-                                <small class="text-muted">Số lượng: 1</small>
-                                <div class="text-primary">8.500.000đ</div>
+                            <h6 class="mb-0">{{this.name}}</h6>
+                            <small class="text-muted">Số lượng: {{this.quantity}}</small>
+                            <div class="text-primary">
+                               {{formatCurrency (multiply this.price this.quantity)}}
+                            </div>
                             </div>
                         </div>
+                        {{/each}}
+                    {{else}}
+                        <p class="text-muted">Giỏ hàng trống</p>
+                    {{/if}}
                     </div>
 
                     <!-- Tổng tiền -->
                     <div class="order-summary">
-                        <div class="d-flex justify-content-between mb-2">
+                       <div class="d-flex justify-content-between mb-2">
                             <span>Tạm tính</span>
-                            <span>8.500.000đ</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
+                            <span>{{formatCurrency cart.totalAmount}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
                             <span>Phí vận chuyển</span>
                             <span>Miễn phí</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between mb-4">
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-4">
                             <strong>Tổng cộng</strong>
-                            <strong class="text-primary">8.500.000đ</strong>
+                            <strong class="text-primary">{{formatCurrency cart.totalAmount}}</strong>
                         </div>
+
 
                         <!-- Phương thức thanh toán -->
                         <div class="mb-4">

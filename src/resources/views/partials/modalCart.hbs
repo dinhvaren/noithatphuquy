@@ -1,61 +1,112 @@
 <!-- Cart Modal -->
 <div class="modal fade" id="cartModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Giỏ hàng của bạn</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Danh sách sản phẩm trong giỏ hàng -->
-                <div class="cart-items">
-                    <div class="cart-item d-flex align-items-center mb-3">
-                        <img src="/img/giuong2.jpg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-                        <div class="ms-3 flex-grow-1">
-                            <h6 class="mb-0">Giường Ngủ Hiện Đại</h6>
-                            <div class="d-flex align-items-center">
-                                <small class="text-muted me-2">Số lượng: 1</small>
-                                <span class="text-primary">8.500.000đ</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-link text-danger"><i class="fas fa-trash"></i></button>
-                    </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Giỏ hàng của bạn</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Danh sách sản phẩm trong giỏ hàng -->
+        <div class="cart-items">
+          {{#if cart.items.length}}
+            {{#each cart.items}}
+              <div
+                class="cart-item d-flex align-items-center mb-3 p-2"
+              >
+                <img
+                  src="{{this.image}}"
+                  alt="{{this.name}}"
+                  class="rounded"
+                  style="width: 60px; height: 60px; object-fit: cover;"
+                />
+
+                <div class="ms-3 flex-grow-1">
+                  <h6 class="mb-1">{{this.name}}</h6>
+                  <div class="d-flex align-items-center">
+                    <small class="text-muted me-2">Số lượng:
+                      {{this.quantity}}</small>
+                    <span class="text-primary">{{formatCurrency
+                        this.price
+                      }}</span>
+                  </div>
                 </div>
-                <!-- Tổng tiền -->
-                <div class="d-flex justify-content-between mt-3">
-                    <strong>Tổng cộng:</strong>
-                    <strong class="text-primary">8.500.000đ</strong>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <a href="/cart/checkout" class="btn btn-primary" style="background-color: #C19977; border-color: #C19977;">Thanh toán</a>
-            </div>
+
+                <!-- Nút xoá -->
+                <form
+                  method="POST"
+                  action="/cart/remove?_method=DELETE"
+                  class="ms-2"
+                >
+                  <input
+                    type="hidden"
+                    name="productId"
+                    value="{{this.productId}}"
+                  />
+                  <button type="submit" class="btn btn-link text-danger">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </div>
+            {{/each}}
+          {{else}}
+            <p class="text-muted">Giỏ hàng trống</p>
+          {{/if}}
         </div>
+
+        <!-- Tổng tiền -->
+        <div class="d-flex justify-content-between mt-3">
+          <strong>Tổng cộng:</strong>
+          <strong id="cart-total" class="text-primary">
+            {{formatCurrency cart.totalAmount}}
+          </strong>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Đóng</button>
+        <a
+          href="/cart/checkout"
+          class="btn btn-primary"
+          style="background-color: #C19977; border-color: #C19977;"
+        >
+          Thanh toán
+        </a>
+      </div>
     </div>
+  </div>
 </div>
 
 <style>
-.cart-item {
+  .cart-item {
     transition: all 0.3s ease;
-}
+  }
 
-.cart-item:hover {
+  .cart-item:hover {
     background-color: #f8f9fa;
     transform: translateX(5px);
-}
+  }
 
-.text-primary {
-    color: #C19977 !important;
-}
+  .text-primary {
+    color: #c19977 !important;
+  }
 
-.btn-primary {
-    background-color: #C19977;
-    border-color: #C19977;
-}
+  .btn-primary {
+    background-color: #c19977;
+    border-color: #c19977;
+  }
 
-.btn-primary:hover {
+  .btn-primary:hover {
     background-color: #b38a68;
     border-color: #b38a68;
-}
-</style> 
+  }
+</style>

@@ -89,11 +89,16 @@ app.engine(
         return Math.round(discount);
       },
       not: (value) => !value,
-      formatCurrency: (value) =>
-        new Intl.NumberFormat("vi-VN", {
+      formatCurrency: function (value) {
+        if (!value || isNaN(value)) return "0 đ";
+        return new Intl.NumberFormat("vi-VN", {
           style: "currency",
           currency: "VND",
-        }).format(value),
+        }).format(value);
+      },
+      multiply: function (a, b) {
+        return a * b;
+      },
       lookup: (obj, field) => obj[field],
       section: function (name, options) {
         if (!this._sections) this._sections = {};

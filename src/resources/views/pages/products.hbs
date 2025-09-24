@@ -407,12 +407,15 @@
                                         <span class="price">{{formatCurrency this.price}}</span>
                                     {{/if}}
                                     </div>
-                                    <button class="btn cart-btn">
+                             </a>
+                                    <button 
+                                        type="button" 
+                                        class="btn cart-btn add-to-cart" 
+                                        data-id="{{this._id}}">
                                         <i class="bi bi-cart-plus"></i>
                                     </button>
                                 </div>
                             </div>
-                        </a>
                     </div>
                 </div>
                     {{/each}}
@@ -548,8 +551,70 @@
             document.getElementById('prevPage').classList.toggle('disabled', currentPage === 1);
             document.getElementById('nextPage').classList.toggle('disabled', currentPage === 2);
         }
-
+            
         // Khởi tạo trạng thái ban đầu của các nút
         updatePaginationButtons();
     });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const productId = btn.dataset.id;
+
+      try {
+        const res = await fetch("/cart/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId, quantity: 1 })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          // ✅ Cập nhật badge
+          document.querySelector(".cart-badge").textContent = data.cart.items.length;
+
+          // ✅ Cập nhật modal cart
+          const cartItemsDiv = document.querySelector(".cart-items");
+          cartItemsDiv.innerHTML = ""; // clear cũ
+          data.cart.items.forEach(item => {
+            cartItemsDiv.innerHTML += `
+                <div class="cart-item d-flex align-items-center mb-3">
+                    <img src="${item.image}" alt="${item.name}" class="rounded" 
+                        style="width: 60px; height: 60px; object-fit: cover;" />
+                    <div class="ms-3 flex-grow-1">
+                    <h6 class="mb-0">${item.name}</h6>
+                    <div class="d-flex align-items-center">
+                        <small class="text-muted me-2">Số lượng: ${item.quantity}</small>
+                        <span class="text-primary">${new Intl.NumberFormat("vi-VN").format(item.price)} đ</span>
+                    </div>
+                    </div>
+                    <form method="POST" action="/cart/remove?_method=DELETE" class="ms-2">
+                    <input type="hidden" name="productId" value="${item.productId}" />
+                    <button type="submit" class="btn btn-link text-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    </form>
+                </div>
+                `;
+          });
+
+          // ✅ Tổng tiền
+          document.getElementById("cart-total").textContent = 
+            new Intl.NumberFormat("vi-VN").format(data.cart.totalAmount) + " đ";
+
+          // ✅ Hiển thị modal ngay sau khi thêm
+          const cartModal = new bootstrap.Modal(document.getElementById("cartModal"));
+          cartModal.show();
+        } else {
+          alert(data.message || "❌ Lỗi khi thêm vào giỏ hàng");
+        }
+      } catch (error) {
+        console.error("❌ Fetch error:", error);
+        alert("Bạn Cần Đăng Nhập Trước");
+      }
+    });
+  });
+});
 </script>

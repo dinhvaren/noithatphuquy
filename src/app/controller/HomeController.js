@@ -250,11 +250,6 @@ class HomeController {
     }
   }
 
-  // Hiển thị trang giỏ hàng
-  cart(req, res, next) {
-    res.render("pages/Cart", { page: { title: "Giỏ hàng" } });
-  }
-
   // Hiển thị trang liên hệ
   contact(req, res, next) {
     res.render("pages/Contact", { page: { title: "Liên hệ" } });
@@ -325,8 +320,7 @@ class HomeController {
         .populate("categoryId") // categoryId trỏ vào Category
         .sort(sortOption)
         .lean();
-      console.log(products[0]);
-
+        
       const parents = await CategoryParent.find().lean();
       const categories = await Promise.all(
         parents.map(async (parent) => {
