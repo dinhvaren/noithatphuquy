@@ -325,6 +325,7 @@ class HomeController {
         .populate("categoryId") // categoryId trỏ vào Category
         .sort(sortOption)
         .lean();
+      console.log(products[0]);
 
       const parents = await CategoryParent.find().lean();
       const categories = await Promise.all(
