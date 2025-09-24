@@ -52,6 +52,7 @@ const attachUser = async (req, res, next) => {
         }
         next();
     } catch (error) {
+        console.error('JWT Error:', error.message);
         next();
     }
 };
