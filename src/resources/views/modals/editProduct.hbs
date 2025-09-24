@@ -47,13 +47,13 @@
 
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Danh mục</label>
-                                        <select class="form-select" name="category" required>
+                                            <select class="form-select" name="category" required>
                                             {{#each categories}}
-                                            <option value="{{this.name}}" {{#if (eq this.name ../product.category)}}selected{{/if}}>
+                                                <option value="{{this._id}}" {{#if (eq this._id ../product.categoryId)}}selected{{/if}}>
                                                 {{this.name}}
-                                            </option>
+                                                </option>
                                             {{/each}}
-                                        </select>
+                                            </select>
                                     </div>
 
                                     <div class="mb-3">
@@ -337,7 +337,7 @@
                     editProductForm.querySelector('[name="name"]').value = product.name || '';
                     editProductForm.querySelector('[name="price"]').value = product.price || '';
                     editProductForm.querySelector('[name="salePrice"]').value = product.salePrice || '';
-                    editProductForm.querySelector('[name="category"]').value = product.category || '';
+                    editProductForm.querySelector('[name="category"]').value = product.categoryId || '';
                     editProductForm.querySelector('[name="isActive"]').value = String(product.isActive === undefined ? true : product.isActive);
                     
                     // Xử lý specifications an toàn
