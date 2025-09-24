@@ -338,7 +338,7 @@ class HomeController {
         })
       );
 
-      res.render("pages/Products", {
+      res.render("pages/products", {
         page: { title: "Sản phẩm" },
         products,
         categories, // cha + con
