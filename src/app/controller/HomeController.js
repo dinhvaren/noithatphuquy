@@ -7,40 +7,32 @@ class HomeController {
   // Hiển thị trang chủ
   async dashboard(req, res, next) {
     try {
-      // Kiểm tra token từ cookie
       const token = req.cookies?.token;
       if (token) {
-        // Verify token
         const decoded = jwt.verify(
           token,
-          process.env.JWT_SECRET || "your-secret-key"
+          process.env.JWT_SECRET
         );
         const user = await User.findById(decoded.id);
 
         if (user && user.isActive) {
-          // Nếu là admin, chuyển về trang admin
           if (user.role === "admin") {
             return res.redirect("/admin");
           }
-          // Nếu là user thường, chuyển về homepage
           return res.redirect("/homepage");
         }
       }
-      // Nếu chưa đăng nhập, hiển thị trang dashboard
       res.render("pages/DashBoard", { page: { title: "Trang chủ" } });
     } catch (error) {
-      // Nếu có lỗi xác thực token, hiển thị trang dashboard
       res.render("pages/DashBoard", { page: { title: "Trang chủ" } });
     }
   }
 
   // Hiển thị trang chủ sau khi đăng nhập
   home(req, res, next) {
-    // Nếu chưa đăng nhập, chuyển hướng về dashboard
     if (!req.user) {
       return res.redirect("/");
     }
-    // Nếu đã đăng nhập, hiển thị trang homepage với thông tin user
     res.render("pages/HomePage", {
       page: { title: "Trang chủ" },
       user: req.user,
@@ -50,7 +42,6 @@ class HomeController {
   // Xử lý đăng nhập
   async login(req, res, next) {
     try {
-      // Nếu là GET request, hiển thị form đăng nhập
       if (req.method === "GET") {
         return res.render("pages/Login", {
           layout: false,
@@ -63,7 +54,6 @@ class HomeController {
 
       const { email, password, rememberMe } = req.body;
 
-      // Kiểm tra dữ liệu đầu vào
       if (!email || !password) {
         return res.status(400).json({
           success: false,
@@ -71,14 +61,12 @@ class HomeController {
         });
       }
 
-      // Log để debug
       console.log("Dữ liệu nhận được:", {
         email,
         hasPassword: !!password,
         body: req.body,
       });
 
-      // Tìm user theo email hoặc username
       const user = await User.findOne({
         $or: [{ email: email.toLowerCase() }, { username: email }],
       });
@@ -122,7 +110,7 @@ class HomeController {
           username: user.username,
           role: user.role,
         },
-        process.env.JWT_SECRET || "your-secret-key",
+        process.env.JWT_SECRET,
         { expiresIn: rememberMe ? "30d" : "24h" }
       );
 
@@ -191,7 +179,7 @@ class HomeController {
           username: newUser.username,
           role: newUser.role,
         },
-        process.env.JWT_SECRET || "your-secret-key",
+        process.env.JWT_SECRET,
         { expiresIn: "24h" }
       );
 

@@ -8,8 +8,8 @@ function connect() {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    .then(() => console.log('🔗 Kết nối MongoDB thành công'))
-    .catch(err => console.error('❌ Lỗi kết nối MongoDB:', err));
+    .then(() => console.log('Kết nối MongoDB thành công'))
+    .catch(err => console.error('Lỗi kết nối MongoDB:', err));
     
 }
 
