@@ -272,10 +272,10 @@ class ProductController {
         runValidators: true,
       });
 
-      console.log("=== CẬP NHẬT SẢN PHẨM THÀNH CÔNG ===");
+      console.log("CẬP NHẬT SẢN PHẨM THÀNH CÔNG");
       return res.redirect("/admin");
     } catch (error) {
-      console.error("=== LỖI KHI CẬP NHẬT SẢN PHẨM ===", error);
+      console.error("LỖI KHI CẬP NHẬT SẢN PHẨM", error);
       if (error.name === "ValidationError") {
         return res.status(400).json({
           message: "Dữ liệu không hợp lệ",
@@ -297,7 +297,7 @@ class ProductController {
   // Xóa sản phẩm
   async deleteProductModal(req, res, next) {
     try {
-      console.log("=== BẮT ĐẦU XÓA SẢN PHẨM ===");
+      console.log("BẮT ĐẦU XÓA SẢN PHẨM");
       const productId = req.params.id;
 
       // Tìm sản phẩm để lấy thông tin ảnh
@@ -324,12 +324,12 @@ class ProductController {
 
       // Xóa sản phẩm khỏi database
       await Product.findByIdAndDelete(productId);
-      console.log("=== XÓA SẢN PHẨM THÀNH CÔNG ===");
+      console.log("XÓA SẢN PHẨM THÀNH CÔNG");
 
       // Redirect về trang admin
       res.redirect("/admin");
     } catch (error) {
-      console.error("=== LỖI KHI XÓA SẢN PHẨM ===", error);
+      console.error("LỖI KHI XÓA SẢN PHẨM", error);
       next(error);
     }
   }
